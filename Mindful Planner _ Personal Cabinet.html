@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindful Planner | Personal Cabinet</title>
+  
+  <!-- SheetJS for Excel Generation -->
+  <script src="./Mindful Planner _ Personal Cabinet_files/xlsx.full.min.js.download"></script>
+  <!-- Chart.js for Analytics -->
+  <script src="./Mindful Planner _ Personal Cabinet_files/chart.js.download"></script>
+
+  <style>
+    :root {
+      --primary: #2b6cb0;
+      --primary-dark: #1a365d;
+      --bg-main: #f0f4f8;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --accent-green: #48bb78;
+      --accent-orange: #ed8936;
+      --accent-purple: #805ad5;
+      --accent-red: #e53e3e;
+
+      /* Pastel Colors for Editor & Notes */
+      --pastel-white: #ffffff;
+      --pastel-yellow: #fef9c3;
+      --pastel-blue: #e0f2fe;
+      --pastel-green: #dcfce7;
+      --pastel-pink: #fce7f3;
+      --pastel-purple: #f3e8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Auth Modal */
+    .auth-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .auth-card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 360px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .auth-card h2 {
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+      text-align: center;
+    }
+
+    .auth-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .auth-btn:hover { background: var(--primary-dark); }
+
+    .auth-toggle {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .auth-toggle span {
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: #2d4a60;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #cbd5e0;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a.active, .nav-links a:hover {
+      color: white;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logout-btn {
+      background: #e53e3e;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    /* Main Workspace Layout */
+    .dashboard-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 60px);
+    }
+
+    /* Left Sidebar Navigation */
+    aside {
+      width: 200px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      padding: 20px 10px;
+    }
+
+    .side-menu {
+      list-style: none;
+    }
+
+    .side-menu li {
+      padding: 12px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .side-menu li.active, .side-menu li:hover {
+      background: #edf2f7;
+      color: var(--primary-dark);
+    }
+
+    /* Main Dashboard Content Area */
+    main {
+      flex: 1;
+      padding: 15px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .welcome-header {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+    }
+
+    .action-toolbar {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-action {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-excel { background: #276749; color: white; }
+    .btn-excel:hover { background: #1c4530; }
+
+    .btn-email { background: #3182ce; color: white; }
+    .btn-email:hover { background: #2b6cb0; }
+
+    /* Time Control Bar Component */
+    .time-control-card {
+      background: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .time-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .current-date-badge {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .days-remaining-badge {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #9c4221;
+      background: #feebc8;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #fbd38d;
+    }
+
+    .month-progress-container {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .month-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3182ce 0%, #dd6b20 100%);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .view-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .view-panel.active-panel {
+      display: flex;
+    }
+
+    .grid-workspace {
+      display: grid;
+      grid-template-columns: 310px 1fr 310px;
+      gap: 15px;
+      align-items: start;
+    }
+
+    /* Goal Tracking Columns */
+    .goals-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .goal-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .goal-header h3 {
+      font-size: 0.9rem;
+      color: var(--primary-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .goal-header-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: normal;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-arrow-btn {
+      background: #edf2f7;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      color: var(--primary-dark);
+      cursor: pointer;
+      font-size: 0.68rem;
+      padding: 1px 5px;
+      line-height: 1;
+      transition: all 0.2s ease;
+    }
+
+    .nav-arrow-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    .progress-bar-container {
+      width: 70px;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent-green);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .goal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.85rem;
+      padding: 2px 0;
+    }
+
+    .goal-item-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .goal-item-left span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .goal-item.done .goal-item-left span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .delete-goal-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.82rem;
+      opacity: 0.6;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      padding: 2px;
+      line-height: 1;
+    }
+
+    .delete-goal-btn:hover {
+      opacity: 1;
+      color: var(--accent-red);
+    }
+
+    .add-goal-form {
+      display: flex;
+      margin-top: 8px;
+      gap: 5px;
+    }
+
+    .add-goal-form input {
+      flex: 1;
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+
+    .add-goal-form button {
+      padding: 4px 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* 5x5 Matrix Grid Section */
+    .matrix-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .matrix-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .matrix-controls button {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: #edf2f7;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+
+    .matrix-controls button.active {
+      background: #feebc8;
+      border-color: #dd6b20;
+      color: #9c4221;
+      font-weight: bold;
+    }
+
+    .matrix-container-wrapper {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      grid-template-rows: 1fr 24px;
+      gap: 4px;
+      position: relative;
+    }
+
+    .y-axis-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .x-axis-label {
+      grid-column: 2;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .matrix-wrapper {
+      position: relative;
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 80px);
+      gap: 5px;
+      background: #f7fafc;
+      padding: 5px;
+      border: 2px solid #cbd5e0;
+      border-radius: 6px;
+    }
+
+    .matrix-cell {
+      background: #fef3c7;
+      border-radius: 4px;
+      border: 1px dashed #cbd5e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 2px;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    /* Heatmap styling */
+    .matrix-cell[data-row="5"] { background-color: #d1fae5; }
+    .matrix-cell[data-row="4"] { background-color: #ecfdf5; }
+    .matrix-cell[data-row="3"] { background-color: #fef3c7; }
+    .matrix-cell[data-row="2"] { background-color: #ffedd5; }
+    .matrix-cell[data-row="1"] { background-color: #fee2e2; }
+
+    /* SVG Canvas Overlay for Lines */
+    .connections-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Right Sidebar Wrapper */
+    .right-sidebar-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Sticky Notes Bank Section */
+    .stickers-bank-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sticker-creator {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sticker-creator input {
+      padding: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    .color-picker {
+      display: flex;
+      gap: 6px;
+    }
+
+    .color-opt {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .color-opt.selected { border-color: #2d3748; }
+
+    .sticker-creator button {
+      padding: 6px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    .stickers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 100px;
+      padding: 8px;
+      background: #f7fafc;
+      border: 1px dashed #cbd5e0;
+      border-radius: 6px;
+    }
+
+    /* Sticky Note UI Component */
+    .sticky-note {
+      width: 70px;
+      height: 70px;
+      padding: 6px;
+      border-radius: 6px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.12);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: grab;
+      user-select: none;
+      position: relative;
+      word-break: break-word;
+      z-index: 20;
+    }
+
+    .sticky-note:active { cursor: grabbing; }
+
+    .sticky-note.selected-for-connect {
+      outline: 3px solid #dd6b20;
+      box-shadow: 0 0 8px rgba(221, 107, 32, 0.6);
+    }
+
+    .sticky-note .delete-note {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      font-size: 0.65rem;
+      color: rgba(0,0,0,0.4);
+      cursor: pointer;
+      display: none;
+    }
+
+    .sticky-note:hover .delete-note { display: block; }
+
+    /* Colors */
+    .bg-yellow { background-color: #fef08a; }
+    .bg-blue   { background-color: #bae6fd; }
+    .bg-green  { background-color: #bbf7d0; }
+    .bg-pink   { background-color: #fbcfe8; }
+
+    /* PASTEL RICH TEXT NOTES & COMMENTS CONTAINER */
+    .notes-editor-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notes-editor-card h3 {
+      font-size: 0.88rem;
+      color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      background: #f7fafc;
+      padding: 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      align-items: center;
+    }
+
+    .editor-btn {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .editor-btn:hover {
+      background: #edf2f7;
+      border-color: var(--primary);
+    }
+
+    /* Pastel Background Swatches for Editor */
+    .bg-swatches {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+    }
+
+    .bg-swatch-title {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .bg-swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1.5px solid #cbd5e0;
+      transition: transform 0.1s ease;
+    }
+
+    .bg-swatch:hover { transform: scale(1.15); }
+    .bg-swatch.selected { border-color: #2d3748; stroke-width: 2px; }
+
+    .rich-notes-box {
+      min-height: 110px;
+      max-height: 180px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      overflow-y: auto;
+      outline: none;
+      background-color: var(--pastel-yellow);
+      transition: background-color 0.25s ease;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .rich-notes-box:focus {
+      border-color: var(--primary);
+    }
+
+    /* Compact Analytics Styling */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .metric-card {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .metric-card h3 {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .charts-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .chart-card {
+      background: white;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-card h3 {
+      font-size: 0.88rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 200px;
+      width: 100%;
+    }
+
+    /* ARCHIVE DUAL GRID SYSTEM */
+    .archive-header-controls {
+      background: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .archive-year-picker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+    }
+
+    .archive-year-picker select {
+      padding: 4px 10px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: #edf2f7;
+      cursor: pointer;
+    }
+
+    .dual-grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 12px;
+    }
+
+    .grid-menu-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .grid-menu-card h3 {
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .months-grid-menu {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .weeks-grid-menu {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    /* Color Highlighting State Classes for Buttons */
+    .nav-grid-btn {
+      padding: 8px 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      background: #edf2f7;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .nav-grid-btn.has-completed {
+      background: #c6f6d5;
+      color: #22543d;
+      border-color: #9ae6b4;
+    }
+
+    .nav-grid-btn.has-uncompleted {
+      background: #feebc8;
+      color: #7b341e;
+      border-color: #fbd38d;
+    }
+
+    .nav-grid-btn.no-records {
+      background: #f7fafc;
+      color: #cbd5e0;
+    }
+
+    .nav-grid-btn.selected {
+      outline: 2px solid var(--primary);
+      font-weight: bold;
+      transform: scale(1.02);
+    }
+
+    .btn-sub-label {
+      font-size: 0.65rem;
+      font-weight: normal;
+      opacity: 0.85;
+    }
+
+    /* ARCHIVE CABINET 3-COLUMN LAYOUT */
+    .archive-cabinet-workspace {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .archive-goal-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 180px;
+    }
+
+    .archive-goal-card h3 {
+      font-size: 0.88rem;
+      color: var(--primary-dark);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 4px;
+    }
+
+    .archive-goal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .archive-goal-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      padding: 4px 6px;
+      background: #f8fafc;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .archive-goal-item.done span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .badge-status {
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .badge-done { background: #c6f6d5; color: #22543d; }
+    .badge-pending { background: #fed7d7; color: #742a2a; }
+
+    /* Compact Priority Matrix Archive Strip */
+    .archive-matrix-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .archive-matrix-card h3 {
+      font-size: 0.85rem;
+      color: var(--primary-dark);
+    }
+
+    .archive-matrix-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .matrix-pill {
+      background: #edf2f7;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .matrix-pill-coord {
+      background: var(--primary);
+      color: white;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.68rem;
+    }
+
+    .archive-notes-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .archive-notes-card h3 {
+      font-size: 0.85rem;
+      color: var(--primary-dark);
+    }
+
+    .archive-notes-content {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      min-height: 40px;
+      background-color: var(--pastel-yellow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH MODAL -->
+  <div id="authModal" class="auth-overlay" style="display: flex;">
+    <div class="auth-card">
+      <h2 id="authTitle">Login to Planner</h2>
+      <form class="auth-form" id="authForm">
+        <input type="text" id="authUsername" placeholder="Username" required="">
+        <input type="password" id="authPassword" placeholder="Password" required="">
+        <button type="submit" class="auth-btn" id="authSubmitBtn">Login</button>
+      </form>
+      <div class="auth-toggle">
+        <span id="toggleAuthMode">Don't have an account? Sign up</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP TOP HEADER -->
+  <header>
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      Mindful Planner
+    </div>
+    <nav class="nav-links">
+      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#" class="active">My Dashboard</a>
+      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Weekly</a>
+      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Monthly</a>
+      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Yearly</a>
+    </nav>
+    <div class="user-profile">
+      <span id="userDisplayName">Alice</span>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- DASHBOARD BODY -->
+  <div class="dashboard-container">
+    <!-- Left Navigation Bar -->
+    <aside>
+      <ul class="side-menu">
+        <li class="active" onclick="switchTab(&#39;dashboard&#39;, this)">
+          📊 Personal Cabinet
+        </li>
+        <li onclick="switchTab(&#39;archive&#39;, this)">
+          📁 Archive Data
+        </li>
+        <li onclick="switchTab(&#39;analytics&#39;, this)">
+          📈 Task Analytics
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main>
+      <div class="header-bar">
+        <h1 class="welcome-header" id="welcomeHeading">Welcome to Your Cabinet!</h1>
+        
+        <!-- Action Toolbar -->
+        <div class="action-toolbar">
+          <button class="btn-action btn-excel" onclick="exportToExcel()" title="Export goals &amp; matrix to Excel">
+            📊 Export Excel
+          </button>
+          <button class="btn-action btn-email" onclick="sendEmailReport()" title="Send summary report via Email">
+            ✉️ Send via Email
+          </button>
+        </div>
+      </div>
+
+      <!-- Time Realization & Month Control Card -->
+      <div class="time-control-card">
+        <div class="time-info">
+          <div class="current-date-badge" id="currentMonthYear">📅 Month &amp; Year</div>
+          <div class="days-remaining-badge" id="daysLeftBadge">⏳ 0 days remaining</div>
+        </div>
+        <div class="month-progress-container">
+          <div class="month-progress-fill" id="monthProgressFill"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted);">
+          <span id="monthSubtextLeft">Day 1</span>
+          <span id="monthSubtextRight">0% of month completed</span>
+        </div>
+      </div>
+
+      <!-- DASHBOARD VIEW PANEL -->
+      <div id="dashboardView" class="view-panel active-panel">
+        <div class="grid-workspace">
+          
+          <!-- Left: Goal Checklists -->
+          <div class="goals-column">
+            <!-- Weekly Goals -->
+            <div class="goal-card">
+              <div class="goal-header">
+                <h3>
+                  Weekly Goals
+                  <span class="goal-header-sub">
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(-1)" title="Previous week">◀</button>
+                    <span id="weeklyCardLabel">Week 1 (10 Aug - 16 Aug)</span>
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(1)" title="Next week">▶</button>
+                  </span>
+                </h3>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" id="weeklyProgress"></div>
+                </div>
+              </div>
+              <ul class="goal-list" id="weeklyGoalList"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, &#39;weekly&#39;)">
+                <input type="text" placeholder="New weekly goal..." required="">
+                <button type="submit">+</button>
+              </form>
+            </div>
+
+            <!-- Monthly Goals -->
+            <div class="goal-card">
+              <div class="goal-header">
+                <h3>
+                  Monthly Goals
+                  <span class="goal-header-sub">
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(-1)" title="Previous month">◀</button>
+                    <span id="monthlyCardLabel">August 2026</span>
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(1)" title="Next month">▶</button>
+                  </span>
+                </h3>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" id="monthlyProgress"></div>
+                </div>
+              </div>
+              <ul class="goal-list" id="monthlyGoalList"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, &#39;monthly&#39;)">
+                <input type="text" placeholder="New monthly goal..." required="">
+                <button type="submit">+</button>
+              </form>
+            </div>
+
+            <!-- Yearly Goals -->
+            <div class="goal-card">
+              <div class="goal-header">
+                <h3>
+                  Yearly Goals
+                  <span class="goal-header-sub">
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanYear(-1)" title="Previous year">◀</button>
+                    <span id="yearlyCardLabel">2026</span>
+                    <button type="button" class="nav-arrow-btn" onclick="navigatePreplanYear(1)" title="Next year">▶</button>
+                  </span>
+                </h3>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" id="yearlyProgress"></div>
+                </div>
+              </div>
+              <ul class="goal-list" id="yearlyGoalList"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, &#39;yearly&#39;)">
+                <input type="text" placeholder="New yearly goal..." required="">
+                <button type="submit">+</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Center: 5x5 Matrix -->
+          <div class="matrix-card">
+            <div class="matrix-title-bar">
+              <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
+              <div class="matrix-controls">
+                <button id="connectBtn" onclick="toggleConnectMode()">Connect Notes</button>
+                <button onclick="clearConnections()">Clear Lines</button>
+              </div>
+            </div>
+
+            <div class="matrix-container-wrapper">
+              <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
+              <div class="matrix-wrapper" id="matrixWrapper">
+                <!-- SVG Canvas overlay for note connection lines -->
+                <svg class="connections-svg" id="connectionsSvg">
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#2b6cb0"></polygon>
+                    </marker>
+                  </defs>
+                </svg>
+
+                <!-- 5x5 Grid Cells -->
+                <div class="matrix-grid" id="matrixGrid"><div class="matrix-cell" data-row="5" data-col="1" id="cell-5-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="2" id="cell-5-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="3" id="cell-5-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="4" id="cell-5-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="5" id="cell-5-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="1" id="cell-4-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="2" id="cell-4-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="3" id="cell-4-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="4" id="cell-4-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="5" id="cell-4-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="1" id="cell-3-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="2" id="cell-3-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="3" id="cell-3-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="4" id="cell-3-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="5" id="cell-3-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="1" id="cell-2-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="2" id="cell-2-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="3" id="cell-2-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="4" id="cell-2-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="5" id="cell-2-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="1" id="cell-1-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="2" id="cell-1-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="3" id="cell-1-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="4" id="cell-1-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="5" id="cell-1-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div></div>
+              </div>
+              <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar Stack: Sticker Bank + Rich Text Notes -->
+          <div class="right-sidebar-column">
+            <!-- Sticker Bank -->
+            <div class="stickers-bank-card">
+              <h3>Sticky Notes</h3>
+              <div class="sticker-creator">
+                <input type="text" id="newStickerText" placeholder="Write goal on sticker..." maxlength="30">
+                <div class="color-picker">
+                  <div class="color-opt bg-yellow selected" data-color="bg-yellow" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-blue" data-color="bg-blue" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-green" data-color="bg-green" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-pink" data-color="bg-pink" onclick="selectStickerColor(this)"></div>
+                </div>
+                <button onclick="createSticker()">Create Sticker</button>
+              </div>
+
+              <p style="font-size: 0.72rem; color: var(--text-muted);">Drag sticky notes onto grid cells or click "Connect Notes".</p>
+              
+              <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
+            </div>
+
+            <!-- Rich Text Notes & Comments Container with Pastel Picker -->
+            <div class="notes-editor-card">
+              <h3>📝 Notes &amp; Comments</h3>
+              <div class="editor-toolbar">
+                <button type="button" class="editor-btn" onclick="execCmd(&#39;bold&#39;)" title="Bold"><b>B</b></button>
+                <button type="button" class="editor-btn" onclick="execCmd(&#39;italic&#39;)" title="Italic"><i>I</i></button>
+                <button type="button" class="editor-btn" onclick="execCmd(&#39;underline&#39;)" title="Underline"><u>U</u></button>
+                <button type="button" class="editor-btn" onclick="execCmd(&#39;insertUnorderedList&#39;)" title="Bullet List">• List</button>
+                <button type="button" class="editor-btn" onclick="execCmd(&#39;insertOrderedList&#39;)" title="Numbered List">1. List</button>
+                
+                <!-- Pastel Color Swatches for Container Background -->
+                <div class="bg-swatches">
+                  <span class="bg-swatch-title">Bg:</span>
+                  <div class="bg-swatch selected" style="background-color: var(--pastel-yellow);" onclick="setPastelBg(&#39;var(--pastel-yellow)&#39;, this)" title="Pastel Yellow"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-blue);" onclick="setPastelBg(&#39;var(--pastel-blue)&#39;, this)" title="Pastel Blue"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-green);" onclick="setPastelBg(&#39;var(--pastel-green)&#39;, this)" title="Pastel Green"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-pink);" onclick="setPastelBg(&#39;var(--pastel-pink)&#39;, this)" title="Pastel Pink"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-purple);" onclick="setPastelBg(&#39;var(--pastel-purple)&#39;, this)" title="Pastel Purple"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-white);" onclick="setPastelBg(&#39;var(--pastel-white)&#39;, this)" title="White"></div>
+                </div>
+              </div>
+              <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ARCHIVE VIEW PANEL WITH 3-COLUMN CABINET LAYOUT -->
+      <div id="archiveView" class="view-panel">
+        <!-- Year Select Combobox Header -->
+        <div class="archive-header-controls">
+          <div class="archive-year-picker">
+            <label for="archiveYearSelect">🗓 Archive Year:</label>
+            <select id="archiveYearSelect" onchange="onArchiveYearChange()"><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option></select>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">
+            <span style="color: var(--accent-green); font-weight: bold;">■ Completed</span> | 
+            <span style="color: var(--accent-orange); font-weight: bold;">■ Pending</span> | 
+            <span style="color: #cbd5e0; font-weight: bold;">■ No Records</span>
+          </div>
+        </div>
+
+        <!-- Side-by-Side Navigation Grid Menu (Months Left, Weeks Right) -->
+        <div class="dual-grid-container">
+          <!-- Left: Month Grid Menu -->
+          <div class="grid-menu-card">
+            <h3>1. Select Month</h3>
+            <div class="months-grid-menu" id="archiveMonthGridMenu"></div>
+          </div>
+
+          <!-- Right: Week Grid Menu -->
+          <div class="grid-menu-card">
+            <h3>2. Select Week</h3>
+            <div class="weeks-grid-menu" id="archiveWeekGridMenu"></div>
+          </div>
+        </div>
+
+        <!-- Date Snapshot Title -->
+        <div style="font-weight: bold; font-size: 0.95rem; color: var(--primary-dark);" id="archiveSelectedDateTitle">
+          Archive Cabinet Snapshot: August 2026 - Week 2
+        </div>
+
+        <!-- 3-Column Cabinet Workspace (Weekly, Monthly, Yearly) -->
+        <div class="archive-cabinet-workspace">
+          <!-- Weekly Column -->
+          <div class="archive-goal-card">
+            <h3>Weekly Goals</h3>
+            <ul class="archive-goal-list" id="archiveWeeklyList"></ul>
+          </div>
+
+          <!-- Monthly Column -->
+          <div class="archive-goal-card">
+            <h3>Monthly Goals</h3>
+            <ul class="archive-goal-list" id="archiveMonthlyList"></ul>
+          </div>
+
+          <!-- Yearly Column -->
+          <div class="archive-goal-card">
+            <h3>Yearly Goals</h3>
+            <ul class="archive-goal-list" id="archiveYearlyList"></ul>
+          </div>
+        </div>
+
+        <!-- Priority Matrix Horizontal Strip -->
+        <div class="archive-matrix-card">
+          <h3>Priority Matrix Snapshot</h3>
+          <div class="archive-matrix-pills" id="archiveMatrixPills"></div>
+        </div>
+
+        <!-- Notes & Comments Archive Section -->
+        <div class="archive-notes-card">
+          <h3>Notes &amp; Comments Snapshot</h3>
+          <div class="archive-notes-content" id="archiveNotesContent"></div>
+        </div>
+      </div>
+
+      <!-- COMPACT ANALYTICS VIEW PANEL -->
+      <div id="analyticsView" class="view-panel">
+        <h2 style="color: var(--primary-dark); font-size: 1.2rem;">Task &amp; Productivity Analytics</h2>
+        
+        <!-- Key Metrics Row -->
+        <div class="analytics-grid">
+          <div class="metric-card">
+            <h3>Active Goals</h3>
+            <div class="metric-number" id="metricActiveGoals">0</div>
+          </div>
+          <div class="metric-card">
+            <h3>Archived Completed</h3>
+            <div class="metric-number" id="metricArchivedGoals" style="color: var(--accent-green);">0</div>
+          </div>
+          <div class="metric-card">
+            <h3>Completion Rate</h3>
+            <div class="metric-number" id="metricCompletionRate" style="color: var(--primary);">0%</div>
+          </div>
+          <div class="metric-card">
+            <h3>Matrix Priority Notes</h3>
+            <div class="metric-number" id="metricMatrixNotes" style="color: var(--accent-orange);">0</div>
+          </div>
+        </div>
+
+        <!-- Compact Charts Row -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <h3>Active Goals by Category</h3>
+            <div class="chart-wrapper">
+              <canvas id="categoryChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>Overall Completion Status</h3>
+            <div class="chart-wrapper">
+              <canvas id="completionChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // --- SAFE STORAGE WRAPPER FOR SANDBOXED IFRAMES (SharePoint / Office 365) ---
+    const safeStorage = (() => {
+      const memory = {};
+      try {
+        const storage = window.localStorage;
+        const key = "__test__";
+        storage.setItem(key, "1");
+        storage.removeItem(key);
+        return storage;
+      } catch (e) {
+        return {
+          getItem: (key) => memory[key] ?? null,
+          setItem: (key, value) => { memory[key] = String(value); },
+          removeItem: (key) => { delete memory[key]; }
+        };
+      }
+    })();
+
+    // Global State
+    let currentUser = null;
+    let isSignUpMode = false;
+    let selectedColor = 'bg-yellow';
+    let isConnectMode = false;
+    let connectSourceId = null;
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let selectedArchiveYear = new Date().getFullYear();
+    let selectedArchiveMonthIdx = new Date().getMonth();
+    let selectedArchiveWeekIdx = 1;
+
+    let preplanWeekDate = getMonday(new Date());
+    let preplanMonthIdx = new Date().getMonth();
+    let preplanMonthYear = new Date().getFullYear();
+    let preplanYear = new Date().getFullYear();
+
+    let appData = {
+      lastActiveMonthYear: "",
+      userNotes: "",
+      userNotesBg: "var(--pastel-yellow)",
+      goals: {
+        weekly: [
+          { id: 1, text: "Run 10k", done: true, dateCreated: "2026-08-13", weekTag: "" },
+          { id: 2, text: "Meal prep", done: false, dateCreated: "2026-08-13", weekTag: "" }
+        ],
+        monthly: [
+          { id: 3, text: "Read 3 books", done: true, dateCreated: "2026-08-13", monthYearTag: "August 2026" },
+          { id: 4, text: "Finish project", done: false, dateCreated: "2026-08-13", monthYearTag: "August 2026" }
+        ],
+        yearly: [
+          { id: 5, text: "Save $5000", done: false, dateCreated: "2026-08-13", yearTag: 2026 },
+          { id: 6, text: "Travel to Italy", done: false, dateCreated: "2026-08-13", yearTag: 2026 }
+        ]
+      },
+      stickers: [
+        { id: "s1", text: "Learn Python", color: "bg-yellow", cellId: null },
+        { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" },
+        { id: "s3", text: "Research Trip", color: "bg-blue", cellId: "cell-2-2" },
+        { id: "s4", text: "Skill Project", color: "bg-yellow", cellId: "cell-4-2" },
+        { id: "s5", text: "Finish Draft", color: "bg-green", cellId: "cell-5-3" },
+        { id: "s6", text: "Submit Report", color: "bg-green", cellId: "cell-5-4" }
+      ],
+      connections: [
+        { from: "s3", to: "s4" },
+        { from: "s4", to: "s5" },
+        { from: "s5", to: "s6" }
+      ],
+      archiveSnapshots: {
+        "2026-08-W2": {
+          goals: {
+            weekly: [{ id: 1, text: "Run 10k", done: true }, { id: 2, text: "Meal prep", done: false }],
+            monthly: [{ id: 3, text: "Read 3 books", done: true }, { id: 4, text: "Finish project", done: false }],
+            yearly: [{ id: 5, text: "Save $5000", done: false }]
+          },
+          stickers: [
+            { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" }
+          ],
+          userNotes: "<b>Team sync</b> on Monday. Review Q3 project deliverables.",
+          userNotesBg: "var(--pastel-yellow)"
+        }
+      }
+    };
+
+    let categoryChartInstance = null;
+    let completionChartInstance = null;
+
+    const authModal = document.getElementById('authModal');
+    const authForm = document.getElementById('authForm');
+    const authTitle = document.getElementById('authTitle');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const toggleAuthMode = document.getElementById('toggleAuthMode');
+    const userDisplayName = document.getElementById('userDisplayName');
+    const welcomeHeading = document.getElementById('welcomeHeading');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      buildMatrixGrid();
+      checkAuthSession();
+      initYearCombobox();
+      window.addEventListener('resize', renderConnections);
+    });
+
+    // --- RICH TEXT EDITOR FUNCTIONS ---
+    function execCmd(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function setPastelBg(colorVal, element) {
+      document.querySelectorAll('.bg-swatch').forEach(sw => sw.classList.remove('selected'));
+      element.classList.add('selected');
+
+      const notesBox = document.getElementById('richNotesBox');
+      notesBox.style.backgroundColor = colorVal;
+
+      appData.userNotesBg = colorVal;
+      saveUserData();
+      autoSaveTodaySnapshot();
+    }
+
+    function saveRichNotes() {
+      const notesBox = document.getElementById('richNotesBox');
+      appData.userNotes = notesBox.innerHTML;
+      saveUserData();
+      autoSaveTodaySnapshot();
+    }
+
+    function loadRichNotes() {
+      const notesBox = document.getElementById('richNotesBox');
+      if (notesBox) {
+        notesBox.innerHTML = appData.userNotes || "";
+        const bg = appData.userNotesBg || "var(--pastel-yellow)";
+        notesBox.style.backgroundColor = bg;
+
+        document.querySelectorAll('.bg-swatch').forEach(sw => {
+          if (sw.getAttribute('onclick').includes(bg)) {
+            sw.classList.add('selected');
+          } else {
+            sw.classList.remove('selected');
+          }
+        });
+      }
+    }
+
+    // --- HELPER DATE UTILITIES ---
+    function getMonday(d) {
+      const date = new Date(d);
+      const day = date.getDay();
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(date.setDate(diff));
+    }
+
+    function formatShortDate(d) {
+      return `${d.getDate()} ${monthNames[d.getMonth()]}`;
+    }
+
+    function getWeekRangeLabel(mondayDate) {
+      const sunday = new Date(mondayDate);
+      sunday.setDate(mondayDate.getDate() + 6);
+      
+      const weekNum = Math.ceil(mondayDate.getDate() / 7);
+      return `Week ${weekNum} (${formatShortDate(mondayDate)} - ${formatShortDate(sunday)})`;
+    }
+
+    function getWeekRangeForMonth(year, monthIdx, weekIdx) {
+      const startDay = weekIdx * 7 + 1;
+      const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
+      const endDay = Math.min(startDay + 6, daysInMonth);
+      return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
+    }
+
+    // --- PRE-PLANNING NAVIGATION LOGIC ---
+    function navigatePreplanWeek(offset) {
+      preplanWeekDate.setDate(preplanWeekDate.getDate() + (offset * 7));
+      renderGoals();
+    }
+
+    function navigatePreplanMonth(offset) {
+      preplanMonthIdx += offset;
+      if (preplanMonthIdx > 11) {
+        preplanMonthIdx = 0;
+        preplanMonthYear++;
+      } else if (preplanMonthIdx < 0) {
+        preplanMonthIdx = 11;
+        preplanMonthYear--;
+      }
+      renderGoals();
+    }
+
+    function navigatePreplanYear(offset) {
+      preplanYear += offset;
+      renderGoals();
+    }
+
+    function getSelectedPreplanMonthTag() {
+      return `${fullMonthNames[preplanMonthIdx]} ${preplanMonthYear}`;
+    }
+
+    // --- AUTOMATIC SNAPSHOT & MONTH LIFECYCLE ---
+    function autoSaveTodaySnapshot() {
+      const now = new Date();
+      const weekNum = Math.ceil(now.getDate() / 7);
+      const snapshotKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-W${weekNum}`;
+      
+      if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
+
+      appData.archiveSnapshots[snapshotKey] = {
+        goals: JSON.parse(JSON.stringify(appData.goals)),
+        stickers: JSON.parse(JSON.stringify(appData.stickers)),
+        userNotes: appData.userNotes || "",
+        userNotesBg: appData.userNotesBg || "var(--pastel-yellow)"
+      };
+      saveUserData();
+    }
+
+    function checkMonthlyAutoReset() {
+      const now = new Date();
+      const currentMonthYear = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+      if (!appData.lastActiveMonthYear) {
+        appData.lastActiveMonthYear = currentMonthYear;
+        autoSaveTodaySnapshot();
+        return;
+      }
+
+      if (appData.lastActiveMonthYear !== currentMonthYear) {
+        autoSaveTodaySnapshot();
+        appData.goals.weekly = [];
+        appData.lastActiveMonthYear = currentMonthYear;
+        saveUserData();
+      } else {
+        autoSaveTodaySnapshot();
+      }
+    }
+
+    // --- TIME REALIZATION BAR MODULE ---
+    function updateTimeControlBar() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const monthIdx = now.getMonth();
+      const currentMonthName = fullMonthNames[monthIdx];
+      
+      const dayOfMonth = now.getDate();
+      const totalDaysInMonth = new Date(year, monthIdx + 1, 0).getDate();
+      const daysRemaining = totalDaysInMonth - dayOfMonth;
+      const percentPassed = Math.round((dayOfMonth / totalDaysInMonth) * 100);
+
+      document.getElementById('currentMonthYear').textContent = `📅 ${currentMonthName} ${year}`;
+      document.getElementById('daysLeftBadge').textContent = `⏳ ${daysRemaining} day${daysRemaining === 1 ? '' : 's'} remaining in ${currentMonthName}`;
+      document.getElementById('monthProgressFill').style.width = `${percentPassed}%`;
+      document.getElementById('monthSubtextLeft').textContent = `Day ${dayOfMonth} of ${totalDaysInMonth}`;
+      document.getElementById('monthSubtextRight').textContent = `${percentPassed}% of ${currentMonthName} elapsed`;
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.side-menu li').forEach(li => li.classList.remove('active'));
+      element.classList.add('active');
+
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active-panel'));
+
+      if (tabName === 'dashboard') {
+        document.getElementById('dashboardView').classList.add('active-panel');
+        setTimeout(renderConnections, 50);
+      } else if (tabName === 'archive') {
+        document.getElementById('archiveView').classList.add('active-panel');
+        renderArchiveSystem();
+      } else if (tabName === 'analytics') {
+        document.getElementById('analyticsView').classList.add('active-panel');
+        renderAnalytics();
+      }
+    }
+
+    // --- AUTHENTICATION MODULE ---
+    function checkAuthSession() {
+      const activeUser = safeStorage.getItem('planner_active_user');
+      if (activeUser) {
+        currentUser = activeUser;
+        loadUserData();
+        checkMonthlyAutoReset();
+        authModal.style.display = 'none';
+        userDisplayName.textContent = currentUser;
+        welcomeHeading.textContent = `Welcome to Your Cabinet, ${currentUser}!`;
+        renderAll();
+      } else {
+        authModal.style.display = 'flex';
+      }
+    }
+
+    toggleAuthMode.addEventListener('click', () => {
+      isSignUpMode = !isSignUpMode;
+      authTitle.textContent = isSignUpMode ? "Create Account" : "Login to Planner";
+      authSubmitBtn.textContent = isSignUpMode ? "Sign Up" : "Login";
+      toggleAuthMode.innerHTML = isSignUpMode ? 
+        'Already have an account? <span>Login</span>' : 
+        'Don\'t have an account? <span>Sign up</span>';
+    });
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('authUsername').value.trim();
+      const pass = document.getElementById('authPassword').value.trim();
+
+      if (!user || !pass) return;
+
+      const usersDb = JSON.parse(safeStorage.getItem('planner_users') || '{}');
+
+      if (isSignUpMode) {
+        if (usersDb[user]) {
+          alert('Username already exists!');
+          return;
+        }
+        usersDb[user] = pass;
+        safeStorage.setItem('planner_users', JSON.stringify(usersDb));
+        safeStorage.setItem(`planner_data_${user}`, JSON.stringify(appData));
+        loginUser(user);
+      } else {
+        if (usersDb[user] && usersDb[user] === pass) {
+          loginUser(user);
+        } else {
+          alert('Invalid credentials!');
+        }
+      }
+    });
+
+    function loginUser(username) {
+      currentUser = username;
+      safeStorage.setItem('planner_active_user', username);
+      authModal.style.display = 'none';
+      userDisplayName.textContent = currentUser;
+      welcomeHeading.textContent = `Welcome to Your Cabinet, ${currentUser}!`;
+      loadUserData();
+      checkMonthlyAutoReset();
+      renderAll();
+    }
+
+    logoutBtn.addEventListener('click', () => {
+      saveUserData();
+      safeStorage.removeItem('planner_active_user');
+      currentUser = null;
+      location.reload();
+    });
+
+    // --- DATA STORAGE MODULE ---
+    function loadUserData() {
+      const saved = safeStorage.getItem(`planner_data_${currentUser}`);
+      if (saved) {
+        appData = JSON.parse(saved);
+        if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
+      }
+    }
+
+    function saveUserData() {
+      if (currentUser) {
+        safeStorage.setItem(`planner_data_${currentUser}`, JSON.stringify(appData));
+      }
+    }
+
+    // --- RENDERERS ---
+    function renderAll() {
+      renderGoals();
+      renderStickers();
+      loadRichNotes();
+      updateTimeControlBar();
+      setTimeout(renderConnections, 50);
+    }
+
+    function renderGoals() {
+      const currentWeekTag = getWeekRangeLabel(preplanWeekDate);
+      const currentMonthTag = getSelectedPreplanMonthTag();
+
+      document.getElementById('weeklyCardLabel').textContent = currentWeekTag;
+      document.getElementById('monthlyCardLabel').textContent = currentMonthTag;
+      document.getElementById('yearlyCardLabel').textContent = preplanYear;
+
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        const listEl = document.getElementById(`${type}GoalList`);
+        const progressEl = document.getElementById(`${type}Progress`);
+        listEl.innerHTML = '';
+
+        let goals = appData.goals[type] || [];
+
+        if (type === 'weekly') {
+          goals = goals.filter(g => (g.weekTag || getWeekRangeLabel(getMonday(new Date()))) === currentWeekTag);
+        } else if (type === 'monthly') {
+          goals = goals.filter(g => (g.monthYearTag || `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`) === currentMonthTag);
+        } else if (type === 'yearly') {
+          goals = goals.filter(g => (g.yearTag || new Date().getFullYear()) === preplanYear);
+        }
+
+        let completedCount = 0;
+
+        goals.forEach(goal => {
+          if (goal.done) completedCount++;
+          const li = document.createElement('li');
+          li.className = `goal-item ${goal.done ? 'done' : ''}`;
+          li.innerHTML = `
+            <div class="goal-item-left">
+              <input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleGoal('${type}', ${goal.id})">
+              <span>${escapeHtml(goal.text)}</span>
+            </div>
+            <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})" title="Delete goal">🗑️</button>
+          `;
+          listEl.appendChild(li);
+        });
+
+        const percent = goals.length > 0 ? (completedCount / goals.length) * 100 : 0;
+        progressEl.style.width = `${percent}%`;
+      });
+    }
+
+    function toggleGoal(type, id) {
+      const goal = appData.goals[type].find(g => g.id === id);
+      if (goal) {
+        goal.done = !goal.done;
+        autoSaveTodaySnapshot();
+        renderGoals();
+      }
+    }
+
+    function deleteGoal(type, id) {
+      appData.goals[type] = appData.goals[type].filter(g => g.id !== id);
+      autoSaveTodaySnapshot();
+      renderGoals();
+    }
+
+    function addGoal(event, type) {
+      event.preventDefault();
+      const input = event.target.querySelector('input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      const newGoal = {
+        id: Date.now(),
+        text: text,
+        done: false,
+        dateCreated: todayStr
+      };
+
+      if (type === 'weekly') {
+        newGoal.weekTag = getWeekRangeLabel(preplanWeekDate);
+      } else if (type === 'monthly') {
+        newGoal.monthYearTag = getSelectedPreplanMonthTag();
+      } else if (type === 'yearly') {
+        newGoal.yearTag = preplanYear;
+      }
+
+      appData.goals[type].push(newGoal);
+
+      input.value = '';
+      autoSaveTodaySnapshot();
+      renderGoals();
+    }
+
+    // --- DUAL-GRID ARCHIVE NAVIGATION & 3-COLUMN CABINET ---
+    function initYearCombobox() {
+      const select = document.getElementById('archiveYearSelect');
+      select.innerHTML = '';
+      const curYear = new Date().getFullYear();
+      for (let y = curYear - 3; y <= curYear + 3; y++) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        if (y === selectedArchiveYear) opt.selected = true;
+        select.appendChild(opt);
+      }
+    }
+
+    function onArchiveYearChange() {
+      selectedArchiveYear = parseInt(document.getElementById('archiveYearSelect').value);
+      renderArchiveSystem();
+    }
+
+    function renderArchiveSystem() {
+      renderMonthGrid();
+      renderWeekGrid();
+      render3ColumnArchiveCabinet();
+    }
+
+    function getWeekSnapshotStatus(snapshotKey) {
+      const snap = (appData.archiveSnapshots || {})[snapshotKey];
+      if (!snap) return 'none';
+
+      let total = 0;
+      let done = 0;
+
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        const list = snap.goals ? (snap.goals[type] || []) : [];
+        total += list.length;
+        done += list.filter(g => g.done).length;
+      });
+
+      if (done > 0) return 'completed';
+      if (total > 0) return 'uncompleted';
+      return 'none';
+    }
+
+    function getMonthStatus(year, monthIdx) {
+      const prefix = `${year}-${String(monthIdx + 1).padStart(2, '0')}`;
+      const matchingKeys = Object.keys(appData.archiveSnapshots || {}).filter(k => k.startsWith(prefix));
+
+      if (matchingKeys.length === 0) return 'none';
+
+      let hasDone = false;
+      let hasTasks = false;
+
+      matchingKeys.forEach(k => {
+        const status = getWeekSnapshotStatus(k);
+        if (status === 'completed') hasDone = true;
+        if (status === 'completed' || status === 'uncompleted') hasTasks = true;
+      });
+
+      if (hasDone) return 'completed';
+      if (hasTasks) return 'uncompleted';
+      return 'none';
+    }
+
+    function renderMonthGrid() {
+      const container = document.getElementById('archiveMonthGridMenu');
+      container.innerHTML = '';
+
+      monthNames.forEach((mName, idx) => {
+        const status = getMonthStatus(selectedArchiveYear, idx);
+        const btn = document.createElement('button');
+        btn.className = 'nav-grid-btn';
+
+        if (status === 'completed') btn.classList.add('has-completed');
+        else if (status === 'uncompleted') btn.classList.add('has-uncompleted');
+        else btn.classList.add('no-records');
+
+        if (idx === selectedArchiveMonthIdx) btn.classList.add('selected');
+
+        btn.textContent = mName;
+        btn.onclick = () => {
+          selectedArchiveMonthIdx = idx;
+          selectedArchiveWeekIdx = 0;
+          renderArchiveSystem();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function renderWeekGrid() {
+      const container = document.getElementById('archiveWeekGridMenu');
+      container.innerHTML = '';
+
+      for (let w = 0; w < 5; w++) {
+        const snapshotKey = `${selectedArchiveYear}-${String(selectedArchiveMonthIdx + 1).padStart(2, '0')}-W${w + 1}`;
+        const status = getWeekSnapshotStatus(snapshotKey);
+
+        const btn = document.createElement('button');
+        btn.className = 'nav-grid-btn';
+
+        if (status === 'completed') btn.classList.add('has-completed');
+        else if (status === 'uncompleted') btn.classList.add('has-uncompleted');
+        else btn.classList.add('no-records');
+
+        if (w === selectedArchiveWeekIdx) btn.classList.add('selected');
+
+        const rangeStr = getWeekRangeForMonth(selectedArchiveYear, selectedArchiveMonthIdx, w);
+
+        btn.innerHTML = `
+          <span>Week ${w + 1}</span>
+          <span class="btn-sub-label">${rangeStr}</span>
+        `;
+        btn.onclick = () => {
+          selectedArchiveWeekIdx = w;
+          renderArchiveSystem();
+        };
+        container.appendChild(btn);
+      }
+    }
+
+    function render3ColumnArchiveCabinet() {
+      const formattedMonth = fullMonthNames[selectedArchiveMonthIdx];
+      const rangeStr = getWeekRangeForMonth(selectedArchiveYear, selectedArchiveMonthIdx, selectedArchiveWeekIdx);
+      const titleEl = document.getElementById('archiveSelectedDateTitle');
+      titleEl.textContent = `Archive Cabinet Snapshot: ${formattedMonth} ${selectedArchiveYear} - Week ${selectedArchiveWeekIdx + 1} (${rangeStr})`;
+
+      const snapshotKey = `${selectedArchiveYear}-${String(selectedArchiveMonthIdx + 1).padStart(2, '0')}-W${selectedArchiveWeekIdx + 1}`;
+      const snap = (appData.archiveSnapshots || {})[snapshotKey];
+
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        const listEl = document.getElementById(`archive${type.charAt(0).toUpperCase() + type.slice(1)}List`);
+        listEl.innerHTML = '';
+
+        const goals = snap && snap.goals ? (snap.goals[type] || []) : [];
+
+        if (goals.length === 0) {
+          listEl.innerHTML = `<li style="font-size:0.75rem; color:var(--text-muted);">No goals saved.</li>`;
+        } else {
+          goals.forEach(g => {
+            const li = document.createElement('li');
+            li.className = `archive-goal-item ${g.done ? 'done' : ''}`;
+            li.innerHTML = `
+              <span>${escapeHtml(g.text)}</span>
+              <span class="badge-status ${g.done ? 'badge-done' : 'badge-pending'}">${g.done ? '✓ Completed' : 'Pending'}</span>
+            `;
+            listEl.appendChild(li);
+          });
+        }
+      });
+
+      // Render Matrix Notes as Horizontal Pills
+      const pillsContainer = document.getElementById('archiveMatrixPills');
+      pillsContainer.innerHTML = '';
+      const stickers = snap && snap.stickers ? snap.stickers : [];
+
+      if (stickers.length === 0) {
+        pillsContainer.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">No matrix sticky notes on grid for this date.</span>`;
+      } else {
+        stickers.forEach(s => {
+          let coord = "Unassigned";
+          if (s.cellId) {
+            const parts = s.cellId.split('-');
+            coord = `Imp: ${parts[1]} | Sim: ${parts[2]}`;
+          }
+
+          const pill = document.createElement('div');
+          pill.className = 'matrix-pill';
+          pill.innerHTML = `
+            <span>${escapeHtml(s.text)}</span>
+            <span class="matrix-pill-coord">${coord}</span>
+          `;
+          pillsContainer.appendChild(pill);
+        });
+      }
+
+      // Render Archive Notes & Comments with Pastel Background Color
+      const notesEl = document.getElementById('archiveNotesContent');
+      const notesHtml = snap && snap.userNotes ? snap.userNotes : "";
+      const notesBg = snap && snap.userNotesBg ? snap.userNotesBg : "var(--pastel-yellow)";
+
+      notesEl.style.backgroundColor = notesBg;
+
+      if (!notesHtml || notesHtml.trim() === "" || notesHtml === "<br>") {
+        notesEl.innerHTML = `<span style="color:var(--text-muted); font-style: italic;">No notes or comments saved for this period.</span>`;
+      } else {
+        notesEl.innerHTML = notesHtml;
+      }
+    }
+
+    // --- ANALYTICS RENDERER ---
+    function renderAnalytics() {
+      const activeWeekly = appData.goals.weekly.length;
+      const activeMonthly = appData.goals.monthly.length;
+      const activeYearly = appData.goals.yearly.length;
+      const totalActive = activeWeekly + activeMonthly + activeYearly;
+
+      const activeCompleted = ['weekly', 'monthly', 'yearly'].reduce((acc, type) => {
+        return acc + appData.goals[type].filter(g => g.done).length;
+      }, 0);
+
+      const totalMatrixNotes = appData.stickers.length;
+      const rate = totalActive > 0 ? Math.round((activeCompleted / totalActive) * 100) : 0;
+
+      document.getElementById('metricActiveGoals').textContent = totalActive;
+      document.getElementById('metricArchivedGoals').textContent = activeCompleted;
+      document.getElementById('metricCompletionRate').textContent = `${rate}%`;
+      document.getElementById('metricMatrixNotes').textContent = totalMatrixNotes;
+
+      // Category Chart
+      const ctxCat = document.getElementById('categoryChart').getContext('2d');
+      if (categoryChartInstance) categoryChartInstance.destroy();
+
+      categoryChartInstance = new Chart(ctxCat, {
+        type: 'bar',
+        data: {
+          labels: ['Weekly', 'Monthly', 'Yearly'],
+          datasets: [{
+            label: 'Active Goals',
+            data: [activeWeekly, activeMonthly, activeYearly],
+            backgroundColor: ['#3182ce', '#dd6b20', '#805ad5'],
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } } },
+            x: { ticks: { font: { size: 11 } } }
+          }
+        }
+      });
+
+      // Completion Chart
+      const ctxComp = document.getElementById('completionChart').getContext('2d');
+      if (completionChartInstance) completionChartInstance.destroy();
+
+      completionChartInstance = new Chart(ctxComp, {
+        type: 'doughnut',
+        data: {
+          labels: ['Pending', 'Completed'],
+          datasets: [{
+            data: [totalActive - activeCompleted, activeCompleted],
+            backgroundColor: ['#cbd5e0', '#48bb78']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } }
+          }
+        }
+      });
+    }
+
+    // --- EXCEL EXPORT FUNCTIONALITY ---
+    function exportToExcel() {
+      const workbook = XLSX.utils.book_new();
+
+      const goalsRows = [];
+      const currentMonthYear = `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
+
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        (appData.goals[type] || []).forEach(g => {
+          goalsRows.push({
+            Category: type.toUpperCase(),
+            "Goal Title": g.text,
+            Status: g.done ? 'Completed' : 'Pending',
+            "Period Tag": g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
+          });
+        });
+      });
+
+      const goalsSheet = XLSX.utils.json_to_sheet(goalsRows);
+      XLSX.utils.book_append_sheet(workbook, goalsSheet, "Active Goals Summary");
+
+      const matrixRows = appData.stickers.map(s => {
+        let imp = "Unassigned";
+        let simp = "Unassigned";
+
+        if (s.cellId) {
+          const parts = s.cellId.split('-');
+          imp = parts[1] + " / 5";
+          simp = parts[2] + " / 5";
+        }
+
+        return {
+          "Note ID": s.id,
+          "Goal Note": s.text,
+          "Importance Level": imp,
+          "Simplicity Level": simp,
+          "Color Tag": s.color
+        };
+      });
+
+      const matrixSheet = XLSX.utils.json_to_sheet(matrixRows);
+      XLSX.utils.book_append_sheet(workbook, matrixSheet, "Priority Matrix");
+
+      XLSX.writeFile(workbook, `Mindful_Planner_${currentUser}_${new Date().toISOString().split('T')[0]}.xlsx`);
+    }
+
+    // --- EMAIL REPORT FUNCTIONALITY ---
+    function sendEmailReport() {
+      const now = new Date();
+      const monthYearStr = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+      let body = `Mindful Planner Summary for ${currentUser} (${monthYearStr})\n\n`;
+
+      body += `--- ACTIVE GOALS ---\n`;
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        body += `\n[${type.toUpperCase()} GOALS]\n`;
+        const list = appData.goals[type] || [];
+        if (list.length === 0) body += `(No active goals)\n`;
+        list.forEach(g => {
+          body += `- [${g.done ? 'X' : ' '}] ${g.text}\n`;
+        });
+      });
+
+      body += `\n--- MATRIX PRIORITY STICKIES ---\n`;
+      appData.stickers.forEach(s => {
+        if (s.cellId) {
+          const p = s.cellId.split('-');
+          body += `- "${s.text}" (Importance: ${p[1]}/5, Simplicity: ${p[2]}/5)\n`;
+        } else {
+          body += `- "${s.text}" (Unassigned in Bank)\n`;
+        }
+      });
+
+      const subject = encodeURIComponent(`Mindful Planner Goals Report (${monthYearStr}) - ${currentUser}`);
+      const mailtoUrl = `mailto:?subject=${subject}&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailtoUrl;
+    }
+
+    // --- 5x5 MATRIX & STICKY NOTES MODULE ---
+    function buildMatrixGrid() {
+      const grid = document.getElementById('matrixGrid');
+      grid.innerHTML = '';
+      for (let r = 5; r >= 1; r--) {
+        for (let c = 1; c <= 5; c++) {
+          const cell = document.createElement('div');
+          cell.className = 'matrix-cell';
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+          cell.id = `cell-${r}-${c}`;
+          cell.setAttribute('ondragover', 'handleDragOver(event)');
+          cell.setAttribute('ondrop', 'handleDropToCell(event)');
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    function renderStickers() {
+      document.getElementById('stickersBank').innerHTML = '';
+      document.querySelectorAll('.matrix-cell').forEach(cell => cell.innerHTML = '');
+
+      appData.stickers.forEach(sticker => {
+        const noteEl = createStickerElement(sticker);
+
+        if (sticker.cellId && document.getElementById(sticker.cellId)) {
+          document.getElementById(sticker.cellId).appendChild(noteEl);
+        } else {
+          document.getElementById('stickersBank').appendChild(noteEl);
+        }
+      });
+    }
+
+    function createStickerElement(sticker) {
+      const div = document.createElement('div');
+      div.className = `sticky-note ${sticker.color}`;
+      div.id = sticker.id;
+      div.draggable = true;
+      div.innerText = sticker.text;
+
+      if (connectSourceId === sticker.id) {
+        div.classList.add('selected-for-connect');
+      }
+
+      const delBtn = document.createElement('span');
+      delBtn.className = 'delete-note';
+      delBtn.innerHTML = '&#10005;';
+      delBtn.onclick = (e) => {
+        e.stopPropagation();
+        deleteSticker(sticker.id);
+      };
+      div.appendChild(delBtn);
+
+      div.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', sticker.id);
+      });
+
+      div.addEventListener('click', (e) => {
+        if (isConnectMode) {
+          e.stopPropagation();
+          handleConnectClick(sticker.id);
+        }
+      });
+
+      return div;
+    }
+
+    function selectStickerColor(el) {
+      document.querySelectorAll('.color-opt').forEach(opt => opt.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedColor = el.dataset.color;
+    }
+
+    function createSticker() {
+      const input = document.getElementById('newStickerText');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const newSticker = {
+        id: 's_' + Date.now(),
+        text: text,
+        color: selectedColor,
+        cellId: null
+      };
+
+      appData.stickers.push(newSticker);
+      input.value = '';
+      saveUserData();
+      autoSaveTodaySnapshot();
+      renderStickers();
+    }
+
+    function deleteSticker(id) {
+      appData.stickers = appData.stickers.filter(s => s.id !== id);
+      appData.connections = appData.connections.filter(c => c.from !== id && c.to !== id);
+      saveUserData();
+      autoSaveTodaySnapshot();
+      renderStickers();
+      renderConnections();
+    }
+
+    // --- DRAG AND DROP HANDLERS ---
+    function handleDragOver(e) {
+      e.preventDefault();
+    }
+
+    function handleDropToCell(e) {
+      e.preventDefault();
+      const stickerId = e.dataTransfer.getData('text/plain');
+      const targetCell = e.currentTarget;
+
+      const sticker = appData.stickers.find(s => s.id === stickerId);
+      if (sticker) {
+        sticker.cellId = targetCell.id;
+        saveUserData();
+        autoSaveTodaySnapshot();
+        renderStickers();
+        renderConnections();
+      }
+    }
+
+    function handleDropToBank(e) {
+      e.preventDefault();
+      const stickerId = e.dataTransfer.getData('text/plain');
+
+      const sticker = appData.stickers.find(s => s.id === stickerId);
+      if (sticker) {
+        sticker.cellId = null;
+        saveUserData();
+        autoSaveTodaySnapshot();
+        renderStickers();
+        renderConnections();
+      }
+    }
+
+    // --- CONNECTING LINES (SVG) MODULE ---
+    function toggleConnectMode() {
+      isConnectMode = !isConnectMode;
+      const btn = document.getElementById('connectBtn');
+      btn.classList.toggle('active', isConnectMode);
+      btn.textContent = isConnectMode ? 'Click 2 Notes...' : 'Connect Notes';
+
+      if (!isConnectMode) {
+        connectSourceId = null;
+        renderStickers();
+      }
+    }
+
+    function handleConnectClick(stickerId) {
+      if (!connectSourceId) {
+        connectSourceId = stickerId;
+        renderStickers();
+      } else {
+        if (connectSourceId !== stickerId) {
+          const exists = appData.connections.some(
+            c => (c.from === connectSourceId && c.to === stickerId)
+          );
+          if (!exists) {
+            appData.connections.push({ from: connectSourceId, to: stickerId });
+            saveUserData();
+            autoSaveTodaySnapshot();
+          }
+        }
+        connectSourceId = null;
+        toggleConnectMode();
+        renderConnections();
+      }
+    }
+
+    function clearConnections() {
+      appData.connections = [];
+      saveUserData();
+      autoSaveTodaySnapshot();
+      renderConnections();
+    }
+
+    function renderConnections() {
+      const svg = document.getElementById('connectionsSvg');
+      const wrapper = document.getElementById('matrixWrapper');
+      if (!wrapper) return;
+      
+      const wrapperRect = wrapper.getBoundingClientRect();
+
+      const lines = svg.querySelectorAll('path');
+      lines.forEach(l => l.remove());
+
+      appData.connections.forEach(conn => {
+        const fromEl = document.getElementById(conn.from);
+        const toEl = document.getElementById(conn.to);
+
+        if (fromEl && toEl && fromEl.closest('.matrix-grid') && toEl.closest('.matrix-grid')) {
+          const fromRect = fromEl.getBoundingClientRect();
+          const toRect = toEl.getBoundingClientRect();
+
+          const x1 = (fromRect.left + fromRect.width / 2) - wrapperRect.left;
+          const y1 = (fromRect.top + fromRect.height / 2) - wrapperRect.top;
+          const x2 = (toRect.left + toRect.width / 2) - wrapperRect.left;
+          const y2 = (toRect.top + toRect.height / 2) - wrapperRect.top;
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          
+          const dx = x2 - x1;
+          const dy = y2 - y1;
+          const cx1 = x1 + dx / 2;
+          const cy1 = y1;
+          const cx2 = x1 + dx / 2;
+          const cy2 = y2;
+
+          path.setAttribute('d', `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`);
+          path.setAttribute('stroke', '#2b6cb0');
+          path.setAttribute('stroke-width', '2.5');
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke-dasharray', '4 2');
+          path.setAttribute('marker-end', 'url(#arrowhead)');
+
+          svg.appendChild(path);
+        }
+      });
+    }
+
+    // Helper
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+  </script>
+
+</body></html>
