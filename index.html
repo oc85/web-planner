@@ -156,7 +156,6 @@
       font-size: 1.15rem;
     }
 
-    /* Replaced Navigation Links with Section Tabs */
     .top-cabinet-nav {
       display: flex;
       gap: 8px;
@@ -201,14 +200,12 @@
       font-size: 0.8rem;
     }
 
-    /* Main Container Layout */
     .dashboard-container {
       display: flex;
       flex: 1;
       width: 100%;
     }
 
-    /* Main Workspace Area */
     main {
       flex: 1;
       padding: 15px 20px;
@@ -261,7 +258,6 @@
     .btn-email { background: #3182ce; color: white; }
     .btn-email:hover { background: #2b6cb0; }
 
-    /* Time Control Bar Component */
     .time-control-card {
       background: white;
       padding: 10px 16px;
@@ -332,7 +328,6 @@
       align-items: start;
     }
 
-    /* Goal Tracking Columns */
     .goals-column {
       display: flex;
       flex-direction: column;
@@ -428,9 +423,7 @@
       transition: all 0.2s ease;
     }
 
-    .goal-item:active {
-      cursor: grabbing;
-    }
+    .goal-item:active { cursor: grabbing; }
 
     .goal-item.dragging {
       opacity: 0.4;
@@ -438,7 +431,6 @@
       border-style: dashed;
     }
 
-    /* Overdue highlight (Orange Theme) */
     .goal-item.overdue {
       background-color: #fffaf0;
       border-color: #fbd38d;
@@ -528,7 +520,6 @@
       cursor: pointer;
     }
 
-    /* 5x5 Matrix Grid Section */
     .matrix-card {
       background: white;
       border-radius: 8px;
@@ -623,14 +614,12 @@
       transition: background 0.2s ease;
     }
 
-    /* Heatmap styling */
     .matrix-cell[data-row="5"] { background-color: #d1fae5; }
     .matrix-cell[data-row="4"] { background-color: #ecfdf5; }
     .matrix-cell[data-row="3"] { background-color: #fef3c7; }
     .matrix-cell[data-row="2"] { background-color: #ffedd5; }
     .matrix-cell[data-row="1"] { background-color: #fee2e2; }
 
-    /* SVG Canvas Overlay for Lines */
     .connections-svg {
       position: absolute;
       top: 0; left: 0;
@@ -639,14 +628,12 @@
       z-index: 10;
     }
 
-    /* Right Sidebar Wrapper */
     .right-sidebar-column {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    /* Sticky Notes Bank Section */
     .stickers-bank-card {
       background: white;
       border-radius: 8px;
@@ -708,7 +695,6 @@
       border-radius: 6px;
     }
 
-    /* Sticky Note UI Component */
     .sticky-note {
       width: 70px;
       height: 70px;
@@ -748,13 +734,11 @@
 
     .sticky-note:hover .delete-note { display: block; }
 
-    /* Colors */
     .bg-yellow { background-color: #fef08a; }
     .bg-blue   { background-color: #bae6fd; }
     .bg-green  { background-color: #bbf7d0; }
     .bg-pink   { background-color: #fbcfe8; }
 
-    /* PASTEL RICH TEXT NOTES & COMMENTS CONTAINER */
     .notes-editor-card {
       background: white;
       border-radius: 8px;
@@ -801,7 +785,6 @@
       border-color: var(--primary);
     }
 
-    /* Pastel Background Swatches for Editor */
     .bg-swatches {
       display: flex;
       align-items: center;
@@ -842,11 +825,8 @@
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
     }
 
-    .rich-notes-box:focus {
-      border-color: var(--primary);
-    }
+    .rich-notes-box:focus { border-color: var(--primary); }
 
-    /* Compact Analytics Styling */
     .analytics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -903,7 +883,6 @@
       width: 100%;
     }
 
-    /* ARCHIVE DUAL GRID SYSTEM */
     .archive-header-controls {
       background: white;
       padding: 10px 16px;
@@ -970,7 +949,6 @@
       gap: 6px;
     }
 
-    /* Color Highlighting State Classes for Buttons */
     .nav-grid-btn {
       padding: 8px 4px;
       font-size: 0.75rem;
@@ -1018,7 +996,6 @@
       opacity: 0.85;
     }
 
-    /* ARCHIVE CABINET 3-COLUMN LAYOUT */
     .archive-cabinet-workspace {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1078,7 +1055,6 @@
     .badge-done { background: #c6f6d5; color: #22543d; }
     .badge-pending { background: #fed7d7; color: #742a2a; }
 
-    /* Compact Priority Matrix Archive Strip */
     .archive-matrix-card {
       background: white;
       border-radius: 8px;
@@ -1145,19 +1121,10 @@
       background-color: var(--pastel-yellow);
     }
 
-    /* MOBILE AND TABLET RESPONSIVE MEDIA QUERIES */
     @media (max-width: 1024px) {
-      .grid-workspace {
-        grid-template-columns: 1fr;
-      }
-      
-      .dual-grid-container {
-        grid-template-columns: 1fr;
-      }
-
-      .archive-cabinet-workspace {
-        grid-template-columns: 1fr;
-      }
+      .grid-workspace { grid-template-columns: 1fr; }
+      .dual-grid-container { grid-template-columns: 1fr; }
+      .archive-cabinet-workspace { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -1166,76 +1133,25 @@
         flex-direction: column;
         align-items: stretch;
       }
-
-      .brand {
-        justify-content: center;
-      }
-
-      .top-cabinet-nav {
-        justify-content: center;
-        width: 100%;
-      }
-
-      .cabinet-tab-btn {
-        flex: 1;
-        justify-content: center;
-        font-size: 0.78rem;
-        padding: 8px 6px;
-      }
-
+      .brand { justify-content: center; }
+      .top-cabinet-nav { justify-content: center; width: 100%; }
+      .cabinet-tab-btn { flex: 1; justify-content: center; font-size: 0.78rem; padding: 8px 6px; }
       .user-profile {
         justify-content: space-between;
         width: 100%;
         border-top: 1px solid rgba(255,255,255,0.1);
         padding-top: 6px;
       }
-
-      main {
-        padding: 10px;
-      }
-
-      .header-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .welcome-header {
-        text-align: center;
-        font-size: 1.15rem;
-      }
-
-      .action-toolbar {
-        justify-content: space-between;
-      }
-
-      .btn-action {
-        flex: 1;
-        justify-content: center;
-        padding: 8px 4px;
-        font-size: 0.75rem;
-      }
-
-      .months-grid-menu {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .weeks-grid-menu {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .matrix-grid {
-        grid-template-rows: repeat(5, 65px);
-      }
-
-      .matrix-cell {
-        font-size: 0.65rem;
-      }
-
-      .sticky-note {
-        width: 60px;
-        height: 60px;
-        font-size: 0.65rem;
-      }
+      main { padding: 10px; }
+      .header-bar { flex-direction: column; align-items: stretch; }
+      .welcome-header { text-align: center; font-size: 1.15rem; }
+      .action-toolbar { justify-content: space-between; }
+      .btn-action { flex: 1; justify-content: center; padding: 8px 4px; font-size: 0.75rem; }
+      .months-grid-menu { grid-template-columns: repeat(3, 1fr); }
+      .weeks-grid-menu { grid-template-columns: repeat(2, 1fr); }
+      .matrix-grid { grid-template-rows: repeat(5, 65px); }
+      .matrix-cell { font-size: 0.65rem; }
+      .sticky-note { width: 60px; height: 60px; font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -1268,7 +1184,7 @@
       Mindful Planner
     </div>
 
-    <!-- Cabinet Section Navigation Buttons Moved to Top -->
+    <!-- Cabinet Section Navigation Buttons -->
     <nav class="top-cabinet-nav">
       <button class="cabinet-tab-btn active" onclick="switchTab('dashboard', this)">
         📊 Personal Cabinet
@@ -1289,17 +1205,15 @@
 
   <!-- DASHBOARD BODY -->
   <div class="dashboard-container">
-    <!-- Main Workspace -->
     <main>
       <div class="header-bar">
         <h1 class="welcome-header" id="welcomeHeading">Welcome to Your Cabinet!</h1>
         
-        <!-- Action Toolbar -->
         <div class="action-toolbar">
-          <button class="btn-action btn-save" id="manualSaveBtn" onclick="manualSave()" title="Save all changes manually (Autosave is also active)">
+          <button class="btn-action btn-save" id="manualSaveBtn" onclick="manualSave()" title="Save all changes manually (Autosave is active)">
             💾 Save
           </button>
-          <button class="btn-action btn-excel" onclick="exportToExcel()" title="Export goals &amp; matrix to Excel">
+          <button class="btn-action btn-excel" onclick="exportToExcel()" title="Export goals & matrix to Excel">
             📊 Excel
           </button>
           <button class="btn-action btn-email" onclick="sendEmailReport()" title="Send summary report via Email">
@@ -1308,7 +1222,7 @@
         </div>
       </div>
 
-      <!-- Time Realization & Month Control Card -->
+      <!-- Time Realization Bar -->
       <div class="time-control-card">
         <div class="time-info">
           <div class="current-date-badge" id="currentMonthYear">📅 Month &amp; Year</div>
@@ -1327,7 +1241,6 @@
       <div id="dashboardView" class="view-panel active-panel">
         <div class="grid-workspace">
           
-          <!-- Goal Checklists -->
           <div class="goals-column">
             <!-- Weekly Goals -->
             <div class="goal-card">
@@ -1336,7 +1249,7 @@
                   Weekly Goals
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(-1)" title="Previous week">◀</button>
-                    <span id="weeklyCardLabel">Week 1 (10 Aug - 16 Aug)</span>
+                    <span id="weeklyCardLabel">Week 1</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(1)" title="Next week">▶</button>
                   </span>
                 </h3>
@@ -1396,7 +1309,7 @@
             </div>
           </div>
 
-          <!-- Center: 5x5 Matrix -->
+          <!-- 5x5 Priority Matrix -->
           <div class="matrix-card">
             <div class="matrix-title-bar">
               <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
@@ -1409,7 +1322,6 @@
             <div class="matrix-container-wrapper">
               <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
               <div class="matrix-wrapper" id="matrixWrapper">
-                <!-- SVG Canvas overlay for note connection lines -->
                 <svg class="connections-svg" id="connectionsSvg">
                   <defs>
                     <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -1417,17 +1329,15 @@
                     </marker>
                   </defs>
                 </svg>
-
-                <!-- 5x5 Grid Cells -->
                 <div class="matrix-grid" id="matrixGrid"></div>
               </div>
               <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
             </div>
           </div>
 
-          <!-- Right Sidebar Stack: Sticker Bank + Rich Text Notes -->
+          <!-- Right Sidebar Stack -->
           <div class="right-sidebar-column">
-            <!-- Sticker Bank -->
+            <!-- Stickers -->
             <div class="stickers-bank-card">
               <h3>Sticky Notes</h3>
               <div class="sticker-creator">
@@ -1446,7 +1356,7 @@
               <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
             </div>
 
-            <!-- Rich Text Notes & Comments Container with Pastel Picker -->
+            <!-- Notes Editor -->
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments</h3>
               <div class="editor-toolbar">
@@ -1456,7 +1366,6 @@
                 <button type="button" class="editor-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">• List</button>
                 <button type="button" class="editor-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">1. List</button>
                 
-                <!-- Pastel Color Swatches for Container Background -->
                 <div class="bg-swatches">
                   <span class="bg-swatch-title">Bg:</span>
                   <div class="bg-swatch selected" style="background-color: var(--pastel-yellow);" onclick="setPastelBg('var(--pastel-yellow)', this)" title="Pastel Yellow"></div>
@@ -1474,9 +1383,8 @@
         </div>
       </div>
 
-      <!-- ARCHIVE VIEW PANEL WITH 3-COLUMN CABINET LAYOUT -->
+      <!-- ARCHIVE VIEW PANEL -->
       <div id="archiveView" class="view-panel">
-        <!-- Year Select Combobox Header -->
         <div class="archive-header-controls">
           <div class="archive-year-picker">
             <label for="archiveYearSelect">🗓 Archive Year:</label>
@@ -1489,65 +1397,51 @@
           </div>
         </div>
 
-        <!-- Side-by-Side Navigation Grid Menu (Months Left, Weeks Right) -->
         <div class="dual-grid-container">
-          <!-- Left: Month Grid Menu -->
           <div class="grid-menu-card">
             <h3>1. Select Month</h3>
             <div class="months-grid-menu" id="archiveMonthGridMenu"></div>
           </div>
-
-          <!-- Right: Week Grid Menu -->
           <div class="grid-menu-card">
             <h3>2. Select Week</h3>
             <div class="weeks-grid-menu" id="archiveWeekGridMenu"></div>
           </div>
         </div>
 
-        <!-- Date Snapshot Title -->
         <div style="font-weight: bold; font-size: 0.95rem; color: var(--primary-dark);" id="archiveSelectedDateTitle">
-          Archive Cabinet Snapshot: August 2026 - Week 2
+          Archive Cabinet Snapshot
         </div>
 
-        <!-- 3-Column Cabinet Workspace (Weekly, Monthly, Yearly) -->
         <div class="archive-cabinet-workspace">
-          <!-- Weekly Column -->
           <div class="archive-goal-card">
             <h3>Weekly Goals</h3>
             <ul class="archive-goal-list" id="archiveWeeklyList"></ul>
           </div>
-
-          <!-- Monthly Column -->
           <div class="archive-goal-card">
             <h3>Monthly Goals</h3>
             <ul class="archive-goal-list" id="archiveMonthlyList"></ul>
           </div>
-
-          <!-- Yearly Column -->
           <div class="archive-goal-card">
             <h3>Yearly Goals</h3>
             <ul class="archive-goal-list" id="archiveYearlyList"></ul>
           </div>
         </div>
 
-        <!-- Priority Matrix Horizontal Strip -->
         <div class="archive-matrix-card">
           <h3>Priority Matrix Snapshot</h3>
           <div class="archive-matrix-pills" id="archiveMatrixPills"></div>
         </div>
 
-        <!-- Notes & Comments Archive Section -->
         <div class="archive-notes-card">
           <h3>Notes &amp; Comments Snapshot</h3>
           <div class="archive-notes-content" id="archiveNotesContent"></div>
         </div>
       </div>
 
-      <!-- COMPACT ANALYTICS VIEW PANEL -->
+      <!-- ANALYTICS VIEW PANEL -->
       <div id="analyticsView" class="view-panel">
         <h2 style="color: var(--primary-dark); font-size: 1.2rem;">Task &amp; Productivity Analytics</h2>
         
-        <!-- Key Metrics Row -->
         <div class="analytics-grid">
           <div class="metric-card">
             <h3>Active Goals</h3>
@@ -1567,7 +1461,6 @@
           </div>
         </div>
 
-        <!-- Compact Charts Row -->
         <div class="charts-row">
           <div class="chart-card">
             <h3>Active Goals by Category</h3>
@@ -1588,7 +1481,7 @@
   </div>
 
   <script>
-    // --- SAFE STORAGE WRAPPER FOR SANDBOXED IFRAMES ---
+    // Safe storage wrapper
     const safeStorage = (() => {
       const memory = {};
       try {
@@ -1606,19 +1499,17 @@
       }
     })();
 
-    // Global State
+    // State Variables
     let currentUser = null;
     let isSignUpMode = false;
     let selectedColor = 'bg-yellow';
     let isConnectMode = false;
     let connectSourceId = null;
 
-    // Drag and Drop state for Task Movement
     let draggedGoalType = null;
     let draggedGoalId = null;
 
     const DAY_MS = 24 * 60 * 60 * 1000;
-    const NOW = Date.now();
 
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -1638,16 +1529,16 @@
       userNotesBg: "var(--pastel-yellow)",
       goals: {
         weekly: [
-          { id: 1, text: "Run 10k", done: true, dateCreated: new Date(NOW - 10 * DAY_MS).toISOString().split('T')[0] },
-          { id: 2, text: "Meal prep", done: false, dateCreated: new Date(NOW - 2 * DAY_MS).toISOString().split('T')[0] }
+          { id: 1, text: "Run 10k", done: true, dateCreated: formatDateISO(getMonday(new Date())) },
+          { id: 2, text: "Meal prep", done: false, dateCreated: formatDateISO(getMonday(new Date())) }
         ],
         monthly: [
-          { id: 3, text: "Read 3 books", done: true, dateCreated: new Date(NOW - 45 * DAY_MS).toISOString().split('T')[0] },
-          { id: 4, text: "Finish project", done: false, dateCreated: new Date(NOW - 5 * DAY_MS).toISOString().split('T')[0] }
+          { id: 3, text: "Read 3 books", done: true, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) },
+          { id: 4, text: "Finish project", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) }
         ],
         yearly: [
-          { id: 5, text: "Save $5000", done: false, dateCreated: new Date(NOW - 400 * DAY_MS).toISOString().split('T')[0] },
-          { id: 6, text: "Travel to Italy", done: false, dateCreated: new Date(NOW - 30 * DAY_MS).toISOString().split('T')[0] }
+          { id: 5, text: "Save $5000", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) },
+          { id: 6, text: "Travel to Italy", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) }
         ]
       },
       stickers: [
@@ -1663,20 +1554,7 @@
         { from: "s4", to: "s5" },
         { from: "s5", to: "s6" }
       ],
-      archiveSnapshots: {
-        "2026-08-W2": {
-          goals: {
-            weekly: [{ id: 1, text: "Run 10k", done: true }, { id: 2, text: "Meal prep", done: false }],
-            monthly: [{ id: 3, text: "Read 3 books", done: true }, { id: 4, text: "Finish project", done: false }],
-            yearly: [{ id: 5, text: "Save $5000", done: false }]
-          },
-          stickers: [
-            { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" }
-          ],
-          userNotes: "<b>Team sync</b> on Monday. Review Q3 project deliverables.",
-          userNotesBg: "var(--pastel-yellow)"
-        }
-      }
+      archiveSnapshots: {}
     };
 
     let categoryChartInstance = null;
@@ -1696,7 +1574,20 @@
       window.addEventListener('resize', renderConnections);
     });
 
-    // --- MANUAL SAVE HANDLER ---
+    function formatDateISO(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const d = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function parseDateISO(isoStr) {
+      if (!isoStr) return new Date();
+      const parts = isoStr.split('-');
+      return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    }
+
+    // Manual Save Button
     function manualSave() {
       saveUserData();
       autoSaveTodaySnapshot();
@@ -1713,7 +1604,7 @@
       }
     }
 
-    // --- AUTHENTICATION MODE TAB TOGGLE ---
+    // Auth Switcher
     function setAuthMode(signUp) {
       isSignUpMode = signUp;
       const loginTab = document.getElementById('loginTabBtn');
@@ -1734,7 +1625,7 @@
       }
     }
 
-    // --- RICH TEXT EDITOR FUNCTIONS ---
+    // Rich Text Commands
     function execCmd(command) {
       document.execCommand(command, false, null);
     }
@@ -1775,7 +1666,7 @@
       }
     }
 
-    // --- HELPER DATE & DEADLINE UTILITIES ---
+    // Dates & Periods
     function getMonday(d) {
       const date = new Date(d);
       const day = date.getDay();
@@ -1790,7 +1681,6 @@
     function getWeekRangeLabel(mondayDate) {
       const sunday = new Date(mondayDate);
       sunday.setDate(mondayDate.getDate() + 6);
-      
       const weekNum = Math.ceil(mondayDate.getDate() / 7);
       return `Week ${weekNum} (${formatShortDate(mondayDate)} - ${formatShortDate(sunday)})`;
     }
@@ -1802,45 +1692,38 @@
       return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
     }
 
-    function getSelectedPeriodRange(type) {
+    // PERIOD DELTA CALCULATOR
+    // Created period evaluates to (0), incrementing by +1 for each subsequent period
+    function calculatePeriodDelta(type, goalDateCreated) {
+      if (!goalDateCreated) return 0;
+      const created = parseDateISO(goalDateCreated);
+
       if (type === 'weekly') {
-        const start = new Date(preplanWeekDate);
-        start.setHours(0,0,0,0);
-        const end = new Date(start);
-        end.setDate(end.getDate() + 7);
-        return { start, end };
-      } else if (type === 'monthly') {
-        const start = new Date(preplanMonthYear, preplanMonthIdx, 1, 0, 0, 0, 0);
-        const end = new Date(preplanMonthYear, preplanMonthIdx + 1, 1, 0, 0, 0, 0);
-        return { start, end };
-      } else if (type === 'yearly') {
-        const start = new Date(preplanYear, 0, 1, 0, 0, 0, 0);
-        const end = new Date(preplanYear + 1, 0, 1, 0, 0, 0, 0);
-        return { start, end };
+        const viewedMonday = new Date(preplanWeekDate);
+        viewedMonday.setHours(0,0,0,0);
+        
+        const createdMonday = getMonday(created);
+        createdMonday.setHours(0,0,0,0);
+
+        const diffTime = viewedMonday.getTime() - createdMonday.getTime();
+        return Math.round(diffTime / (7 * DAY_MS));
+      } 
+      else if (type === 'monthly') {
+        const viewedYear = preplanMonthYear;
+        const viewedMonth = preplanMonthIdx;
+        const createdYear = created.getFullYear();
+        const createdMonth = created.getMonth();
+
+        return (viewedYear - createdYear) * 12 + (viewedMonth - createdMonth);
+      } 
+      else if (type === 'yearly') {
+        const viewedYear = preplanYear;
+        const createdYear = created.getFullYear();
+        return viewedYear - createdYear;
       }
+      return 0;
     }
 
-    function getPassedPeriodsForView(type, dateCreated) {
-      if (!dateCreated) return 0;
-      const createdTime = new Date(dateCreated).getTime();
-      if (isNaN(createdTime)) return 0;
-
-      const { start: periodStart } = getSelectedPeriodRange(type);
-
-      if (createdTime >= periodStart.getTime()) {
-        return 0;
-      }
-
-      const elapsed = periodStart.getTime() - createdTime;
-
-      let periodMs = 7 * DAY_MS;
-      if (type === 'monthly') periodMs = 30 * DAY_MS;
-      if (type === 'yearly') periodMs = 365 * DAY_MS;
-
-      return Math.max(1, Math.floor(elapsed / periodMs) + 1);
-    }
-
-    // --- PRE-PLANNING NAVIGATION LOGIC ---
     function navigatePreplanWeek(offset) {
       preplanWeekDate.setDate(preplanWeekDate.getDate() + (offset * 7));
       renderGoals();
@@ -1867,7 +1750,6 @@
       return `${fullMonthNames[preplanMonthIdx]} ${preplanMonthYear}`;
     }
 
-    // --- AUTOMATIC SNAPSHOT & MONTH LIFECYCLE ---
     function autoSaveTodaySnapshot() {
       const now = new Date();
       const weekNum = Math.ceil(now.getDate() / 7);
@@ -1904,7 +1786,6 @@
       }
     }
 
-    // --- TIME REALIZATION BAR MODULE ---
     function updateTimeControlBar() {
       const now = new Date();
       const year = now.getFullYear();
@@ -1923,7 +1804,6 @@
       document.getElementById('monthSubtextRight').textContent = `${percentPassed}% of ${currentMonthName} elapsed`;
     }
 
-    // --- TAB SWITCHING FOR TOP CABINET NAVIGATION ---
     function switchTab(tabName, element) {
       document.querySelectorAll('.cabinet-tab-btn').forEach(btn => btn.classList.remove('active'));
       if (element) element.classList.add('active');
@@ -1942,7 +1822,6 @@
       }
     }
 
-    // --- AUTHENTICATION MODULE ---
     function checkAuthSession() {
       const activeUser = safeStorage.getItem('planner_active_user');
       if (activeUser) {
@@ -2003,7 +1882,6 @@
       location.reload();
     });
 
-    // --- DATA STORAGE MODULE ---
     function loadUserData() {
       const saved = safeStorage.getItem(`planner_data_${currentUser}`);
       if (saved) {
@@ -2018,7 +1896,6 @@
       }
     }
 
-    // --- RENDERERS ---
     function renderAll() {
       renderGoals();
       renderStickers();
@@ -2041,20 +1918,17 @@
         listEl.innerHTML = '';
 
         let allGoals = appData.goals[type] || [];
-        const { end: periodEnd } = getSelectedPeriodRange(type);
 
-        let visibleGoals = allGoals.filter(g => {
-          if (!g.dateCreated) return true;
-          return new Date(g.dateCreated).getTime() < periodEnd.getTime();
-        });
+        // Visible goals: created on or prior to current navigated view
+        let visibleGoals = allGoals.filter(g => calculatePeriodDelta(type, g.dateCreated) >= 0);
 
         let completedCount = 0;
 
         visibleGoals.forEach((goal) => {
           if (goal.done) completedCount++;
 
-          const passedPeriods = getPassedPeriodsForView(type, goal.dateCreated);
-          const isOverdue = passedPeriods > 0 && !goal.done;
+          const deltaIndex = calculatePeriodDelta(type, goal.dateCreated);
+          const isOverdue = deltaIndex > 0 && !goal.done;
 
           const li = document.createElement('li');
           li.className = `goal-item ${goal.done ? 'done' : ''} ${isOverdue ? 'overdue' : ''}`;
@@ -2101,7 +1975,7 @@
             <div class="goal-item-left">
               <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
               <input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleGoal('${type}', ${goal.id})">
-              <span class="goal-num-badge">(${passedPeriods})</span>
+              <span class="goal-num-badge">(${deltaIndex})</span>
               <span class="goal-text">${escapeHtml(goal.text)}</span>
             </div>
             <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})" title="Delete goal">🗑️</button>
@@ -2149,14 +2023,24 @@
       renderGoals();
     }
 
+    // ADD GOAL FORM SUBMISSION
+    // Stamped with active view date so index initializes at (0)
     function addGoal(event, type) {
       event.preventDefault();
       const input = event.target.querySelector('input');
       const text = input.value.trim();
       if (!text) return;
 
-      const { start: periodStart } = getSelectedPeriodRange(type);
-      const createdDateStr = periodStart.toISOString().split('T')[0];
+      let createdDateObj;
+      if (type === 'weekly') {
+        createdDateObj = getMonday(preplanWeekDate);
+      } else if (type === 'monthly') {
+        createdDateObj = new Date(preplanMonthYear, preplanMonthIdx, 1);
+      } else if (type === 'yearly') {
+        createdDateObj = new Date(preplanYear, 0, 1);
+      }
+
+      const createdDateStr = formatDateISO(createdDateObj);
 
       const newGoal = {
         id: Date.now(),
@@ -2168,11 +2052,12 @@
       appData.goals[type].push(newGoal);
 
       input.value = '';
+      saveUserData();
       autoSaveTodaySnapshot();
       renderGoals();
     }
 
-    // --- DUAL-GRID ARCHIVE NAVIGATION & 3-COLUMN CABINET ---
+    // Archive Navigation
     function initYearCombobox() {
       const select = document.getElementById('archiveYearSelect');
       select.innerHTML = '';
@@ -2358,7 +2243,7 @@
       }
     }
 
-    // --- ANALYTICS RENDERER ---
+    // Analytics
     function renderAnalytics() {
       const activeWeekly = appData.goals.weekly.length;
       const activeMonthly = appData.goals.monthly.length;
@@ -2424,10 +2309,9 @@
       });
     }
 
-    // --- EXCEL EXPORT FUNCTIONALITY ---
+    // Excel Export
     function exportToExcel() {
       const workbook = XLSX.utils.book_new();
-
       const goalsRows = [];
       const currentMonthYear = `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
 
@@ -2437,7 +2321,7 @@
             Category: type.toUpperCase(),
             "Goal Title": g.text,
             Status: g.done ? 'Completed' : 'Pending',
-            "Periods Passed": getPassedPeriodsForView(type, g.dateCreated),
+            "Periods Passed": calculatePeriodDelta(type, g.dateCreated),
             "Period Tag": g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
           });
         });
@@ -2471,7 +2355,7 @@
       XLSX.writeFile(workbook, `Mindful_Planner_${currentUser}_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
-    // --- EMAIL REPORT FUNCTIONALITY ---
+    // Email Report
     function sendEmailReport() {
       const now = new Date();
       const monthYearStr = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
@@ -2484,7 +2368,7 @@
         const list = appData.goals[type] || [];
         if (list.length === 0) body += `(No active goals)\n`;
         list.forEach(g => {
-          body += `- [${g.done ? 'X' : ' '}] (${getPassedPeriodsForView(type, g.dateCreated)}) ${g.text}\n`;
+          body += `- [${g.done ? 'X' : ' '}] (${calculatePeriodDelta(type, g.dateCreated)}) ${g.text}\n`;
         });
       });
 
@@ -2504,7 +2388,7 @@
       window.location.href = mailtoUrl;
     }
 
-    // --- 5x5 MATRIX & STICKY NOTES MODULE ---
+    // Grid Construction
     function buildMatrixGrid() {
       const grid = document.getElementById('matrixGrid');
       grid.innerHTML = '';
@@ -2605,7 +2489,6 @@
       renderConnections();
     }
 
-    // --- DRAG AND DROP HANDLERS ---
     function handleDragOver(e) {
       e.preventDefault();
     }
@@ -2639,7 +2522,6 @@
       }
     }
 
-    // --- CONNECTING LINES (SVG) MODULE ---
     function toggleConnectMode() {
       isConnectMode = !isConnectMode;
       const btn = document.getElementById('connectBtn');
@@ -2724,7 +2606,6 @@
       });
     }
 
-    // Helper
     function escapeHtml(str) {
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
