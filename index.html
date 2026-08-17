@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mindful Planner | Personal Cabinet</title>
   
@@ -390,6 +390,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-height: 25px;
     }
 
     .goal-item {
@@ -398,24 +399,71 @@
       justify-content: space-between;
       gap: 8px;
       font-size: 0.85rem;
-      padding: 2px 0;
+      padding: 5px 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .goal-item:active {
+      cursor: grabbing;
+    }
+
+    .goal-item.dragging {
+      opacity: 0.4;
+      background: #edf2f7;
+      border-style: dashed;
+    }
+
+    /* Overdue highlight (Orange Theme) */
+    .goal-item.overdue {
+      background-color: #fffaf0;
+      border-color: #fbd38d;
+    }
+
+    .goal-item.overdue .goal-text {
+      color: #c05621;
+      font-weight: 600;
+    }
+
+    .drag-handle {
+      color: #a0aec0;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: grab;
+      padding-right: 2px;
+    }
+
+    .goal-num-badge {
+      font-size: 0.72rem;
+      font-weight: bold;
+      color: #718096;
+      white-space: nowrap;
+    }
+
+    .goal-item.overdue .goal-num-badge {
+      color: #dd6b20;
     }
 
     .goal-item-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex: 1;
       overflow: hidden;
     }
 
-    .goal-item-left span {
+    .goal-text {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
     }
 
-    .goal-item.done .goal-item-left span {
+    .goal-item.done .goal-text {
       text-decoration: line-through;
       color: var(--text-muted);
     }
@@ -1099,10 +1147,10 @@
       Mindful Planner
     </div>
     <nav class="nav-links">
-      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#" class="active">My Dashboard</a>
-      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Weekly</a>
-      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Monthly</a>
-      <a href="file:///C:/Users/olga/Downloads/Telegram%20Desktop/goals.html#">Yearly</a>
+      <a href="#" class="active">My Dashboard</a>
+      <a href="#">Weekly</a>
+      <a href="#">Monthly</a>
+      <a href="#">Yearly</a>
     </nav>
     <div class="user-profile">
       <span id="userDisplayName">Alice</span>
@@ -1115,13 +1163,13 @@
     <!-- Left Navigation Bar -->
     <aside>
       <ul class="side-menu">
-        <li class="active" onclick="switchTab(&#39;dashboard&#39;, this)">
+        <li class="active" onclick="switchTab('dashboard', this)">
           📊 Personal Cabinet
         </li>
-        <li onclick="switchTab(&#39;archive&#39;, this)">
+        <li onclick="switchTab('archive', this)">
           📁 Archive Data
         </li>
-        <li onclick="switchTab(&#39;analytics&#39;, this)">
+        <li onclick="switchTab('analytics', this)">
           📈 Task Analytics
         </li>
       </ul>
@@ -1179,8 +1227,8 @@
                   <div class="progress-bar-fill" id="weeklyProgress"></div>
                 </div>
               </div>
-              <ul class="goal-list" id="weeklyGoalList"></ul>
-              <form class="add-goal-form" onsubmit="addGoal(event, &#39;weekly&#39;)">
+              <ul class="goal-list" id="weeklyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'weekly')"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, 'weekly')">
                 <input type="text" placeholder="New weekly goal..." required="">
                 <button type="submit">+</button>
               </form>
@@ -1201,8 +1249,8 @@
                   <div class="progress-bar-fill" id="monthlyProgress"></div>
                 </div>
               </div>
-              <ul class="goal-list" id="monthlyGoalList"></ul>
-              <form class="add-goal-form" onsubmit="addGoal(event, &#39;monthly&#39;)">
+              <ul class="goal-list" id="monthlyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'monthly')"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, 'monthly')">
                 <input type="text" placeholder="New monthly goal..." required="">
                 <button type="submit">+</button>
               </form>
@@ -1223,8 +1271,8 @@
                   <div class="progress-bar-fill" id="yearlyProgress"></div>
                 </div>
               </div>
-              <ul class="goal-list" id="yearlyGoalList"></ul>
-              <form class="add-goal-form" onsubmit="addGoal(event, &#39;yearly&#39;)">
+              <ul class="goal-list" id="yearlyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'yearly')"></ul>
+              <form class="add-goal-form" onsubmit="addGoal(event, 'yearly')">
                 <input type="text" placeholder="New yearly goal..." required="">
                 <button type="submit">+</button>
               </form>
@@ -1254,7 +1302,7 @@
                 </svg>
 
                 <!-- 5x5 Grid Cells -->
-                <div class="matrix-grid" id="matrixGrid"><div class="matrix-cell" data-row="5" data-col="1" id="cell-5-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="2" id="cell-5-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="3" id="cell-5-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="4" id="cell-5-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="5" data-col="5" id="cell-5-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="1" id="cell-4-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="2" id="cell-4-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="3" id="cell-4-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="4" id="cell-4-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="4" data-col="5" id="cell-4-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="1" id="cell-3-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="2" id="cell-3-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="3" id="cell-3-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="4" id="cell-3-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="3" data-col="5" id="cell-3-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="1" id="cell-2-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="2" id="cell-2-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="3" id="cell-2-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="4" id="cell-2-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="2" data-col="5" id="cell-2-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="1" id="cell-1-1" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="2" id="cell-1-2" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="3" id="cell-1-3" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="4" id="cell-1-4" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div><div class="matrix-cell" data-row="1" data-col="5" id="cell-1-5" ondragover="handleDragOver(event)" ondrop="handleDropToCell(event)"></div></div>
+                <div class="matrix-grid" id="matrixGrid"></div>
               </div>
               <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
             </div>
@@ -1285,21 +1333,21 @@
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments</h3>
               <div class="editor-toolbar">
-                <button type="button" class="editor-btn" onclick="execCmd(&#39;bold&#39;)" title="Bold"><b>B</b></button>
-                <button type="button" class="editor-btn" onclick="execCmd(&#39;italic&#39;)" title="Italic"><i>I</i></button>
-                <button type="button" class="editor-btn" onclick="execCmd(&#39;underline&#39;)" title="Underline"><u>U</u></button>
-                <button type="button" class="editor-btn" onclick="execCmd(&#39;insertUnorderedList&#39;)" title="Bullet List">• List</button>
-                <button type="button" class="editor-btn" onclick="execCmd(&#39;insertOrderedList&#39;)" title="Numbered List">1. List</button>
+                <button type="button" class="editor-btn" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
+                <button type="button" class="editor-btn" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
+                <button type="button" class="editor-btn" onclick="execCmd('underline')" title="Underline"><u>U</u></button>
+                <button type="button" class="editor-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">• List</button>
+                <button type="button" class="editor-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">1. List</button>
                 
                 <!-- Pastel Color Swatches for Container Background -->
                 <div class="bg-swatches">
                   <span class="bg-swatch-title">Bg:</span>
-                  <div class="bg-swatch selected" style="background-color: var(--pastel-yellow);" onclick="setPastelBg(&#39;var(--pastel-yellow)&#39;, this)" title="Pastel Yellow"></div>
-                  <div class="bg-swatch" style="background-color: var(--pastel-blue);" onclick="setPastelBg(&#39;var(--pastel-blue)&#39;, this)" title="Pastel Blue"></div>
-                  <div class="bg-swatch" style="background-color: var(--pastel-green);" onclick="setPastelBg(&#39;var(--pastel-green)&#39;, this)" title="Pastel Green"></div>
-                  <div class="bg-swatch" style="background-color: var(--pastel-pink);" onclick="setPastelBg(&#39;var(--pastel-pink)&#39;, this)" title="Pastel Pink"></div>
-                  <div class="bg-swatch" style="background-color: var(--pastel-purple);" onclick="setPastelBg(&#39;var(--pastel-purple)&#39;, this)" title="Pastel Purple"></div>
-                  <div class="bg-swatch" style="background-color: var(--pastel-white);" onclick="setPastelBg(&#39;var(--pastel-white)&#39;, this)" title="White"></div>
+                  <div class="bg-swatch selected" style="background-color: var(--pastel-yellow);" onclick="setPastelBg('var(--pastel-yellow)', this)" title="Pastel Yellow"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-blue);" onclick="setPastelBg('var(--pastel-blue)', this)" title="Pastel Blue"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-green);" onclick="setPastelBg('var(--pastel-green)', this)" title="Pastel Green"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-pink);" onclick="setPastelBg('var(--pastel-pink)', this)" title="Pastel Pink"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-purple);" onclick="setPastelBg('var(--pastel-purple)', this)" title="Pastel Purple"></div>
+                  <div class="bg-swatch" style="background-color: var(--pastel-white);" onclick="setPastelBg('var(--pastel-white)', this)" title="White"></div>
                 </div>
               </div>
               <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
@@ -1315,7 +1363,7 @@
         <div class="archive-header-controls">
           <div class="archive-year-picker">
             <label for="archiveYearSelect">🗓 Archive Year:</label>
-            <select id="archiveYearSelect" onchange="onArchiveYearChange()"><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option></select>
+            <select id="archiveYearSelect" onchange="onArchiveYearChange()"></select>
           </div>
           <div style="font-size: 0.8rem; color: var(--text-muted);">
             <span style="color: var(--accent-green); font-weight: bold;">■ Completed</span> | 
@@ -1423,7 +1471,7 @@
   </div>
 
   <script>
-    // --- SAFE STORAGE WRAPPER FOR SANDBOXED IFRAMES (SharePoint / Office 365) ---
+    // --- SAFE STORAGE WRAPPER FOR SANDBOXED IFRAMES ---
     const safeStorage = (() => {
       const memory = {};
       try {
@@ -1448,6 +1496,13 @@
     let isConnectMode = false;
     let connectSourceId = null;
 
+    // Drag and Drop state for Task Movement
+    let draggedGoalType = null;
+    let draggedGoalId = null;
+
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    const NOW = Date.now();
+
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -1466,16 +1521,16 @@
       userNotesBg: "var(--pastel-yellow)",
       goals: {
         weekly: [
-          { id: 1, text: "Run 10k", done: true, dateCreated: "2026-08-13", weekTag: "" },
-          { id: 2, text: "Meal prep", done: false, dateCreated: "2026-08-13", weekTag: "" }
+          { id: 1, text: "Run 10k", done: true, dateCreated: new Date(NOW - 10 * DAY_MS).toISOString().split('T')[0] },
+          { id: 2, text: "Meal prep", done: false, dateCreated: new Date(NOW - 2 * DAY_MS).toISOString().split('T')[0] }
         ],
         monthly: [
-          { id: 3, text: "Read 3 books", done: true, dateCreated: "2026-08-13", monthYearTag: "August 2026" },
-          { id: 4, text: "Finish project", done: false, dateCreated: "2026-08-13", monthYearTag: "August 2026" }
+          { id: 3, text: "Read 3 books", done: true, dateCreated: new Date(NOW - 45 * DAY_MS).toISOString().split('T')[0] },
+          { id: 4, text: "Finish project", done: false, dateCreated: new Date(NOW - 5 * DAY_MS).toISOString().split('T')[0] }
         ],
         yearly: [
-          { id: 5, text: "Save $5000", done: false, dateCreated: "2026-08-13", yearTag: 2026 },
-          { id: 6, text: "Travel to Italy", done: false, dateCreated: "2026-08-13", yearTag: 2026 }
+          { id: 5, text: "Save $5000", done: false, dateCreated: new Date(NOW - 400 * DAY_MS).toISOString().split('T')[0] },
+          { id: 6, text: "Travel to Italy", done: false, dateCreated: new Date(NOW - 30 * DAY_MS).toISOString().split('T')[0] }
         ]
       },
       stickers: [
@@ -1567,7 +1622,7 @@
       }
     }
 
-    // --- HELPER DATE UTILITIES ---
+    // --- HELPER DATE & DEADLINE UTILITIES ---
     function getMonday(d) {
       const date = new Date(d);
       const day = date.getDay();
@@ -1592,6 +1647,46 @@
       const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
       const endDay = Math.min(startDay + 6, daysInMonth);
       return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
+    }
+
+    // Helper to calculate start/end boundary dates for a selected period view
+    function getSelectedPeriodRange(type) {
+      if (type === 'weekly') {
+        const start = new Date(preplanWeekDate);
+        start.setHours(0,0,0,0);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 7);
+        return { start, end };
+      } else if (type === 'monthly') {
+        const start = new Date(preplanMonthYear, preplanMonthIdx, 1, 0, 0, 0, 0);
+        const end = new Date(preplanMonthYear, preplanMonthIdx + 1, 1, 0, 0, 0, 0);
+        return { start, end };
+      } else if (type === 'yearly') {
+        const start = new Date(preplanYear, 0, 1, 0, 0, 0, 0);
+        const end = new Date(preplanYear + 1, 0, 1, 0, 0, 0, 0);
+        return { start, end };
+      }
+    }
+
+    // Calculate passed periods dynamically relative to the currently viewed navigation date
+    function getPassedPeriodsForView(type, dateCreated) {
+      if (!dateCreated) return 0;
+      const createdTime = new Date(dateCreated).getTime();
+      if (isNaN(createdTime)) return 0;
+
+      const { start: periodStart } = getSelectedPeriodRange(type);
+
+      if (createdTime >= periodStart.getTime()) {
+        return 0; // Created within or after this viewed period
+      }
+
+      const elapsed = periodStart.getTime() - createdTime;
+
+      let periodMs = 7 * DAY_MS;
+      if (type === 'monthly') periodMs = 30 * DAY_MS;
+      if (type === 'yearly') periodMs = 365 * DAY_MS;
+
+      return Math.max(1, Math.floor(elapsed / periodMs) + 1);
     }
 
     // --- PRE-PLANNING NAVIGATION LOGIC ---
@@ -1803,35 +1898,100 @@
         const progressEl = document.getElementById(`${type}Progress`);
         listEl.innerHTML = '';
 
-        let goals = appData.goals[type] || [];
+        let allGoals = appData.goals[type] || [];
+        const { end: periodEnd } = getSelectedPeriodRange(type);
 
-        if (type === 'weekly') {
-          goals = goals.filter(g => (g.weekTag || getWeekRangeLabel(getMonday(new Date()))) === currentWeekTag);
-        } else if (type === 'monthly') {
-          goals = goals.filter(g => (g.monthYearTag || `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`) === currentMonthTag);
-        } else if (type === 'yearly') {
-          goals = goals.filter(g => (g.yearTag || new Date().getFullYear()) === preplanYear);
-        }
+        // Filter tasks created up to the end of the currently viewed period
+        let visibleGoals = allGoals.filter(g => {
+          if (!g.dateCreated) return true;
+          return new Date(g.dateCreated).getTime() < periodEnd.getTime();
+        });
 
         let completedCount = 0;
 
-        goals.forEach(goal => {
+        visibleGoals.forEach((goal) => {
           if (goal.done) completedCount++;
+
+          const passedPeriods = getPassedPeriodsForView(type, goal.dateCreated);
+          const isOverdue = passedPeriods > 0 && !goal.done;
+
           const li = document.createElement('li');
-          li.className = `goal-item ${goal.done ? 'done' : ''}`;
+          li.className = `goal-item ${goal.done ? 'done' : ''} ${isOverdue ? 'overdue' : ''}`;
+          li.draggable = true;
+
+          // Drag Events for Mouse / Touchpad Task Reordering
+          li.addEventListener('dragstart', (e) => {
+            draggedGoalType = type;
+            draggedGoalId = goal.id;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', JSON.stringify({ type, id: goal.id }));
+            setTimeout(() => li.classList.add('dragging'), 0);
+          });
+
+          li.addEventListener('dragend', () => {
+            li.classList.remove('dragging');
+            draggedGoalType = null;
+            draggedGoalId = null;
+          });
+
+          li.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          });
+
+          li.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (draggedGoalType === type && draggedGoalId !== null && draggedGoalId !== goal.id) {
+              const fullList = appData.goals[type];
+              const fromIndex = fullList.findIndex(g => g.id === draggedGoalId);
+              const toIndex = fullList.findIndex(g => g.id === goal.id);
+
+              if (fromIndex !== -1 && toIndex !== -1) {
+                const [movedItem] = fullList.splice(fromIndex, 1);
+                fullList.splice(toIndex, 0, movedItem);
+                saveUserData();
+                autoSaveTodaySnapshot();
+                renderGoals();
+              }
+            }
+          });
+
           li.innerHTML = `
             <div class="goal-item-left">
+              <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
               <input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleGoal('${type}', ${goal.id})">
-              <span>${escapeHtml(goal.text)}</span>
+              <span class="goal-num-badge">(${passedPeriods})</span>
+              <span class="goal-text">${escapeHtml(goal.text)}</span>
             </div>
             <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})" title="Delete goal">🗑️</button>
           `;
           listEl.appendChild(li);
         });
 
-        const percent = goals.length > 0 ? (completedCount / goals.length) * 100 : 0;
+        const percent = visibleGoals.length > 0 ? (completedCount / visibleGoals.length) * 100 : 0;
         progressEl.style.width = `${percent}%`;
       });
+    }
+
+    function handleGoalContainerDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleGoalContainerDrop(e, targetType) {
+      e.preventDefault();
+      if (draggedGoalType === targetType && draggedGoalId !== null) {
+        const fullList = appData.goals[targetType];
+        const fromIndex = fullList.findIndex(g => g.id === draggedGoalId);
+        if (fromIndex !== -1) {
+          const [movedItem] = fullList.splice(fromIndex, 1);
+          fullList.push(movedItem);
+          saveUserData();
+          autoSaveTodaySnapshot();
+          renderGoals();
+        }
+      }
     }
 
     function toggleGoal(type, id) {
@@ -1855,22 +2015,16 @@
       const text = input.value.trim();
       if (!text) return;
 
-      const todayStr = new Date().toISOString().split('T')[0];
+      // Assign creation date based on currently navigated period start date
+      const { start: periodStart } = getSelectedPeriodRange(type);
+      const createdDateStr = periodStart.toISOString().split('T')[0];
 
       const newGoal = {
         id: Date.now(),
         text: text,
         done: false,
-        dateCreated: todayStr
+        dateCreated: createdDateStr
       };
-
-      if (type === 'weekly') {
-        newGoal.weekTag = getWeekRangeLabel(preplanWeekDate);
-      } else if (type === 'monthly') {
-        newGoal.monthYearTag = getSelectedPreplanMonthTag();
-      } else if (type === 'yearly') {
-        newGoal.yearTag = preplanYear;
-      }
 
       appData.goals[type].push(newGoal);
 
@@ -2148,6 +2302,7 @@
             Category: type.toUpperCase(),
             "Goal Title": g.text,
             Status: g.done ? 'Completed' : 'Pending',
+            "Periods Passed": getPassedPeriodsForView(type, g.dateCreated),
             "Period Tag": g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
           });
         });
@@ -2194,7 +2349,7 @@
         const list = appData.goals[type] || [];
         if (list.length === 0) body += `(No active goals)\n`;
         list.forEach(g => {
-          body += `- [${g.done ? 'X' : ' '}] ${g.text}\n`;
+          body += `- [${g.done ? 'X' : ' '}] (${getPassedPeriodsForView(type, g.dateCreated)}) ${g.text}\n`;
         });
       });
 
@@ -2440,4 +2595,5 @@
     }
   </script>
 
-</body></html>
+</body>
+</html>
