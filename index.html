@@ -43,13 +43,13 @@
     body {
       background-color: var(--bg-main);
       color: var(--text-main);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
     }
 
-    /* Auth Modal */
+    /* Clear Tabbed Auth Modal */
     .auth-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -58,89 +58,131 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
+      padding: 15px;
     }
 
     .auth-card {
       background: white;
-      padding: 30px;
+      padding: 24px;
       border-radius: 12px;
-      width: 360px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     }
 
-    .auth-card h2 {
-      margin-bottom: 20px;
+    .auth-tabs {
+      display: flex;
+      background: #edf2f7;
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      gap: 4px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .auth-tab.active {
+      background: white;
       color: var(--primary-dark);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+    .auth-mode-help {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
       text-align: center;
     }
 
     .auth-form input {
       width: 100%;
-      padding: 10px;
+      padding: 10px 12px;
       margin-bottom: 12px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .auth-form input:focus {
+      outline: none;
+      border-color: var(--primary);
     }
 
     .auth-btn {
       width: 100%;
-      padding: 10px;
+      padding: 11px;
       background: var(--primary);
       color: white;
       border: none;
       border-radius: 6px;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 0.92rem;
       cursor: pointer;
-      margin-top: 5px;
+      margin-top: 4px;
+      transition: background 0.2s ease;
     }
 
     .auth-btn:hover { background: var(--primary-dark); }
 
-    .auth-toggle {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .auth-toggle span {
-      color: var(--primary);
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* Top Navigation Bar */
+    /* Top Navigation Bar with Cabinet Navigation Tabs */
     header {
       background: #2d4a60;
       color: white;
-      padding: 12px 24px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
     }
 
-    .nav-links {
+    /* Replaced Navigation Links with Section Tabs */
+    .top-cabinet-nav {
       display: flex;
-      gap: 20px;
+      gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
-    .nav-links a {
+    .cabinet-tab-btn {
+      background: rgba(255, 255, 255, 0.1);
       color: #cbd5e0;
-      text-decoration: none;
-      font-size: 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .nav-links a.active, .nav-links a:hover {
-      color: white;
+    .cabinet-tab-btn:hover, .cabinet-tab-btn.active {
+      background: white;
+      color: var(--primary-dark);
+      border-color: white;
     }
 
     .user-profile {
@@ -159,51 +201,23 @@
       font-size: 0.8rem;
     }
 
-    /* Main Workspace Layout */
+    /* Main Container Layout */
     .dashboard-container {
       display: flex;
       flex: 1;
-      height: calc(100vh - 60px);
+      width: 100%;
     }
 
-    /* Left Sidebar Navigation */
-    aside {
-      width: 200px;
-      background: #ffffff;
-      border-right: 1px solid var(--border-color);
-      padding: 20px 10px;
-    }
-
-    .side-menu {
-      list-style: none;
-    }
-
-    .side-menu li {
-      padding: 12px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-bottom: 5px;
-      color: var(--text-muted);
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .side-menu li.active, .side-menu li:hover {
-      background: #edf2f7;
-      color: var(--primary-dark);
-    }
-
-    /* Main Dashboard Content Area */
+    /* Main Workspace Area */
     main {
       flex: 1;
       padding: 15px 20px;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .header-bar {
@@ -211,17 +225,18 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
     }
 
     .welcome-header {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: var(--primary-dark);
     }
 
     .action-toolbar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn-action {
@@ -236,6 +251,9 @@
       gap: 6px;
       transition: all 0.2s ease;
     }
+
+    .btn-save { background: var(--accent-purple); color: white; }
+    .btn-save:hover { background: #6b46c1; }
 
     .btn-excel { background: #276749; color: white; }
     .btn-excel:hover { background: #1c4530; }
@@ -259,6 +277,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .current-date-badge {
@@ -573,17 +593,20 @@
       position: relative;
       grid-column: 2;
       grid-row: 1;
+      width: 100%;
+      overflow-x: auto;
     }
 
     .matrix-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(5, minmax(50px, 1fr));
       grid-template-rows: repeat(5, 80px);
       gap: 5px;
       background: #f7fafc;
       padding: 5px;
       border: 2px solid #cbd5e0;
       border-radius: 6px;
+      min-width: 280px;
     }
 
     .matrix-cell {
@@ -889,6 +912,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .archive-year-picker {
@@ -1119,22 +1144,118 @@
       min-height: 40px;
       background-color: var(--pastel-yellow);
     }
+
+    /* MOBILE AND TABLET RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 1024px) {
+      .grid-workspace {
+        grid-template-columns: 1fr;
+      }
+      
+      .dual-grid-container {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-cabinet-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .brand {
+        justify-content: center;
+      }
+
+      .top-cabinet-nav {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .cabinet-tab-btn {
+        flex: 1;
+        justify-content: center;
+        font-size: 0.78rem;
+        padding: 8px 6px;
+      }
+
+      .user-profile {
+        justify-content: space-between;
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 6px;
+      }
+
+      main {
+        padding: 10px;
+      }
+
+      .header-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .welcome-header {
+        text-align: center;
+        font-size: 1.15rem;
+      }
+
+      .action-toolbar {
+        justify-content: space-between;
+      }
+
+      .btn-action {
+        flex: 1;
+        justify-content: center;
+        padding: 8px 4px;
+        font-size: 0.75rem;
+      }
+
+      .months-grid-menu {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .weeks-grid-menu {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .matrix-grid {
+        grid-template-rows: repeat(5, 65px);
+      }
+
+      .matrix-cell {
+        font-size: 0.65rem;
+      }
+
+      .sticky-note {
+        width: 60px;
+        height: 60px;
+        font-size: 0.65rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- AUTH MODAL -->
+  <!-- CLEAR TABBED AUTH MODAL -->
   <div id="authModal" class="auth-overlay" style="display: flex;">
     <div class="auth-card">
-      <h2 id="authTitle">Login to Planner</h2>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="loginTabBtn" onclick="setAuthMode(false)">🔑 Log In</button>
+        <button type="button" class="auth-tab" id="signupTabBtn" onclick="setAuthMode(true)">✨ Sign Up</button>
+      </div>
+
+      <div class="auth-mode-help" id="authModeHelp">Enter your credentials to access your cabinet.</div>
+
       <form class="auth-form" id="authForm">
         <input type="text" id="authUsername" placeholder="Username" required="">
         <input type="password" id="authPassword" placeholder="Password" required="">
-        <button type="submit" class="auth-btn" id="authSubmitBtn">Login</button>
+        <button type="submit" class="auth-btn" id="authSubmitBtn">Log In to Cabinet</button>
       </form>
-      <div class="auth-toggle">
-        <span id="toggleAuthMode">Don't have an account? Sign up</span>
-      </div>
     </div>
   </div>
 
@@ -1146,12 +1267,20 @@
       </svg>
       Mindful Planner
     </div>
-    <nav class="nav-links">
-      <a href="#" class="active">My Dashboard</a>
-      <a href="#">Weekly</a>
-      <a href="#">Monthly</a>
-      <a href="#">Yearly</a>
+
+    <!-- Cabinet Section Navigation Buttons Moved to Top -->
+    <nav class="top-cabinet-nav">
+      <button class="cabinet-tab-btn active" onclick="switchTab('dashboard', this)">
+        📊 Personal Cabinet
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchTab('archive', this)">
+        📁 Archive Data
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchTab('analytics', this)">
+        📈 Task Analytics
+      </button>
     </nav>
+
     <div class="user-profile">
       <span id="userDisplayName">Alice</span>
       <button class="logout-btn" id="logoutBtn">Logout</button>
@@ -1160,21 +1289,6 @@
 
   <!-- DASHBOARD BODY -->
   <div class="dashboard-container">
-    <!-- Left Navigation Bar -->
-    <aside>
-      <ul class="side-menu">
-        <li class="active" onclick="switchTab('dashboard', this)">
-          📊 Personal Cabinet
-        </li>
-        <li onclick="switchTab('archive', this)">
-          📁 Archive Data
-        </li>
-        <li onclick="switchTab('analytics', this)">
-          📈 Task Analytics
-        </li>
-      </ul>
-    </aside>
-
     <!-- Main Workspace -->
     <main>
       <div class="header-bar">
@@ -1182,11 +1296,14 @@
         
         <!-- Action Toolbar -->
         <div class="action-toolbar">
+          <button class="btn-action btn-save" id="manualSaveBtn" onclick="manualSave()" title="Save all changes manually (Autosave is also active)">
+            💾 Save
+          </button>
           <button class="btn-action btn-excel" onclick="exportToExcel()" title="Export goals &amp; matrix to Excel">
-            📊 Export Excel
+            📊 Excel
           </button>
           <button class="btn-action btn-email" onclick="sendEmailReport()" title="Send summary report via Email">
-            ✉️ Send via Email
+            ✉️ Email
           </button>
         </div>
       </div>
@@ -1210,7 +1327,7 @@
       <div id="dashboardView" class="view-panel active-panel">
         <div class="grid-workspace">
           
-          <!-- Left: Goal Checklists -->
+          <!-- Goal Checklists -->
           <div class="goals-column">
             <!-- Weekly Goals -->
             <div class="goal-card">
@@ -1567,9 +1684,7 @@
 
     const authModal = document.getElementById('authModal');
     const authForm = document.getElementById('authForm');
-    const authTitle = document.getElementById('authTitle');
     const authSubmitBtn = document.getElementById('authSubmitBtn');
-    const toggleAuthMode = document.getElementById('toggleAuthMode');
     const userDisplayName = document.getElementById('userDisplayName');
     const welcomeHeading = document.getElementById('welcomeHeading');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -1580,6 +1695,44 @@
       initYearCombobox();
       window.addEventListener('resize', renderConnections);
     });
+
+    // --- MANUAL SAVE HANDLER ---
+    function manualSave() {
+      saveUserData();
+      autoSaveTodaySnapshot();
+
+      const btn = document.getElementById('manualSaveBtn');
+      if (btn) {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '✅ Saved!';
+        btn.style.backgroundColor = '#38a169';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+          btn.style.backgroundColor = '';
+        }, 1800);
+      }
+    }
+
+    // --- AUTHENTICATION MODE TAB TOGGLE ---
+    function setAuthMode(signUp) {
+      isSignUpMode = signUp;
+      const loginTab = document.getElementById('loginTabBtn');
+      const signupTab = document.getElementById('signupTabBtn');
+      const submitBtn = document.getElementById('authSubmitBtn');
+      const helpText = document.getElementById('authModeHelp');
+
+      if (isSignUpMode) {
+        loginTab.classList.remove('active');
+        signupTab.classList.add('active');
+        submitBtn.textContent = '✨ Create Account (Sign Up)';
+        helpText.textContent = 'Create a new account to store your goals and data.';
+      } else {
+        signupTab.classList.remove('active');
+        loginTab.classList.add('active');
+        submitBtn.textContent = '🔑 Log In to Cabinet';
+        helpText.textContent = 'Enter your credentials to access your cabinet.';
+      }
+    }
 
     // --- RICH TEXT EDITOR FUNCTIONS ---
     function execCmd(command) {
@@ -1649,7 +1802,6 @@
       return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
     }
 
-    // Helper to calculate start/end boundary dates for a selected period view
     function getSelectedPeriodRange(type) {
       if (type === 'weekly') {
         const start = new Date(preplanWeekDate);
@@ -1668,7 +1820,6 @@
       }
     }
 
-    // Calculate passed periods dynamically relative to the currently viewed navigation date
     function getPassedPeriodsForView(type, dateCreated) {
       if (!dateCreated) return 0;
       const createdTime = new Date(dateCreated).getTime();
@@ -1677,7 +1828,7 @@
       const { start: periodStart } = getSelectedPeriodRange(type);
 
       if (createdTime >= periodStart.getTime()) {
-        return 0; // Created within or after this viewed period
+        return 0;
       }
 
       const elapsed = periodStart.getTime() - createdTime;
@@ -1772,10 +1923,10 @@
       document.getElementById('monthSubtextRight').textContent = `${percentPassed}% of ${currentMonthName} elapsed`;
     }
 
-    // --- TAB SWITCHING ---
+    // --- TAB SWITCHING FOR TOP CABINET NAVIGATION ---
     function switchTab(tabName, element) {
-      document.querySelectorAll('.side-menu li').forEach(li => li.classList.remove('active'));
-      element.classList.add('active');
+      document.querySelectorAll('.cabinet-tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
 
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active-panel'));
 
@@ -1806,15 +1957,6 @@
         authModal.style.display = 'flex';
       }
     }
-
-    toggleAuthMode.addEventListener('click', () => {
-      isSignUpMode = !isSignUpMode;
-      authTitle.textContent = isSignUpMode ? "Create Account" : "Login to Planner";
-      authSubmitBtn.textContent = isSignUpMode ? "Sign Up" : "Login";
-      toggleAuthMode.innerHTML = isSignUpMode ? 
-        'Already have an account? <span>Login</span>' : 
-        'Don\'t have an account? <span>Sign up</span>';
-    });
 
     authForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -1901,7 +2043,6 @@
         let allGoals = appData.goals[type] || [];
         const { end: periodEnd } = getSelectedPeriodRange(type);
 
-        // Filter tasks created up to the end of the currently viewed period
         let visibleGoals = allGoals.filter(g => {
           if (!g.dateCreated) return true;
           return new Date(g.dateCreated).getTime() < periodEnd.getTime();
@@ -1919,7 +2060,6 @@
           li.className = `goal-item ${goal.done ? 'done' : ''} ${isOverdue ? 'overdue' : ''}`;
           li.draggable = true;
 
-          // Drag Events for Mouse / Touchpad Task Reordering
           li.addEventListener('dragstart', (e) => {
             draggedGoalType = type;
             draggedGoalId = goal.id;
@@ -2015,7 +2155,6 @@
       const text = input.value.trim();
       if (!text) return;
 
-      // Assign creation date based on currently navigated period start date
       const { start: periodStart } = getSelectedPeriodRange(type);
       const createdDateStr = periodStart.toISOString().split('T')[0];
 
@@ -2182,7 +2321,6 @@
         }
       });
 
-      // Render Matrix Notes as Horizontal Pills
       const pillsContainer = document.getElementById('archiveMatrixPills');
       pillsContainer.innerHTML = '';
       const stickers = snap && snap.stickers ? snap.stickers : [];
@@ -2207,7 +2345,6 @@
         });
       }
 
-      // Render Archive Notes & Comments with Pastel Background Color
       const notesEl = document.getElementById('archiveNotesContent');
       const notesHtml = snap && snap.userNotes ? snap.userNotes : "";
       const notesBg = snap && snap.userNotesBg ? snap.userNotesBg : "var(--pastel-yellow)";
@@ -2240,7 +2377,6 @@
       document.getElementById('metricCompletionRate').textContent = `${rate}%`;
       document.getElementById('metricMatrixNotes').textContent = totalMatrixNotes;
 
-      // Category Chart
       const ctxCat = document.getElementById('categoryChart').getContext('2d');
       if (categoryChartInstance) categoryChartInstance.destroy();
 
@@ -2266,7 +2402,6 @@
         }
       });
 
-      // Completion Chart
       const ctxComp = document.getElementById('completionChart').getContext('2d');
       if (completionChartInstance) completionChartInstance.destroy();
 
