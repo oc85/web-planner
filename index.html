@@ -334,6 +334,12 @@
       gap: 12px;
     }
 
+    .center-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .goal-card {
       background: white;
       border-radius: 8px;
@@ -738,6 +744,60 @@
     .bg-blue   { background-color: #bae6fd; }
     .bg-green  { background-color: #bbf7d0; }
     .bg-pink   { background-color: #fbcfe8; }
+
+    /* FLOWER POT CARD STYLES */
+    .flower-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flower-card h3 {
+      font-size: 0.88rem;
+      color: var(--primary-dark);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flower-canvas-box {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: radial-gradient(circle, #1a0b2e 0%, #05020c 100%);
+      border-radius: 8px;
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.2);
+      overflow: hidden;
+    }
+
+    .flower-canvas-box canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .flower-status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #9f1239;
+      background: #ffe4e6;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid #fecdd3;
+    }
+
+    .flower-info-text {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
 
     .notes-editor-card {
       background: white;
@@ -1241,6 +1301,7 @@
       <div id="dashboardView" class="view-panel active-panel">
         <div class="grid-workspace">
           
+          <!-- Column 1: Goals -->
           <div class="goals-column">
             <!-- Weekly Goals -->
             <div class="goal-card">
@@ -1309,54 +1370,35 @@
             </div>
           </div>
 
-          <!-- 5x5 Priority Matrix -->
-          <div class="matrix-card">
-            <div class="matrix-title-bar">
-              <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
-              <div class="matrix-controls">
-                <button id="connectBtn" onclick="toggleConnectMode()">Connect Notes</button>
-                <button onclick="clearConnections()">Clear Lines</button>
-              </div>
-            </div>
-
-            <div class="matrix-container-wrapper">
-              <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
-              <div class="matrix-wrapper" id="matrixWrapper">
-                <svg class="connections-svg" id="connectionsSvg">
-                  <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                      <polygon points="0 0, 10 3.5, 0 7" fill="#2b6cb0"></polygon>
-                    </marker>
-                  </defs>
-                </svg>
-                <div class="matrix-grid" id="matrixGrid"></div>
-              </div>
-              <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
-            </div>
-          </div>
-
-          <!-- Right Sidebar Stack -->
-          <div class="right-sidebar-column">
-            <!-- Stickers -->
-            <div class="stickers-bank-card">
-              <h3>Sticky Notes</h3>
-              <div class="sticker-creator">
-                <input type="text" id="newStickerText" placeholder="Write goal on sticker..." maxlength="30">
-                <div class="color-picker">
-                  <div class="color-opt bg-yellow selected" data-color="bg-yellow" onclick="selectStickerColor(this)"></div>
-                  <div class="color-opt bg-blue" data-color="bg-blue" onclick="selectStickerColor(this)"></div>
-                  <div class="color-opt bg-green" data-color="bg-green" onclick="selectStickerColor(this)"></div>
-                  <div class="color-opt bg-pink" data-color="bg-pink" onclick="selectStickerColor(this)"></div>
+          <!-- Column 2: Center (Matrix + Notes & Comments below) -->
+          <div class="center-column">
+            <!-- 5x5 Priority Matrix -->
+            <div class="matrix-card">
+              <div class="matrix-title-bar">
+                <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
+                <div class="matrix-controls">
+                  <button id="connectBtn" onclick="toggleConnectMode()">Connect Notes</button>
+                  <button onclick="clearConnections()">Clear Lines</button>
                 </div>
-                <button onclick="createSticker()">Create Sticker</button>
               </div>
 
-              <p style="font-size: 0.72rem; color: var(--text-muted);">Drag sticky notes onto grid cells or click "Connect Notes".</p>
-              
-              <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
+              <div class="matrix-container-wrapper">
+                <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
+                <div class="matrix-wrapper" id="matrixWrapper">
+                  <svg class="connections-svg" id="connectionsSvg">
+                    <defs>
+                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#2b6cb0"></polygon>
+                      </marker>
+                    </defs>
+                  </svg>
+                  <div class="matrix-grid" id="matrixGrid"></div>
+                </div>
+                <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
+              </div>
             </div>
 
-            <!-- Notes Editor -->
+            <!-- Notes Editor (Moved Under Matrix) -->
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments</h3>
               <div class="editor-toolbar">
@@ -1377,6 +1419,42 @@
                 </div>
               </div>
               <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
+            </div>
+          </div>
+
+          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot below) -->
+          <div class="right-sidebar-column">
+            <!-- Stickers -->
+            <div class="stickers-bank-card">
+              <h3>Sticky Notes</h3>
+              <div class="sticker-creator">
+                <input type="text" id="newStickerText" placeholder="Write goal on sticker..." maxlength="30">
+                <div class="color-picker">
+                  <div class="color-opt bg-yellow selected" data-color="bg-yellow" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-blue" data-color="bg-blue" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-green" data-color="bg-green" onclick="selectStickerColor(this)"></div>
+                  <div class="color-opt bg-pink" data-color="bg-pink" onclick="selectStickerColor(this)"></div>
+                </div>
+                <button onclick="createSticker()">Create Sticker</button>
+              </div>
+
+              <p style="font-size: 0.72rem; color: var(--text-muted);">Drag sticky notes onto grid cells or click "Connect Notes".</p>
+              
+              <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
+            </div>
+
+            <!-- Flower Pot (Placed Under Stickers Menu) -->
+            <div class="flower-card">
+              <h3>
+                🌹 Rose Bloom Pot
+                <span class="flower-status-badge" id="flowerBadge">Stage 0 / 12</span>
+              </h3>
+              <div class="flower-canvas-box">
+                <canvas id="flowerCanvas" width="280" height="240"></canvas>
+              </div>
+              <div class="flower-info-text" id="flowerInfoText">
+                Complete > 60% of month &amp; week tasks to trigger bloom growth.
+              </div>
             </div>
           </div>
 
@@ -1523,6 +1601,20 @@
     let preplanMonthYear = new Date().getFullYear();
     let preplanYear = new Date().getFullYear();
 
+    // FLOWER GROWTH ENGINE VARIABLES
+    let currentFlowerStage = 0; // Smooth interpolated stage (0 to 12)
+    let targetFlowerStage = 0;  // Calculated stage target (0 to 12)
+    let flowerTime = 0;
+
+    const flowerPollenParticles = Array.from({ length: 30 }, () => ({
+      x: Math.random() * 280,
+      y: Math.random() * 240,
+      radius: Math.random() * 1.5 + 0.4,
+      speedY: Math.random() * 0.35 + 0.15,
+      wobble: Math.random() * Math.PI * 2,
+      opacity: Math.random()
+    }));
+
     let appData = {
       lastActiveMonthYear: "",
       userNotes: "",
@@ -1572,6 +1664,7 @@
       checkAuthSession();
       initYearCombobox();
       window.addEventListener('resize', renderConnections);
+      requestAnimationFrame(flowerAnimationLoop);
     });
 
     function formatDateISO(dateObj) {
@@ -1693,7 +1786,6 @@
     }
 
     // PERIOD DELTA CALCULATOR
-    // Created period evaluates to (0), incrementing by +1 for each subsequent period
     function calculatePeriodDelta(type, goalDateCreated) {
       if (!goalDateCreated) return 0;
       const created = parseDateISO(goalDateCreated);
@@ -1904,6 +1996,281 @@
       setTimeout(renderConnections, 50);
     }
 
+    // 12-STAGE FLOWER GROWTH ENGINE
+    function updateFlowerGrowth() {
+      const visibleWeekly = (appData.goals.weekly || []).filter(g => calculatePeriodDelta('weekly', g.dateCreated) >= 0);
+      const visibleMonthly = (appData.goals.monthly || []).filter(g => calculatePeriodDelta('monthly', g.dateCreated) >= 0);
+
+      const totalTasks = visibleWeekly.length + visibleMonthly.length;
+      const doneTasks = visibleWeekly.filter(g => g.done).length + visibleMonthly.filter(g => g.done).length;
+
+      const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
+      // 60% Threshold Logic -> 12 Stages Growth Mapping
+      if (percent <= 60) {
+        targetFlowerStage = 0;
+      } else {
+        // Map 60% -> 100% completion to Stage 1 -> Stage 12
+        const normalized = (percent - 60) / 40; // 0.0 -> 1.0
+        targetFlowerStage = Math.min(12, Math.max(1, Math.round(normalized * 11) + 1));
+      }
+
+      const badge = document.getElementById('flowerBadge');
+      const infoText = document.getElementById('flowerInfoText');
+
+      if (badge) badge.textContent = `Stage ${targetFlowerStage} / 12`;
+      if (infoText) {
+        if (percent <= 60) {
+          infoText.textContent = `Month completion: ${percent}%. Reach >60% to sprout flower!`;
+        } else {
+          infoText.textContent = `Month completion: ${percent}%! Flower blooming at Stage ${targetFlowerStage}.`;
+        }
+      }
+    }
+
+    function draw12StageRose(stageVal) {
+      const canvas = document.getElementById('flowerCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      flowerTime += 0.025;
+
+      const centerX = 140;
+      const baseY = 205;
+      const stageRatio = stageVal / 12; // 0.0 to 1.0
+
+      // Floating Pollen Particles
+      flowerPollenParticles.forEach(p => {
+        p.y -= p.speedY;
+        p.wobble += 0.02;
+        const xOffset = Math.sin(p.wobble) * 1.2;
+
+        if (p.y < 0) p.y = canvas.height;
+
+        ctx.beginPath();
+        ctx.arc(p.x + xOffset, p.y, p.radius, 0, Math.PI * 2);
+        const alpha = (0.2 + 0.6 * p.opacity) * Math.max(stageRatio, 0.1);
+        ctx.fillStyle = `rgba(251, 191, 36, ${alpha})`;
+        ctx.fill();
+      });
+
+      // Stage 0: Dormant Star Gem
+      if (stageVal === 0) {
+        ctx.save();
+        ctx.translate(centerX, baseY - 15);
+        ctx.beginPath();
+        ctx.arc(0, 0, 6 + Math.sin(flowerTime * 2) * 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#38bdf8';
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.restore();
+        return;
+      }
+
+      const windSway = Math.sin(flowerTime * 0.8) * 4 * Math.max(stageRatio, 0.2);
+      const actualStemLength = 110 * Math.max(0.2, stageRatio);
+      const tipX = centerX + windSway;
+      const tipY = baseY - actualStemLength;
+
+      // Stem
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(centerX, baseY);
+      ctx.bezierCurveTo(
+        centerX - 18 * stageRatio + windSway * 0.3, baseY - actualStemLength * 0.4,
+        centerX + 15 * stageRatio + windSway * 0.7, baseY - actualStemLength * 0.7,
+        tipX, tipY
+      );
+
+      const stemGrad = ctx.createLinearGradient(centerX, baseY, tipX, tipY);
+      stemGrad.addColorStop(0, '#064e3b');
+      stemGrad.addColorStop(0.5, '#059669');
+      stemGrad.addColorStop(1, '#10b981');
+
+      ctx.lineWidth = 4 + stageRatio * 2;
+      ctx.strokeStyle = stemGrad;
+      ctx.shadowColor = '#34d399';
+      ctx.shadowBlur = 8 * stageRatio;
+      ctx.stroke();
+      ctx.restore();
+
+      // Leaves Sprouting (Stages 2 to 12)
+      if (stageVal >= 2) {
+        const leafProgress = stageRatio;
+        
+        // Lower Left Leaf
+        drawDetailedLeaf(ctx, centerX - 8 + windSway * 0.2, baseY - actualStemLength * 0.3, -Math.PI * 0.7, 42 * leafProgress, 18 * leafProgress);
+        // Mid Right Leaf
+        drawDetailedLeaf(ctx, centerX + 10 + windSway * 0.5, baseY - actualStemLength * 0.55, Math.PI * 0.2, 46 * leafProgress, 20 * leafProgress);
+
+        if (stageVal >= 6) {
+          // Upper Small Left Leaf
+          drawDetailedLeaf(ctx, centerX - 6 + windSway * 0.8, baseY - actualStemLength * 0.8, -Math.PI * 0.6, 32 * leafProgress, 14 * leafProgress);
+        }
+      }
+
+      // Rose Petal Layers (Stages 3 to 12)
+      if (stageVal >= 3) {
+        ctx.save();
+        ctx.translate(tipX, tipY);
+
+        // Core Backing Radial Glow
+        ctx.beginPath();
+        ctx.arc(0, -8, 35 * stageRatio, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(244, 63, 94, 0.18)';
+        ctx.shadowColor = '#f43f5e';
+        ctx.shadowBlur = 22 * stageRatio;
+        ctx.fill();
+
+        // Calyx Sepals
+        const sepalScale = Math.min(1, stageRatio * 1.2);
+        for (let i = 0; i < 5; i++) {
+          const sepalAngle = (i * Math.PI * 2 / 5) + Math.PI / 5;
+          ctx.save();
+          ctx.rotate(sepalAngle);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(-5 * sepalScale, 12 * sepalScale, 0, 22 * sepalScale);
+          ctx.quadraticCurveTo(5 * sepalScale, 12 * sepalScale, 0, 0);
+          ctx.fillStyle = '#059669';
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // Layer 1: Outer Petals
+        drawPetalRing(ctx, 8, 38 * stageRatio, 25 * stageRatio, '#881337', '#e11d48', '#f43f5e', flowerTime * 0.05);
+
+        // Layer 2: Mid Crown Petals (Stages 6 to 12)
+        if (stageVal >= 6) {
+          const midScale = (stageVal - 5) / 7;
+          drawPetalRing(ctx, 6, 28 * midScale, 18 * midScale, '#9f1239', '#f43f5e', '#fb7185', -flowerTime * 0.08);
+        }
+
+        // Layer 3: Inner Core Spiral Petals (Stages 9 to 12)
+        if (stageVal >= 9) {
+          const innerScale = (stageVal - 8) / 4;
+          drawPetalRing(ctx, 5, 18 * innerScale, 12 * innerScale, '#be123c', '#fb7185', '#ffe4e6', flowerTime * 0.12);
+        }
+
+        // Layer 4: Golden Stamens (Stage 12 Full Bloom)
+        if (stageVal >= 11) {
+          const coreScale = (stageVal - 10) / 2;
+          const stamenCount = 10;
+
+          ctx.globalCompositeOperation = 'lighter';
+          for (let s = 0; s < stamenCount; s++) {
+            const angle = (s * Math.PI * 2 / stamenCount) + flowerTime * 0.1;
+            const len = 10 * coreScale;
+
+            ctx.save();
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -len);
+            ctx.strokeStyle = '#fef08a';
+            ctx.lineWidth = 1.4;
+            ctx.shadowColor = '#fbbf24';
+            ctx.shadowBlur = 5;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(0, -len, 1.8 * coreScale, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.restore();
+          }
+
+          ctx.beginPath();
+          ctx.arc(0, 0, (5 + Math.sin(flowerTime * 3) * 1.2) * coreScale, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = '#fbbf24';
+          ctx.shadowBlur = 16;
+          ctx.fill();
+        }
+
+        ctx.restore();
+      } else {
+        // Tight Closed Rose Bud
+        ctx.save();
+        ctx.translate(tipX, tipY);
+        ctx.beginPath();
+        ctx.ellipse(0, -6, 6, 10, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#be123c';
+        ctx.shadowColor = '#f43f5e';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function drawDetailedLeaf(ctx, x, y, rotation, length, width) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-width * 0.8, length * 0.3, -width, length * 0.7, 0, length);
+      ctx.bezierCurveTo(width, length * 0.7, width * 0.8, length * 0.3, 0, 0);
+
+      const leafGrad = ctx.createLinearGradient(0, 0, 0, length);
+      leafGrad.addColorStop(0, '#065f46');
+      leafGrad.addColorStop(0.6, '#10b981');
+      leafGrad.addColorStop(1, '#6ee7b7');
+
+      ctx.fillStyle = leafGrad;
+      ctx.shadowColor = '#10b981';
+      ctx.shadowBlur = 6;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, length * 0.9);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawPetalRing(ctx, count, length, width, colorBase, colorMid, colorEdge, rotationOffset) {
+      for (let i = 0; i < count; i++) {
+        const angle = (i * Math.PI * 2 / count) + rotationOffset;
+        ctx.save();
+        ctx.rotate(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(-width * 0.9, -length * 0.35, -width * 0.6, -length, 0, -length);
+        ctx.bezierCurveTo(width * 0.6, -length, width * 0.9, -length * 0.35, 0, 0);
+
+        const petalGrad = ctx.createLinearGradient(0, 0, 0, -length);
+        petalGrad.addColorStop(0, colorBase);
+        petalGrad.addColorStop(0.65, colorMid);
+        petalGrad.addColorStop(1, colorEdge);
+
+        ctx.fillStyle = petalGrad;
+        ctx.shadowColor = colorMid;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+
+        ctx.restore();
+      }
+    }
+
+    function flowerAnimationLoop() {
+      if (Math.abs(currentFlowerStage - targetFlowerStage) > 0.005) {
+        currentFlowerStage += (targetFlowerStage - currentFlowerStage) * 0.04;
+      } else {
+        currentFlowerStage = targetFlowerStage;
+      }
+
+      draw12StageRose(currentFlowerStage);
+      requestAnimationFrame(flowerAnimationLoop);
+    }
+
     function renderGoals() {
       const currentWeekTag = getWeekRangeLabel(preplanWeekDate);
       const currentMonthTag = getSelectedPreplanMonthTag();
@@ -1986,6 +2353,8 @@
         const percent = visibleGoals.length > 0 ? (completedCount / visibleGoals.length) * 100 : 0;
         progressEl.style.width = `${percent}%`;
       });
+
+      updateFlowerGrowth();
     }
 
     function handleGoalContainerDragOver(e) {
@@ -2024,7 +2393,6 @@
     }
 
     // ADD GOAL FORM SUBMISSION
-    // Stamped with active view date so index initializes at (0)
     function addGoal(event, type) {
       event.preventDefault();
       const input = event.target.querySelector('input');
