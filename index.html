@@ -49,7 +49,7 @@
       overflow-x: hidden;
     }
 
-    /* Clear Tabbed Auth Modal */
+    /* Tabbed Auth Modal */
     .auth-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -104,6 +104,7 @@
       color: var(--text-muted);
       margin-bottom: 14px;
       text-align: center;
+      line-height: 1.3;
     }
 
     .auth-form input {
@@ -136,7 +137,7 @@
 
     .auth-btn:hover { background: var(--primary-dark); }
 
-    /* Top Navigation Bar with Cabinet Navigation Tabs */
+    /* Top Navigation Bar */
     header {
       background: #2d4a60;
       color: white;
@@ -438,8 +439,7 @@
     }
 
     .goal-item.overdue {
-      background-color: #fffaf0;
-      border-color: #fbd38d;
+      border-color: #fbd38d !important;
     }
 
     .goal-item.overdue .goal-text {
@@ -486,6 +486,16 @@
       color: var(--text-muted);
     }
 
+    .category-tag-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.08);
+      color: #2d3748;
+      white-space: nowrap;
+    }
+
     .delete-goal-btn {
       background: none;
       border: none;
@@ -505,7 +515,13 @@
 
     .add-goal-form {
       display: flex;
+      flex-direction: column;
       margin-top: 8px;
+      gap: 5px;
+    }
+
+    .add-goal-input-row {
+      display: flex;
       gap: 5px;
     }
 
@@ -515,6 +531,14 @@
       font-size: 0.78rem;
       border: 1px solid var(--border-color);
       border-radius: 4px;
+    }
+
+    .add-goal-form select {
+      padding: 4px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: #f7fafc;
     }
 
     .add-goal-form button {
@@ -887,6 +911,89 @@
 
     .rich-notes-box:focus { border-color: var(--primary); }
 
+    /* SETTINGS CATEGORY CARD STYLES */
+    .settings-card {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .settings-card h3 {
+      font-size: 1rem;
+      color: var(--primary-dark);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    .add-category-form {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .add-category-form input[type="text"] {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .add-category-form input[type="color"] {
+      width: 38px;
+      height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      background: white;
+    }
+
+    .add-category-form button {
+      padding: 6px 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .category-list-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .category-list-table th, .category-list-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    .category-list-table th {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .color-preview-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.15);
+      display: inline-block;
+      vertical-align: middle;
+    }
+
     .analytics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1217,7 +1324,7 @@
 </head>
 <body>
 
-  <!-- CLEAR TABBED AUTH MODAL -->
+  <!-- TABBED AUTH MODAL (Existing vs New Registration) -->
   <div id="authModal" class="auth-overlay" style="display: flex;">
     <div class="auth-card">
       <div class="auth-tabs">
@@ -1225,7 +1332,7 @@
         <button type="button" class="auth-tab" id="signupTabBtn" onclick="setAuthMode(true)">✨ Sign Up</button>
       </div>
 
-      <div class="auth-mode-help" id="authModeHelp">Enter your credentials to access your cabinet.</div>
+      <div class="auth-mode-help" id="authModeHelp">Log in with your existing account.</div>
 
       <form class="auth-form" id="authForm">
         <input type="text" id="authUsername" placeholder="Username" required="">
@@ -1254,6 +1361,9 @@
       </button>
       <button class="cabinet-tab-btn" onclick="switchTab('analytics', this)">
         📈 Task Analytics
+      </button>
+      <button class="cabinet-tab-btn" onclick="switchTab('settings', this)">
+        ⚙️ Settings
       </button>
     </nav>
 
@@ -1320,8 +1430,11 @@
               </div>
               <ul class="goal-list" id="weeklyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'weekly')"></ul>
               <form class="add-goal-form" onsubmit="addGoal(event, 'weekly')">
-                <input type="text" placeholder="New weekly goal..." required="">
-                <button type="submit">+</button>
+                <div class="add-goal-input-row">
+                  <input type="text" placeholder="New weekly goal..." required="">
+                  <select class="category-select" required></select>
+                  <button type="submit">+</button>
+                </div>
               </form>
             </div>
 
@@ -1342,8 +1455,11 @@
               </div>
               <ul class="goal-list" id="monthlyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'monthly')"></ul>
               <form class="add-goal-form" onsubmit="addGoal(event, 'monthly')">
-                <input type="text" placeholder="New monthly goal..." required="">
-                <button type="submit">+</button>
+                <div class="add-goal-input-row">
+                  <input type="text" placeholder="New monthly goal..." required="">
+                  <select class="category-select" required></select>
+                  <button type="submit">+</button>
+                </div>
               </form>
             </div>
 
@@ -1364,8 +1480,11 @@
               </div>
               <ul class="goal-list" id="yearlyGoalList" ondragover="handleGoalContainerDragOver(event)" ondrop="handleGoalContainerDrop(event, 'yearly')"></ul>
               <form class="add-goal-form" onsubmit="addGoal(event, 'yearly')">
-                <input type="text" placeholder="New yearly goal..." required="">
-                <button type="submit">+</button>
+                <div class="add-goal-input-row">
+                  <input type="text" placeholder="New yearly goal..." required="">
+                  <select class="category-select" required></select>
+                  <button type="submit">+</button>
+                </div>
               </form>
             </div>
           </div>
@@ -1398,7 +1517,7 @@
               </div>
             </div>
 
-            <!-- Notes Editor (Moved Under Matrix) -->
+            <!-- Notes Editor -->
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments</h3>
               <div class="editor-toolbar">
@@ -1422,7 +1541,7 @@
             </div>
           </div>
 
-          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot below) -->
+          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot) -->
           <div class="right-sidebar-column">
             <!-- Stickers -->
             <div class="stickers-bank-card">
@@ -1443,7 +1562,7 @@
               <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
             </div>
 
-            <!-- Flower Pot (Placed Under Stickers Menu) -->
+            <!-- Flower Pot -->
             <div class="flower-card">
               <h3>
                 🌹 Rose Bloom Pot
@@ -1555,6 +1674,30 @@
         </div>
       </div>
 
+      <!-- SETTINGS VIEW PANEL -->
+      <div id="settingsView" class="view-panel">
+        <div class="settings-card">
+          <h3>🎨 Category Settings &amp; Task Background Colors</h3>
+          
+          <form class="add-category-form" onsubmit="addCategory(event)">
+            <input type="text" id="newCatName" placeholder="Category name (e.g., Hobby, Work, Home)..." required>
+            <input type="color" id="newCatColor" value="#e0f2fe" title="Choose background color">
+            <button type="submit">+ Add Category</button>
+          </form>
+
+          <table class="category-list-table">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th>Task Background Color</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="categoryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
     </main>
   </div>
 
@@ -1576,6 +1719,49 @@
         };
       }
     })();
+
+    // Default template data for fresh user signups
+    function getDefaultAppData() {
+      return {
+        lastActiveMonthYear: "",
+        userNotes: "",
+        userNotesBg: "var(--pastel-yellow)",
+        categories: [
+          { id: "cat_work", name: "Work", color: "#e0f2fe" },
+          { id: "cat_home", name: "Home", color: "#dcfce7" },
+          { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
+          { id: "cat_default", name: "General", color: "#f8fafc" }
+        ],
+        goals: {
+          weekly: [
+            { id: 1, text: "Run 10k", categoryId: "cat_hobby", done: true, dateCreated: formatDateISO(getMonday(new Date())) },
+            { id: 2, text: "Meal prep", categoryId: "cat_home", done: false, dateCreated: formatDateISO(getMonday(new Date())) }
+          ],
+          monthly: [
+            { id: 3, text: "Read 3 books", categoryId: "cat_hobby", done: true, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) },
+            { id: 4, text: "Finish project", categoryId: "cat_work", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) }
+          ],
+          yearly: [
+            { id: 5, text: "Save $5000", categoryId: "cat_home", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) },
+            { id: 6, text: "Travel to Italy", categoryId: "cat_hobby", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) }
+          ]
+        },
+        stickers: [
+          { id: "s1", text: "Learn Python", color: "bg-yellow", cellId: null },
+          { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" },
+          { id: "s3", text: "Research Trip", color: "bg-blue", cellId: "cell-2-2" },
+          { id: "s4", text: "Skill Project", color: "bg-yellow", cellId: "cell-4-2" },
+          { id: "s5", text: "Finish Draft", color: "bg-green", cellId: "cell-5-3" },
+          { id: "s6", text: "Submit Report", color: "bg-green", cellId: "cell-5-4" }
+        ],
+        connections: [
+          { from: "s3", to: "s4" },
+          { from: "s4", to: "s5" },
+          { from: "s5", to: "s6" }
+        ],
+        archiveSnapshots: {}
+      };
+    }
 
     // State Variables
     let currentUser = null;
@@ -1602,8 +1788,8 @@
     let preplanYear = new Date().getFullYear();
 
     // FLOWER GROWTH ENGINE VARIABLES
-    let currentFlowerStage = 0; // Smooth interpolated stage (0 to 12)
-    let targetFlowerStage = 0;  // Calculated stage target (0 to 12)
+    let currentFlowerStage = 0; 
+    let targetFlowerStage = 0;  
     let flowerTime = 0;
 
     const flowerPollenParticles = Array.from({ length: 30 }, () => ({
@@ -1615,46 +1801,13 @@
       opacity: Math.random()
     }));
 
-    let appData = {
-      lastActiveMonthYear: "",
-      userNotes: "",
-      userNotesBg: "var(--pastel-yellow)",
-      goals: {
-        weekly: [
-          { id: 1, text: "Run 10k", done: true, dateCreated: formatDateISO(getMonday(new Date())) },
-          { id: 2, text: "Meal prep", done: false, dateCreated: formatDateISO(getMonday(new Date())) }
-        ],
-        monthly: [
-          { id: 3, text: "Read 3 books", done: true, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) },
-          { id: 4, text: "Finish project", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) }
-        ],
-        yearly: [
-          { id: 5, text: "Save $5000", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) },
-          { id: 6, text: "Travel to Italy", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) }
-        ]
-      },
-      stickers: [
-        { id: "s1", text: "Learn Python", color: "bg-yellow", cellId: null },
-        { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" },
-        { id: "s3", text: "Research Trip", color: "bg-blue", cellId: "cell-2-2" },
-        { id: "s4", text: "Skill Project", color: "bg-yellow", cellId: "cell-4-2" },
-        { id: "s5", text: "Finish Draft", color: "bg-green", cellId: "cell-5-3" },
-        { id: "s6", text: "Submit Report", color: "bg-green", cellId: "cell-5-4" }
-      ],
-      connections: [
-        { from: "s3", to: "s4" },
-        { from: "s4", to: "s5" },
-        { from: "s5", to: "s6" }
-      ],
-      archiveSnapshots: {}
-    };
+    let appData = getDefaultAppData();
 
     let categoryChartInstance = null;
     let completionChartInstance = null;
 
     const authModal = document.getElementById('authModal');
     const authForm = document.getElementById('authForm');
-    const authSubmitBtn = document.getElementById('authSubmitBtn');
     const userDisplayName = document.getElementById('userDisplayName');
     const welcomeHeading = document.getElementById('welcomeHeading');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -1680,7 +1833,6 @@
       return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     }
 
-    // Manual Save Button
     function manualSave() {
       saveUserData();
       autoSaveTodaySnapshot();
@@ -1697,7 +1849,7 @@
       }
     }
 
-    // Auth Switcher
+    // Clear Auth Tab Mode Selector (Log In vs Sign Up)
     function setAuthMode(signUp) {
       isSignUpMode = signUp;
       const loginTab = document.getElementById('loginTabBtn');
@@ -1708,17 +1860,16 @@
       if (isSignUpMode) {
         loginTab.classList.remove('active');
         signupTab.classList.add('active');
-        submitBtn.textContent = '✨ Create Account (Sign Up)';
-        helpText.textContent = 'Create a new account to store your goals and data.';
+        submitBtn.textContent = '✨ Register New Account';
+        helpText.textContent = 'Sign up for a new account to begin tracking goals.';
       } else {
         signupTab.classList.remove('active');
         loginTab.classList.add('active');
         submitBtn.textContent = '🔑 Log In to Cabinet';
-        helpText.textContent = 'Enter your credentials to access your cabinet.';
+        helpText.textContent = 'Log in with your existing account.';
       }
     }
 
-    // Rich Text Commands
     function execCmd(command) {
       document.execCommand(command, false, null);
     }
@@ -1759,7 +1910,6 @@
       }
     }
 
-    // Dates & Periods
     function getMonday(d) {
       const date = new Date(d);
       const day = date.getDay();
@@ -1785,7 +1935,6 @@
       return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
     }
 
-    // PERIOD DELTA CALCULATOR
     function calculatePeriodDelta(type, goalDateCreated) {
       if (!goalDateCreated) return 0;
       const created = parseDateISO(goalDateCreated);
@@ -1911,6 +2060,9 @@
       } else if (tabName === 'analytics') {
         document.getElementById('analyticsView').classList.add('active-panel');
         renderAnalytics();
+      } else if (tabName === 'settings') {
+        document.getElementById('settingsView').classList.add('active-panel');
+        renderSettingsCategories();
       }
     }
 
@@ -1929,6 +2081,7 @@
       }
     }
 
+    // Authentic tabbed Auth submit logic
     authForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const user = document.getElementById('authUsername').value.trim();
@@ -1939,20 +2092,30 @@
       const usersDb = JSON.parse(safeStorage.getItem('planner_users') || '{}');
 
       if (isSignUpMode) {
+        // Sign Up Mode: New Registration
         if (usersDb[user]) {
-          alert('Username already exists!');
+          alert('Username is already registered! Please log in or choose a different username.');
           return;
         }
         usersDb[user] = pass;
         safeStorage.setItem('planner_users', JSON.stringify(usersDb));
+        
+        // Save initial template state for new user
+        appData = getDefaultAppData();
         safeStorage.setItem(`planner_data_${user}`, JSON.stringify(appData));
+        
         loginUser(user);
       } else {
-        if (usersDb[user] && usersDb[user] === pass) {
-          loginUser(user);
-        } else {
-          alert('Invalid credentials!');
+        // Log In Mode: Existing User
+        if (!usersDb[user]) {
+          alert('User not found. Please register via the Sign Up tab.');
+          return;
         }
+        if (usersDb[user] !== pass) {
+          alert('Incorrect password. Please try again.');
+          return;
+        }
+        loginUser(user);
       }
     });
 
@@ -1979,6 +2142,16 @@
       if (saved) {
         appData = JSON.parse(saved);
         if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
+        if (!appData.categories) {
+          appData.categories = [
+            { id: "cat_work", name: "Work", color: "#e0f2fe" },
+            { id: "cat_home", name: "Home", color: "#dcfce7" },
+            { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
+            { id: "cat_default", name: "General", color: "#f8fafc" }
+          ];
+        }
+      } else {
+        appData = getDefaultAppData();
       }
     }
 
@@ -1989,11 +2162,96 @@
     }
 
     function renderAll() {
+      populateCategorySelects();
       renderGoals();
       renderStickers();
       loadRichNotes();
       updateTimeControlBar();
       setTimeout(renderConnections, 50);
+    }
+
+    // CATEGORY MANAGEMENT
+    function populateCategorySelects() {
+      const selects = document.querySelectorAll('.category-select');
+      selects.forEach(sel => {
+        sel.innerHTML = '';
+        (appData.categories || []).forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat.id;
+          opt.textContent = cat.name;
+          sel.appendChild(opt);
+        });
+      });
+    }
+
+    function renderSettingsCategories() {
+      const tbody = document.getElementById('categoryTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      (appData.categories || []).forEach(cat => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(cat.name)}</strong></td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="color-preview-box" style="background-color: ${cat.color};"></span>
+              <input type="color" value="${cat.color}" onchange="updateCategoryColor('${cat.id}', this.value)">
+            </div>
+          </td>
+          <td>
+            <button class="delete-goal-btn" onclick="deleteCategory('${cat.id}')" title="Delete category">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addCategory(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('newCatName');
+      const colorInput = document.getElementById('newCatColor');
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      const newCat = {
+        id: 'cat_' + Date.now(),
+        name: name,
+        color: colorInput.value
+      };
+
+      if (!appData.categories) appData.categories = [];
+      appData.categories.push(newCat);
+
+      nameInput.value = '';
+      saveUserData();
+      autoSaveTodaySnapshot();
+      populateCategorySelects();
+      renderSettingsCategories();
+      renderGoals();
+    }
+
+    function updateCategoryColor(catId, newColor) {
+      const cat = appData.categories.find(c => c.id === catId);
+      if (cat) {
+        cat.color = newColor;
+        saveUserData();
+        autoSaveTodaySnapshot();
+        renderGoals();
+      }
+    }
+
+    function deleteCategory(catId) {
+      if (appData.categories.length <= 1) {
+        alert("You must keep at least one category.");
+        return;
+      }
+      appData.categories = appData.categories.filter(c => c.id !== catId);
+      saveUserData();
+      autoSaveTodaySnapshot();
+      populateCategorySelects();
+      renderSettingsCategories();
+      renderGoals();
     }
 
     // 12-STAGE FLOWER GROWTH ENGINE
@@ -2006,12 +2264,10 @@
 
       const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
 
-      // 60% Threshold Logic -> 12 Stages Growth Mapping
       if (percent <= 60) {
         targetFlowerStage = 0;
       } else {
-        // Map 60% -> 100% completion to Stage 1 -> Stage 12
-        const normalized = (percent - 60) / 40; // 0.0 -> 1.0
+        const normalized = (percent - 60) / 40; 
         targetFlowerStage = Math.min(12, Math.max(1, Math.round(normalized * 11) + 1));
       }
 
@@ -2038,9 +2294,8 @@
 
       const centerX = 140;
       const baseY = 205;
-      const stageRatio = stageVal / 12; // 0.0 to 1.0
+      const stageRatio = stageVal / 12;
 
-      // Floating Pollen Particles
       flowerPollenParticles.forEach(p => {
         p.y -= p.speedY;
         p.wobble += 0.02;
@@ -2055,7 +2310,6 @@
         ctx.fill();
       });
 
-      // Stage 0: Dormant Star Gem
       if (stageVal === 0) {
         ctx.save();
         ctx.translate(centerX, baseY - 15);
@@ -2074,7 +2328,6 @@
       const tipX = centerX + windSway;
       const tipY = baseY - actualStemLength;
 
-      // Stem
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(centerX, baseY);
@@ -2096,27 +2349,20 @@
       ctx.stroke();
       ctx.restore();
 
-      // Leaves Sprouting (Stages 2 to 12)
       if (stageVal >= 2) {
         const leafProgress = stageRatio;
-        
-        // Lower Left Leaf
         drawDetailedLeaf(ctx, centerX - 8 + windSway * 0.2, baseY - actualStemLength * 0.3, -Math.PI * 0.7, 42 * leafProgress, 18 * leafProgress);
-        // Mid Right Leaf
         drawDetailedLeaf(ctx, centerX + 10 + windSway * 0.5, baseY - actualStemLength * 0.55, Math.PI * 0.2, 46 * leafProgress, 20 * leafProgress);
 
         if (stageVal >= 6) {
-          // Upper Small Left Leaf
           drawDetailedLeaf(ctx, centerX - 6 + windSway * 0.8, baseY - actualStemLength * 0.8, -Math.PI * 0.6, 32 * leafProgress, 14 * leafProgress);
         }
       }
 
-      // Rose Petal Layers (Stages 3 to 12)
       if (stageVal >= 3) {
         ctx.save();
         ctx.translate(tipX, tipY);
 
-        // Core Backing Radial Glow
         ctx.beginPath();
         ctx.arc(0, -8, 35 * stageRatio, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(244, 63, 94, 0.18)';
@@ -2124,7 +2370,6 @@
         ctx.shadowBlur = 22 * stageRatio;
         ctx.fill();
 
-        // Calyx Sepals
         const sepalScale = Math.min(1, stageRatio * 1.2);
         for (let i = 0; i < 5; i++) {
           const sepalAngle = (i * Math.PI * 2 / 5) + Math.PI / 5;
@@ -2139,22 +2384,18 @@
           ctx.restore();
         }
 
-        // Layer 1: Outer Petals
         drawPetalRing(ctx, 8, 38 * stageRatio, 25 * stageRatio, '#881337', '#e11d48', '#f43f5e', flowerTime * 0.05);
 
-        // Layer 2: Mid Crown Petals (Stages 6 to 12)
         if (stageVal >= 6) {
           const midScale = (stageVal - 5) / 7;
           drawPetalRing(ctx, 6, 28 * midScale, 18 * midScale, '#9f1239', '#f43f5e', '#fb7185', -flowerTime * 0.08);
         }
 
-        // Layer 3: Inner Core Spiral Petals (Stages 9 to 12)
         if (stageVal >= 9) {
           const innerScale = (stageVal - 8) / 4;
           drawPetalRing(ctx, 5, 18 * innerScale, 12 * innerScale, '#be123c', '#fb7185', '#ffe4e6', flowerTime * 0.12);
         }
 
-        // Layer 4: Golden Stamens (Stage 12 Full Bloom)
         if (stageVal >= 11) {
           const coreScale = (stageVal - 10) / 2;
           const stamenCount = 10;
@@ -2192,7 +2433,6 @@
 
         ctx.restore();
       } else {
-        // Tight Closed Rose Bud
         ctx.save();
         ctx.translate(tipX, tipY);
         ctx.beginPath();
@@ -2285,8 +2525,6 @@
         listEl.innerHTML = '';
 
         let allGoals = appData.goals[type] || [];
-
-        // Visible goals: created on or prior to current navigated view
         let visibleGoals = allGoals.filter(g => calculatePeriodDelta(type, g.dateCreated) >= 0);
 
         let completedCount = 0;
@@ -2297,8 +2535,11 @@
           const deltaIndex = calculatePeriodDelta(type, goal.dateCreated);
           const isOverdue = deltaIndex > 0 && !goal.done;
 
+          const cat = (appData.categories || []).find(c => c.id === goal.categoryId) || { name: 'General', color: '#f8fafc' };
+
           const li = document.createElement('li');
           li.className = `goal-item ${goal.done ? 'done' : ''} ${isOverdue ? 'overdue' : ''}`;
+          li.style.backgroundColor = cat.color;
           li.draggable = true;
 
           li.addEventListener('dragstart', (e) => {
@@ -2344,6 +2585,7 @@
               <input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleGoal('${type}', ${goal.id})">
               <span class="goal-num-badge">(${deltaIndex})</span>
               <span class="goal-text">${escapeHtml(goal.text)}</span>
+              <span class="category-tag-pill">${escapeHtml(cat.name)}</span>
             </div>
             <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})" title="Delete goal">🗑️</button>
           `;
@@ -2392,11 +2634,14 @@
       renderGoals();
     }
 
-    // ADD GOAL FORM SUBMISSION
     function addGoal(event, type) {
       event.preventDefault();
-      const input = event.target.querySelector('input');
+      const form = event.target;
+      const input = form.querySelector('input[type="text"]');
+      const catSelect = form.querySelector('.category-select');
+
       const text = input.value.trim();
+      const catId = catSelect.value;
       if (!text) return;
 
       let createdDateObj;
@@ -2413,6 +2658,7 @@
       const newGoal = {
         id: Date.now(),
         text: text,
+        categoryId: catId,
         done: false,
         dateCreated: createdDateStr
       };
@@ -2425,7 +2671,6 @@
       renderGoals();
     }
 
-    // Archive Navigation
     function initYearCombobox() {
       const select = document.getElementById('archiveYearSelect');
       select.innerHTML = '';
@@ -2611,7 +2856,6 @@
       }
     }
 
-    // Analytics
     function renderAnalytics() {
       const activeWeekly = appData.goals.weekly.length;
       const activeMonthly = appData.goals.monthly.length;
@@ -2677,7 +2921,6 @@
       });
     }
 
-    // Excel Export
     function exportToExcel() {
       const workbook = XLSX.utils.book_new();
       const goalsRows = [];
@@ -2685,8 +2928,10 @@
 
       ['weekly', 'monthly', 'yearly'].forEach(type => {
         (appData.goals[type] || []).forEach(g => {
+          const cat = (appData.categories || []).find(c => c.id === g.categoryId) || { name: 'General' };
           goalsRows.push({
-            Category: type.toUpperCase(),
+            Category: cat.name,
+            Type: type.toUpperCase(),
             "Goal Title": g.text,
             Status: g.done ? 'Completed' : 'Pending',
             "Periods Passed": calculatePeriodDelta(type, g.dateCreated),
@@ -2723,7 +2968,6 @@
       XLSX.writeFile(workbook, `Mindful_Planner_${currentUser}_${new Date().toISOString().split('T')[0]}.xlsx`);
     }
 
-    // Email Report
     function sendEmailReport() {
       const now = new Date();
       const monthYearStr = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
@@ -2736,7 +2980,8 @@
         const list = appData.goals[type] || [];
         if (list.length === 0) body += `(No active goals)\n`;
         list.forEach(g => {
-          body += `- [${g.done ? 'X' : ' '}] (${calculatePeriodDelta(type, g.dateCreated)}) ${g.text}\n`;
+          const cat = (appData.categories || []).find(c => c.id === g.categoryId) || { name: 'General' };
+          body += `- [${g.done ? 'X' : ' '}] (${cat.name}) ${g.text}\n`;
         });
       });
 
@@ -2756,7 +3001,6 @@
       window.location.href = mailtoUrl;
     }
 
-    // Grid Construction
     function buildMatrixGrid() {
       const grid = document.getElementById('matrixGrid');
       grid.innerHTML = '';
