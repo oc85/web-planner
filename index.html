@@ -10,6 +10,11 @@
   <!-- Chart.js for Analytics -->
   <script src="./Mindful Planner _ Personal Cabinet_files/chart.js.download"></script>
 
+  <!-- Firebase Web SDK Compatibility Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
   <style>
     :root {
       --primary: #2b6cb0;
@@ -1368,7 +1373,7 @@
     </nav>
 
     <div class="user-profile">
-      <span id="userDisplayName">Alice</span>
+      <span id="userDisplayName">User</span>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </div>
   </header>
@@ -1702,23 +1707,20 @@
   </div>
 
   <script>
-    // Safe storage wrapper
-    const safeStorage = (() => {
-      const memory = {};
-      try {
-        const storage = window.localStorage;
-        const key = "__test__";
-        storage.setItem(key, "1");
-        storage.removeItem(key);
-        return storage;
-      } catch (e) {
-        return {
-          getItem: (key) => memory[key] ?? null,
-          setItem: (key, value) => { memory[key] = String(value); },
-          removeItem: (key) => { delete memory[key]; }
-        };
-      }
-    })();
+    // 1. Initialize Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5NLG57O_ehRWFzkk1GUGO-LS9iXB8O6U",
+      authDomain: "mindful-planner-31026.firebaseapp.com",
+      projectId: "mindful-planner-31026",
+      storageBucket: "mindful-planner-31026.firebasestorage.app",
+      messagingSenderId: "1058974671888",
+      appId: "1:1058974671888:web:a6292d78e442674e429695",
+      measurementId: "G-HVDXS3CSD6"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
     // Default template data for fresh user signups
     function getDefaultAppData() {
@@ -1814,10 +1816,103 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       buildMatrixGrid();
-      checkAuthSession();
       initYearCombobox();
+      populateCategorySelects();
       window.addEventListener('resize', renderConnections);
       requestAnimationFrame(flowerAnimationLoop);
+    });
+
+    // 2. Auth State Sync with Firebase
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        currentUser = user.email ? user.email.split('@')[0] : 'User';
+        authModal.style.display = 'none';
+        userDisplayName.textContent = currentUser;
+        welcomeHeading.textContent = `Welcome to Your Cabinet, ${currentUser}!`;
+        loadUserDataCloud(user.uid);
+      } else {
+        authModal.style.display = 'flex';
+      }
+    });
+
+    // 3. Database Read & Write Methods
+    async function loadUserDataCloud(uid) {
+      try {
+        const doc = await db.collection('users').doc(uid).get();
+        if (doc.exists) {
+          appData = doc.data();
+          if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
+          if (!appData.categories || appData.categories.length === 0) {
+            appData.categories = [
+              { id: "cat_work", name: "Work", color: "#e0f2fe" },
+              { id: "cat_home", name: "Home", color: "#dcfce7" },
+              { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
+              { id: "cat_default", name: "General", color: "#f8fafc" }
+            ];
+          }
+        } else {
+          appData = getDefaultAppData();
+          await saveUserDataCloud(uid);
+        }
+        checkMonthlyAutoReset();
+        populateCategorySelects();
+        renderAll();
+      } catch (err) {
+        console.error("Error reading cloud data:", err);
+        alert("Firestore Read Error: " + err.message);
+      }
+    }
+
+    async function saveUserDataCloud(uid) {
+      const targetUid = uid || (auth.currentUser ? auth.currentUser.uid : null);
+      if (!targetUid) {
+        console.warn("Save skipped: No authenticated user ID found.");
+        return;
+      }
+
+      try {
+        const cleanData = JSON.parse(JSON.stringify(appData));
+        await db.collection('users').doc(targetUid).set(cleanData, { merge: true });
+        console.log("Successfully saved to Firestore for UID:", targetUid);
+      } catch (err) {
+        console.error("Firestore Save Failed:", err);
+        alert("Firestore Save Error: " + err.message);
+      }
+    }
+
+    async function saveUserData() {
+      if (auth.currentUser) {
+        await saveUserDataCloud(auth.currentUser.uid);
+      } else {
+        alert("Cannot save: You are not logged in.");
+      }
+    }
+
+    // 4. Form Authentication Handler
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawUser = document.getElementById('authUsername').value.trim();
+      const pass = document.getElementById('authPassword').value.trim();
+
+      if (!rawUser || !pass) return;
+
+      const email = rawUser.includes('@') ? rawUser : `${rawUser}@planner.com`;
+
+      try {
+        if (isSignUpMode) {
+          const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
+          appData = getDefaultAppData();
+          await saveUserDataCloud(userCredential.user.uid);
+        } else {
+          await auth.signInWithEmailAndPassword(email, pass);
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => location.reload());
     });
 
     function formatDateISO(dateObj) {
@@ -1833,23 +1928,23 @@
       return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     }
 
-    function manualSave() {
-      saveUserData();
-      autoSaveTodaySnapshot();
-
+    async function manualSave() {
       const btn = document.getElementById('manualSaveBtn');
+      if (btn) btn.innerHTML = '⏳ Saving...';
+      
+      autoSaveTodaySnapshot();
+      await saveUserData();
+
       if (btn) {
-        const origText = btn.innerHTML;
         btn.innerHTML = '✅ Saved!';
         btn.style.backgroundColor = '#38a169';
         setTimeout(() => {
-          btn.innerHTML = origText;
+          btn.innerHTML = '💾 Save';
           btn.style.backgroundColor = '';
         }, 1800);
       }
     }
 
-    // Clear Auth Tab Mode Selector (Log In vs Sign Up)
     function setAuthMode(signUp) {
       isSignUpMode = signUp;
       const loginTab = document.getElementById('loginTabBtn');
@@ -2066,101 +2161,6 @@
       }
     }
 
-    function checkAuthSession() {
-      const activeUser = safeStorage.getItem('planner_active_user');
-      if (activeUser) {
-        currentUser = activeUser;
-        loadUserData();
-        checkMonthlyAutoReset();
-        authModal.style.display = 'none';
-        userDisplayName.textContent = currentUser;
-        welcomeHeading.textContent = `Welcome to Your Cabinet, ${currentUser}!`;
-        renderAll();
-      } else {
-        authModal.style.display = 'flex';
-      }
-    }
-
-    // Authentic tabbed Auth submit logic
-    authForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const user = document.getElementById('authUsername').value.trim();
-      const pass = document.getElementById('authPassword').value.trim();
-
-      if (!user || !pass) return;
-
-      const usersDb = JSON.parse(safeStorage.getItem('planner_users') || '{}');
-
-      if (isSignUpMode) {
-        // Sign Up Mode: New Registration
-        if (usersDb[user]) {
-          alert('Username is already registered! Please log in or choose a different username.');
-          return;
-        }
-        usersDb[user] = pass;
-        safeStorage.setItem('planner_users', JSON.stringify(usersDb));
-        
-        // Save initial template state for new user
-        appData = getDefaultAppData();
-        safeStorage.setItem(`planner_data_${user}`, JSON.stringify(appData));
-        
-        loginUser(user);
-      } else {
-        // Log In Mode: Existing User
-        if (!usersDb[user]) {
-          alert('User not found. Please register via the Sign Up tab.');
-          return;
-        }
-        if (usersDb[user] !== pass) {
-          alert('Incorrect password. Please try again.');
-          return;
-        }
-        loginUser(user);
-      }
-    });
-
-    function loginUser(username) {
-      currentUser = username;
-      safeStorage.setItem('planner_active_user', username);
-      authModal.style.display = 'none';
-      userDisplayName.textContent = currentUser;
-      welcomeHeading.textContent = `Welcome to Your Cabinet, ${currentUser}!`;
-      loadUserData();
-      checkMonthlyAutoReset();
-      renderAll();
-    }
-
-    logoutBtn.addEventListener('click', () => {
-      saveUserData();
-      safeStorage.removeItem('planner_active_user');
-      currentUser = null;
-      location.reload();
-    });
-
-    function loadUserData() {
-      const saved = safeStorage.getItem(`planner_data_${currentUser}`);
-      if (saved) {
-        appData = JSON.parse(saved);
-        if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
-        if (!appData.categories) {
-          appData.categories = [
-            { id: "cat_work", name: "Work", color: "#e0f2fe" },
-            { id: "cat_home", name: "Home", color: "#dcfce7" },
-            { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
-            { id: "cat_default", name: "General", color: "#f8fafc" }
-          ];
-        }
-      } else {
-        appData = getDefaultAppData();
-      }
-    }
-
-    function saveUserData() {
-      if (currentUser) {
-        safeStorage.setItem(`planner_data_${currentUser}`, JSON.stringify(appData));
-      }
-    }
-
     function renderAll() {
       populateCategorySelects();
       renderGoals();
@@ -2170,12 +2170,20 @@
       setTimeout(renderConnections, 50);
     }
 
-    // CATEGORY MANAGEMENT
     function populateCategorySelects() {
       const selects = document.querySelectorAll('.category-select');
+      if (!appData.categories || appData.categories.length === 0) {
+        appData.categories = [
+          { id: "cat_work", name: "Work", color: "#e0f2fe" },
+          { id: "cat_home", name: "Home", color: "#dcfce7" },
+          { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
+          { id: "cat_default", name: "General", color: "#f8fafc" }
+        ];
+      }
+
       selects.forEach(sel => {
         sel.innerHTML = '';
-        (appData.categories || []).forEach(cat => {
+        appData.categories.forEach(cat => {
           const opt = document.createElement('option');
           opt.value = cat.id;
           opt.textContent = cat.name;
@@ -2254,7 +2262,6 @@
       renderGoals();
     }
 
-    // 12-STAGE FLOWER GROWTH ENGINE
     function updateFlowerGrowth() {
       const visibleWeekly = (appData.goals.weekly || []).filter(g => calculatePeriodDelta('weekly', g.dateCreated) >= 0);
       const visibleMonthly = (appData.goals.monthly || []).filter(g => calculatePeriodDelta('monthly', g.dateCreated) >= 0);
