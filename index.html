@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mindful Planner | Personal Cabinet</title>
   
-  <!-- SheetJS for Excel Generation -->
-  <script src="./Mindful Planner _ Personal Cabinet_files/xlsx.full.min.js.download"></script>
   <!-- Chart.js for Analytics -->
   <script src="./Mindful Planner _ Personal Cabinet_files/chart.js.download"></script>
 
@@ -1600,8 +1598,8 @@
           <button class="btn-action btn-save" id="manualSaveBtn" onclick="manualSave()" title="Save all changes manually (Autosave is active)">
             💾 Save
           </button>
-          <button class="btn-action btn-excel" onclick="exportToExcel()" title="Export goals & matrix to Excel">
-            📊 Excel
+          <button class="btn-action btn-excel" onclick="exportToCSV()" title="Export goals & matrix to CSV">
+            📊 CSV Export
           </button>
           <button class="btn-action btn-email" onclick="sendEmailReport()" title="Send summary report via Email">
             ✉️ Email
@@ -2239,12 +2237,11 @@
       document.execCommand(command, false, null);
     }
 
-    /* FIXED NOTE TABS MANAGEMENT */
+    /* NOTE TABS MANAGEMENT */
     function renderNoteTabs() {
       const tabBar = document.getElementById('noteTabBar');
       if (!tabBar) return;
 
-      // Clear existing tabs except "+ New Tab" button
       tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
 
       if (!appData.noteTabs || appData.noteTabs.length === 0) {
@@ -2262,7 +2259,6 @@
         const tabEl = document.createElement('div');
         tabEl.className = `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
         
-        // Single click switches active tab
         tabEl.onclick = (e) => {
           if (e.target.tagName === 'INPUT') return;
           selectNoteTab(tab.id);
@@ -2348,7 +2344,6 @@
         activeTab.content = notesBox.innerHTML;
       }
 
-      // Do NOT tear down DOM if clicking the already selected tab
       if (appData.activeNoteTabId === id) return;
 
       appData.activeNoteTabId = id;
@@ -3439,29 +3434,36 @@
       });
     }
 
-    function exportToExcel() {
-      const workbook = XLSX.utils.book_new();
-      const goalsRows = [];
+    /* PURE JS CSV EXPORTER (NO EXTERNAL LIBRARIES REQUIRED) */
+    function exportToCSV() {
       const currentMonthYear = `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
+      let csvRows = [];
+
+      // Section 1: Active Goals
+      csvRows.push(['SECTION', 'ACTIVE GOALS']);
+      csvRows.push(['Category', 'Type', 'Goal Title', 'Status', 'Periods Passed', 'Period Tag']);
 
       ['weekly', 'monthly', 'yearly'].forEach(type => {
         (appData.goals[type] || []).forEach(g => {
           const cat = (appData.categories || []).find(c => c.id === g.categoryId) || { name: 'General' };
-          goalsRows.push({
-            Category: cat.name,
-            Type: type.toUpperCase(),
-            "Goal Title": g.text,
-            Status: g.done ? 'Completed' : 'Pending',
-            "Periods Passed": calculatePeriodDelta(type, g.dateCreated),
-            "Period Tag": g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
-          });
+          csvRows.push([
+            cat.name,
+            type.toUpperCase(),
+            g.text,
+            g.done ? 'Completed' : 'Pending',
+            calculatePeriodDelta(type, g.dateCreated),
+            g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
+          ]);
         });
       });
 
-      const goalsSheet = XLSX.utils.json_to_sheet(goalsRows);
-      XLSX.utils.book_append_sheet(workbook, goalsSheet, "Active Goals Summary");
+      csvRows.push([]); // Empty spacer row
 
-      const matrixRows = appData.stickers.map(s => {
+      // Section 2: Priority Matrix
+      csvRows.push(['SECTION', 'PRIORITY MATRIX']);
+      csvRows.push(['Note ID', 'Goal Note', 'Importance Level', 'Simplicity Level', 'Color Tag']);
+
+      (appData.stickers || []).forEach(s => {
         let imp = "Unassigned";
         let simp = "Unassigned";
 
@@ -3471,19 +3473,36 @@
           simp = parts[2] + " / 5";
         }
 
-        return {
-          "Note ID": s.id,
-          "Goal Note": s.text,
-          "Importance Level": imp,
-          "Simplicity Level": simp,
-          "Color Tag": s.color
-        };
+        csvRows.push([
+          s.id,
+          s.text,
+          imp,
+          simp,
+          s.color
+        ]);
       });
 
-      const matrixSheet = XLSX.utils.json_to_sheet(matrixRows);
-      XLSX.utils.book_append_sheet(workbook, matrixSheet, "Priority Matrix");
+      // Escape quotes and format comma values
+      const csvContent = csvRows.map(row => 
+        row.map(field => {
+          const str = String(field ?? '');
+          if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+            return `"${str.replace(/"/g, '""')}"`;
+          }
+          return str;
+        }).join(',')
+      ).join('\n');
 
-      XLSX.writeFile(workbook, `Mindful_Planner_${currentUser}_${new Date().toISOString().split('T')[0]}.xlsx`);
+      // Trigger automatic CSV file download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `Mindful_Planner_${currentUser || 'Export'}_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
 
     function sendEmailReport() {
