@@ -919,12 +919,6 @@
       border-radius: 3px;
     }
 
-    .note-tab-title[contenteditable="true"] {
-      background: white;
-      color: var(--text-main);
-      outline: 1.5px solid var(--primary-dark);
-    }
-
     .close-note-tab {
       font-size: 0.75rem;
       opacity: 0.7;
@@ -1009,7 +1003,7 @@
 
     /* EXPANDED Tall Note Area */
     .rich-notes-box {
-      min-height: 380px; /* Expand down significantly */
+      min-height: 380px;
       max-height: 600px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
@@ -1547,7 +1541,7 @@
 </head>
 <body>
 
-  <!-- TABBED AUTH MODAL (Existing vs New Registration) -->
+  <!-- TABBED AUTH MODAL -->
   <div id="authModal" class="auth-overlay" style="display: flex;">
     <div class="auth-card">
       <div class="auth-tabs">
@@ -1774,7 +1768,7 @@
 
           </div>
 
-          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot + Compact 7x7 Tracker) -->
+          <!-- Column 3: Right Sidebar Stack -->
           <div class="right-sidebar-column">
             <!-- Sticky Notes -->
             <div class="stickers-bank-card">
@@ -1809,7 +1803,7 @@
               </div>
             </div>
 
-            <!-- Compact 7x7 Task Tracker Grid (Placed directly under Flower Pot) -->
+            <!-- Compact 7x7 Task Tracker Grid -->
             <div class="tracker-card">
               <h3>
                 <span>🎯 7-Day Habit Grid</span>
@@ -1826,7 +1820,6 @@
                 <div class="grid-7x7-header">F</div>
                 <div class="grid-7x7-header">S</div>
                 <div class="grid-7x7-header">S</div>
-                <!-- 7 Rows rendered via JS -->
               </div>
             </div>
 
@@ -2246,11 +2239,12 @@
       document.execCommand(command, false, null);
     }
 
-    /* NOTE TABS MANAGEMENT */
+    /* FIXED NOTE TABS MANAGEMENT */
     function renderNoteTabs() {
       const tabBar = document.getElementById('noteTabBar');
       if (!tabBar) return;
 
+      // Clear existing tabs except "+ New Tab" button
       tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
 
       if (!appData.noteTabs || appData.noteTabs.length === 0) {
@@ -2267,39 +2261,50 @@
       appData.noteTabs.forEach(tab => {
         const tabEl = document.createElement('div');
         tabEl.className = `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
-        tabEl.onclick = () => selectNoteTab(tab.id);
+        
+        // Single click switches active tab
+        tabEl.onclick = (e) => {
+          if (e.target.tagName === 'INPUT') return;
+          selectNoteTab(tab.id);
+        };
 
         const titleEl = document.createElement('span');
         titleEl.className = 'note-tab-title';
         titleEl.textContent = tab.title;
         titleEl.title = "Double-click to rename tab";
 
-        /* EDIT TAB NAME ON DOUBLE CLICK */
+        /* DOUBLE CLICK TO RENAME TAB VIA INLINE INPUT */
         titleEl.ondblclick = (e) => {
           e.stopPropagation();
-          titleEl.contentEditable = "true";
-          titleEl.focus();
+          e.preventDefault();
 
-          // Select all text
-          const range = document.createRange();
-          range.selectNodeContents(titleEl);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-        };
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = tab.title;
+          input.style.cssText = 'width: 90px; font-size: 0.82rem; font-weight: 600; padding: 1px 4px; border: 1px solid #2b6cb0; border-radius: 4px; outline: none; color: #2d3748; background: #ffffff;';
 
-        titleEl.onblur = () => {
-          titleEl.contentEditable = "false";
-          const newTitle = titleEl.textContent.trim();
-          tab.title = newTitle || 'Untitled Tab';
-          saveUserData();
-        };
+          titleEl.replaceWith(input);
+          input.focus();
+          input.select();
 
-        titleEl.onkeydown = (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            titleEl.blur();
-          }
+          const saveNewTitle = () => {
+            const newTitle = input.value.trim();
+            tab.title = newTitle || 'Untitled Tab';
+            saveUserData();
+            autoSaveTodaySnapshot();
+            renderNoteTabs();
+          };
+
+          input.onblur = saveNewTitle;
+          input.onkeydown = (ev) => {
+            if (ev.key === 'Enter') {
+              ev.preventDefault();
+              input.blur();
+            }
+            if (ev.key === 'Escape') {
+              renderNoteTabs();
+            }
+          };
         };
 
         const closeBtn = document.createElement('button');
@@ -2342,6 +2347,9 @@
       if (activeTab && notesBox) {
         activeTab.content = notesBox.innerHTML;
       }
+
+      // Do NOT tear down DOM if clicking the already selected tab
+      if (appData.activeNoteTabId === id) return;
 
       appData.activeNoteTabId = id;
       renderNoteTabs();
