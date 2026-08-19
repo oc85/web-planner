@@ -330,7 +330,7 @@
     /* Flexible & Resizable Grid Layout */
     .grid-workspace {
       display: grid;
-      grid-template-columns: minmax(220px, auto) 1fr minmax(220px, auto);
+      grid-template-columns: minmax(220px, auto) 1fr minmax(240px, auto);
       gap: 15px;
       align-items: start;
     }
@@ -350,7 +350,7 @@
     .center-column {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       min-width: 0;
     }
 
@@ -359,7 +359,7 @@
       flex-direction: column;
       gap: 12px;
       width: 320px;
-      min-width: 220px;
+      min-width: 240px;
       max-width: 600px;
       resize: horizontal;
       overflow: auto;
@@ -861,23 +861,98 @@
       text-align: center;
     }
 
+    /* EXPANDED TABBED NOTES EDITOR CARD */
     .notes-editor-card {
       background: white;
       border-radius: 8px;
-      padding: 12px;
+      padding: 14px 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       border: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .notes-editor-card h3 {
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--primary-dark);
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    /* Note Tabs Navigation Bar */
+    .note-tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+      overflow-x: auto;
+    }
+
+    .note-tab {
+      background: #edf2f7;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .note-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .note-tab-title {
+      outline: none;
+      padding: 1px 3px;
+      border-radius: 3px;
+    }
+
+    .note-tab-title[contenteditable="true"] {
+      background: white;
+      color: var(--text-main);
+      outline: 1.5px solid var(--primary-dark);
+    }
+
+    .close-note-tab {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      border: none;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .close-note-tab:hover { opacity: 1; }
+
+    .add-note-tab-btn {
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .add-note-tab-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #f7fafc;
     }
 
     .editor-toolbar {
@@ -932,22 +1007,120 @@
     .bg-swatch:hover { transform: scale(1.15); }
     .bg-swatch.selected { border-color: #2d3748; stroke-width: 2px; }
 
+    /* EXPANDED Tall Note Area */
     .rich-notes-box {
-      min-height: 110px;
-      max-height: 180px;
+      min-height: 380px; /* Expand down significantly */
+      max-height: 600px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 0.8rem;
-      line-height: 1.4;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      line-height: 1.6;
       overflow-y: auto;
       outline: none;
       background-color: var(--pastel-yellow);
       transition: background-color 0.25s ease;
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+      resize: vertical;
     }
 
     .rich-notes-box:focus { border-color: var(--primary); }
+
+    /* COMPACT RIGHT SIDEBAR 7x7 TRACKER STYLES */
+    .tracker-card {
+      background: white;
+      border-radius: 8px;
+      padding: 10px 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tracker-card h3 {
+      font-size: 0.82rem;
+      color: var(--primary-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .grid-7x7-container {
+      display: grid;
+      grid-template-columns: minmax(75px, 1fr) repeat(7, 20px);
+      gap: 4px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .grid-7x7-header {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .grid-7x7-task-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      outline: none;
+      padding: 2px 4px;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .grid-7x7-task-label:hover {
+      background: #f8fafc;
+      border-color: var(--border-color);
+    }
+
+    .grid-7x7-task-label[contenteditable="true"] {
+      background: white;
+      border-color: var(--primary);
+      overflow: visible;
+      white-space: normal;
+    }
+
+    /* Compact Circle Checks */
+    .circle-check-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #cbd5e0;
+      background: white;
+      cursor: pointer;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      font-size: 0.65rem;
+      font-weight: bold;
+      color: white;
+      user-select: none;
+      padding: 0;
+    }
+
+    .circle-check-btn:hover {
+      border-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .circle-check-btn.checked {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .circle-check-btn.checked::after {
+      content: '✓';
+    }
 
     /* SETTINGS CATEGORY CARD STYLES */
     .settings-card {
@@ -1539,7 +1712,7 @@
             </div>
           </div>
 
-          <!-- Column 2: Center (Matrix + Notes & Comments below) -->
+          <!-- Column 2: Center (Matrix + Notes) -->
           <div class="center-column">
             <!-- 5x5 Priority Matrix -->
             <div class="matrix-card">
@@ -1567,9 +1740,16 @@
               </div>
             </div>
 
-            <!-- Notes Editor -->
+            <!-- Notes Editor with Editable Tabs and Expanded Height -->
             <div class="notes-editor-card">
-              <h3>📝 Notes &amp; Comments</h3>
+              <h3>📝 Notes &amp; Comments Workspace</h3>
+              
+              <!-- Tab Bar for Notes -->
+              <div class="note-tab-bar" id="noteTabBar">
+                <!-- Dynamic tabs added here in JS -->
+                <button type="button" class="add-note-tab-btn" onclick="addNoteTab()">+ New Tab</button>
+              </div>
+
               <div class="editor-toolbar">
                 <button type="button" class="editor-btn" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
                 <button type="button" class="editor-btn" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
@@ -1587,13 +1767,16 @@
                   <div class="bg-swatch" style="background-color: var(--pastel-white);" onclick="setPastelBg('var(--pastel-white)', this)" title="White"></div>
                 </div>
               </div>
+              
+              <!-- Expanded Tall Rich Notes Area -->
               <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
             </div>
+
           </div>
 
-          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot) -->
+          <!-- Column 3: Right Sidebar Stack (Stickers + Flower Pot + Compact 7x7 Tracker) -->
           <div class="right-sidebar-column">
-            <!-- Stickers -->
+            <!-- Sticky Notes -->
             <div class="stickers-bank-card">
               <h3>Sticky Notes</h3>
               <div class="sticker-creator">
@@ -1625,6 +1808,28 @@
                 Complete > 60% of month &amp; week tasks to trigger bloom growth.
               </div>
             </div>
+
+            <!-- Compact 7x7 Task Tracker Grid (Placed directly under Flower Pot) -->
+            <div class="tracker-card">
+              <h3>
+                <span>🎯 7-Day Habit Grid</span>
+                <small style="font-size: 0.65rem; color: var(--text-muted); font-weight: normal;">Click labels to edit</small>
+              </h3>
+              
+              <div class="grid-7x7-container" id="trackerGrid7x7">
+                <!-- Headers -->
+                <div class="grid-7x7-header" style="text-align: left;">Task</div>
+                <div class="grid-7x7-header">M</div>
+                <div class="grid-7x7-header">T</div>
+                <div class="grid-7x7-header">W</div>
+                <div class="grid-7x7-header">T</div>
+                <div class="grid-7x7-header">F</div>
+                <div class="grid-7x7-header">S</div>
+                <div class="grid-7x7-header">S</div>
+                <!-- 7 Rows rendered via JS -->
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -1773,6 +1978,20 @@
         lastActiveMonthYear: "",
         userNotes: "",
         userNotesBg: "var(--pastel-yellow)",
+        noteTabs: [
+          { id: "tab_1", title: "Main Notes", content: "This is an expanded note area! Double-click tab titles to rename them.", bg: "var(--pastel-yellow)" },
+          { id: "tab_2", title: "Brainstorming", content: "Ideas for future projects go here...", bg: "var(--pastel-blue)" }
+        ],
+        activeNoteTabId: "tab_1",
+        tracker7x7: [
+          { id: 1, title: "Morning Run", checks: [false, false, false, false, false, false, false] },
+          { id: 2, title: "Deep Work (2h)", checks: [false, false, false, false, false, false, false] },
+          { id: 3, title: "Read 30 mins", checks: [false, false, false, false, false, false, false] },
+          { id: 4, title: "Meditation", checks: [false, false, false, false, false, false, false] },
+          { id: 5, title: "No Sugar", checks: [false, false, false, false, false, false, false] },
+          { id: 6, title: "Code / Study", checks: [false, false, false, false, false, false, false] },
+          { id: 7, title: "Plan Tomorrow", checks: [false, false, false, false, false, false, false] }
+        ],
         categories: [
           { id: "cat_work", name: "Work", color: "#e0f2fe" },
           { id: "cat_home", name: "Home", color: "#dcfce7" },
@@ -1895,6 +2114,19 @@
               { id: "cat_default", name: "General", color: "#f8fafc" }
             ];
           }
+
+          if (!appData.noteTabs || appData.noteTabs.length === 0) {
+            appData.noteTabs = [
+              { id: "tab_1", title: "Main Notes", content: appData.userNotes || "Type comments or notes here...", bg: appData.userNotesBg || "var(--pastel-yellow)" }
+            ];
+            appData.activeNoteTabId = "tab_1";
+          }
+          if (!appData.tracker7x7 || appData.tracker7x7.length === 0) {
+            appData.tracker7x7 = [
+              "Morning Run", "Deep Work (2h)", "Read 30 mins", "Meditation", "No Sugar", "Code / Study", "Plan Tomorrow"
+            ].map((t, idx) => ({ id: idx + 1, title: t, checks: [false, false, false, false, false, false, false] }));
+          }
+
         } else {
           appData = getDefaultAppData();
           await saveUserDataCloud(uid);
@@ -2014,9 +2246,151 @@
       document.execCommand(command, false, null);
     }
 
+    /* NOTE TABS MANAGEMENT */
+    function renderNoteTabs() {
+      const tabBar = document.getElementById('noteTabBar');
+      if (!tabBar) return;
+
+      tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
+
+      if (!appData.noteTabs || appData.noteTabs.length === 0) {
+        appData.noteTabs = [
+          { id: "tab_1", title: "Main Notes", content: "", bg: "var(--pastel-yellow)" }
+        ];
+        appData.activeNoteTabId = "tab_1";
+      }
+
+      if (!appData.activeNoteTabId) {
+        appData.activeNoteTabId = appData.noteTabs[0].id;
+      }
+
+      appData.noteTabs.forEach(tab => {
+        const tabEl = document.createElement('div');
+        tabEl.className = `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
+        tabEl.onclick = () => selectNoteTab(tab.id);
+
+        const titleEl = document.createElement('span');
+        titleEl.className = 'note-tab-title';
+        titleEl.textContent = tab.title;
+        titleEl.title = "Double-click to rename tab";
+
+        /* EDIT TAB NAME ON DOUBLE CLICK */
+        titleEl.ondblclick = (e) => {
+          e.stopPropagation();
+          titleEl.contentEditable = "true";
+          titleEl.focus();
+
+          // Select all text
+          const range = document.createRange();
+          range.selectNodeContents(titleEl);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        };
+
+        titleEl.onblur = () => {
+          titleEl.contentEditable = "false";
+          const newTitle = titleEl.textContent.trim();
+          tab.title = newTitle || 'Untitled Tab';
+          saveUserData();
+        };
+
+        titleEl.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            titleEl.blur();
+          }
+        };
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'close-note-tab';
+        closeBtn.textContent = '✕';
+        closeBtn.title = "Delete tab";
+        closeBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteNoteTab(tab.id);
+        };
+
+        tabEl.appendChild(titleEl);
+        if (appData.noteTabs.length > 1) {
+          tabEl.appendChild(closeBtn);
+        }
+
+        tabBar.insertBefore(tabEl, tabBar.querySelector('.add-note-tab-btn'));
+      });
+
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId) || appData.noteTabs[0];
+      const notesBox = document.getElementById('richNotesBox');
+      if (notesBox) {
+        notesBox.innerHTML = activeTab.content || "";
+        const bg = activeTab.bg || "var(--pastel-yellow)";
+        notesBox.style.backgroundColor = bg;
+
+        document.querySelectorAll('.bg-swatch').forEach(sw => {
+          if (sw.getAttribute('onclick').includes(bg)) {
+            sw.classList.add('selected');
+          } else {
+            sw.classList.remove('selected');
+          }
+        });
+      }
+    }
+
+    function selectNoteTab(id) {
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
+      const notesBox = document.getElementById('richNotesBox');
+      if (activeTab && notesBox) {
+        activeTab.content = notesBox.innerHTML;
+      }
+
+      appData.activeNoteTabId = id;
+      renderNoteTabs();
+      saveUserData();
+    }
+
+    function addNoteTab() {
+      const notesBox = document.getElementById('richNotesBox');
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
+      if (activeTab && notesBox) {
+        activeTab.content = notesBox.innerHTML;
+      }
+
+      const newId = 'tab_' + Date.now();
+      const newTab = {
+        id: newId,
+        title: `Note ${appData.noteTabs.length + 1}`,
+        content: '',
+        bg: 'var(--pastel-yellow)'
+      };
+
+      appData.noteTabs.push(newTab);
+      appData.activeNoteTabId = newId;
+      renderNoteTabs();
+      saveUserData();
+      autoSaveTodaySnapshot();
+    }
+
+    function deleteNoteTab(id) {
+      if (appData.noteTabs.length <= 1) return;
+
+      appData.noteTabs = appData.noteTabs.filter(t => t.id !== id);
+      if (appData.activeNoteTabId === id) {
+        appData.activeNoteTabId = appData.noteTabs[0].id;
+      }
+
+      renderNoteTabs();
+      saveUserData();
+      autoSaveTodaySnapshot();
+    }
+
     function setPastelBg(colorVal, element) {
       document.querySelectorAll('.bg-swatch').forEach(sw => sw.classList.remove('selected'));
       element.classList.add('selected');
+
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
+      if (activeTab) {
+        activeTab.bg = colorVal;
+      }
 
       const notesBox = document.getElementById('richNotesBox');
       notesBox.style.backgroundColor = colorVal;
@@ -2028,26 +2402,68 @@
 
     function saveRichNotes() {
       const notesBox = document.getElementById('richNotesBox');
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
+      if (activeTab && notesBox) {
+        activeTab.content = notesBox.innerHTML;
+      }
       appData.userNotes = notesBox.innerHTML;
       saveUserData();
       autoSaveTodaySnapshot();
     }
 
-    function loadRichNotes() {
-      const notesBox = document.getElementById('richNotesBox');
-      if (notesBox) {
-        notesBox.innerHTML = appData.userNotes || "";
-        const bg = appData.userNotesBg || "var(--pastel-yellow)";
-        notesBox.style.backgroundColor = bg;
+    /* COMPACT 7x7 HABIT TRACKER GRID RENDER */
+    function render7x7Tracker() {
+      const grid = document.getElementById('trackerGrid7x7');
+      if (!grid) return;
 
-        document.querySelectorAll('.bg-swatch').forEach(sw => {
-          if (sw.getAttribute('onclick').includes(bg)) {
-            sw.classList.add('selected');
-          } else {
-            sw.classList.remove('selected');
-          }
-        });
+      grid.querySelectorAll('.grid-7x7-task-label, .circle-check-btn').forEach(el => el.remove());
+
+      if (!appData.tracker7x7 || appData.tracker7x7.length === 0) {
+        appData.tracker7x7 = [
+          "Run 10k", "Deep Work", "Read", "Meditate", "No Sugar", "Code/Study", "Plan Day"
+        ].map((t, idx) => ({ id: idx + 1, title: t, checks: [false, false, false, false, false, false, false] }));
       }
+
+      appData.tracker7x7.slice(0, 7).forEach((row, rowIndex) => {
+        const label = document.createElement('div');
+        label.className = 'grid-7x7-task-label';
+        label.textContent = row.title || `Habit ${rowIndex + 1}`;
+        label.title = "Click to edit task name";
+
+        label.onclick = () => {
+          label.contentEditable = "true";
+          label.focus();
+        };
+
+        label.onblur = () => {
+          label.contentEditable = "false";
+          const newTitle = label.textContent.trim();
+          row.title = newTitle || `Habit ${rowIndex + 1}`;
+          saveUserData();
+        };
+
+        label.onkeydown = (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            label.blur();
+          }
+        };
+
+        grid.appendChild(label);
+
+        for (let col = 0; col < 7; col++) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `circle-check-btn ${row.checks[col] ? 'checked' : ''}`;
+          btn.onclick = () => {
+            row.checks[col] = !row.checks[col];
+            btn.classList.toggle('checked', row.checks[col]);
+            saveUserData();
+            autoSaveTodaySnapshot();
+          };
+          grid.appendChild(btn);
+        }
+      });
     }
 
     function getMonday(d) {
@@ -2210,7 +2626,8 @@
       populateCategorySelects();
       renderGoals();
       renderStickers();
-      loadRichNotes();
+      renderNoteTabs();
+      render7x7Tracker();
       updateTimeControlBar();
       setTimeout(renderConnections, 50);
     }
@@ -2569,7 +2986,6 @@
       textSpan.setAttribute('contenteditable', 'true');
       textSpan.focus();
 
-      // Select all text when editing starts
       const range = document.createRange();
       range.selectNodeContents(textSpan);
       const sel = window.getSelection();
@@ -2587,7 +3003,7 @@
           autoSaveTodaySnapshot();
           renderGoals();
         } else if (goal) {
-          textSpan.innerText = goal.text; // Revert if empty
+          textSpan.innerText = goal.text;
         }
       };
 
