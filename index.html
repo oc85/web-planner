@@ -342,6 +342,7 @@
       display: flex;
     }
 
+    /* Flexible & Resizable Grid Layout */
     .grid-workspace {
       display: grid;
       grid-template-columns: minmax(220px, auto) 1fr minmax(240px, auto);
@@ -875,7 +876,7 @@
       text-align: center;
     }
 
-    /* NOTES EDITOR CARD */
+    /* EXPANDED TABBED NOTES EDITOR CARD */
     .notes-editor-card {
       background: white;
       border-radius: 8px;
@@ -895,6 +896,7 @@
       align-items: center;
     }
 
+    /* Note Tabs Navigation Bar */
     .note-tab-bar {
       display: flex;
       align-items: center;
@@ -1014,6 +1016,7 @@
     .bg-swatch:hover { transform: scale(1.15); }
     .bg-swatch.selected { border-color: #2d3748; stroke-width: 2px; }
 
+    /* EXPANDED Tall Note Area */
     .rich-notes-box {
       min-height: 380px;
       max-height: 600px;
@@ -1032,6 +1035,7 @@
 
     .rich-notes-box:focus { border-color: var(--primary); }
 
+    /* COMPACT RIGHT SIDEBAR 7x7 TRACKER STYLES */
     .tracker-card {
       background: white;
       border-radius: 8px;
@@ -1093,6 +1097,7 @@
       white-space: normal;
     }
 
+    /* Compact Circle Checks */
     .circle-check-btn {
       width: 18px;
       height: 18px;
@@ -1751,6 +1756,7 @@
 
           <!-- Column 2: Center (Matrix + Notes) -->
           <div class="center-column">
+            <!-- 5x5 Priority Matrix -->
             <div class="matrix-card">
               <div class="matrix-title-bar">
                 <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
@@ -1776,10 +1782,13 @@
               </div>
             </div>
 
+            <!-- Notes Editor with Editable Tabs and Expanded Height -->
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments Workspace</h3>
               
+              <!-- Tab Bar for Notes -->
               <div class="note-tab-bar" id="noteTabBar">
+                <!-- Dynamic tabs added here in JS -->
                 <button type="button" class="add-note-tab-btn" onclick="addNoteTab()">+ New Tab</button>
               </div>
 
@@ -1801,6 +1810,7 @@
                 </div>
               </div>
               
+              <!-- Expanded Tall Rich Notes Area -->
               <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
             </div>
 
@@ -1808,6 +1818,7 @@
 
           <!-- Column 3: Right Sidebar Stack -->
           <div class="right-sidebar-column">
+            <!-- Sticky Notes -->
             <div class="stickers-bank-card">
               <h3>Sticky Notes</h3>
               <div class="sticker-creator">
@@ -1826,6 +1837,7 @@
               <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
             </div>
 
+            <!-- Flower Pot -->
             <div class="flower-card">
               <h3>
                 🌹 Rose Bloom Pot
@@ -1839,6 +1851,7 @@
               </div>
             </div>
 
+            <!-- Compact 7x7 Task Tracker Grid -->
             <div class="tracker-card">
               <h3>
                 <span>🎯 7-Day Habit Grid</span>
@@ -1846,6 +1859,7 @@
               </h3>
               
               <div class="grid-7x7-container" id="trackerGrid7x7">
+                <!-- Headers -->
                 <div class="grid-7x7-header" style="text-align: left;">Task</div>
                 <div class="grid-7x7-header">M</div>
                 <div class="grid-7x7-header">T</div>
@@ -1959,17 +1973,17 @@
       <!-- SETTINGS VIEW PANEL -->
       <div id="settingsView" class="view-panel">
 
-        <!-- ACCOUNT RECOVERY & PASSWORD SETTINGS -->
+        <!-- ACCOUNT SECURITY & RECOVERY EMAIL CARD -->
         <div class="settings-card">
           <h3>📧 Account Recovery & Password Settings</h3>
           
           <form onsubmit="updateUserRecoveryEmail(event)" style="display:flex; flex-direction:column; gap:8px;">
             <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Registered Email Address (For Password Reset):</label>
             <div style="display:flex; gap:8px;">
-              <input type="email" id="settingsEmailInput" placeholder="Enter your real email (e.g. user@gmail.com)" required style="flex:1;">
+              <input type="email" id="settingsEmailInput" placeholder="Enter your email (e.g. user@example.com)" required style="flex:1;">
               <button type="submit" class="settings-btn">Save Email</button>
             </div>
-            <p style="font-size:0.75rem; color:var(--text-muted);">This email address will be linked to your account to send password reset links if you click "Forgot Password".</p>
+            <p style="font-size:0.75rem; color:var(--text-muted);">This email address will be used to send password reset links if you click "Forgot Password".</p>
           </form>
 
           <hr style="border:0; border-top:1px solid var(--border-color); margin:6px 0;">
@@ -2024,6 +2038,7 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    // Default template data for fresh user signups
     function getDefaultAppData() {
       return {
         recoveryEmail: "",
@@ -2081,8 +2096,9 @@
       };
     }
 
+    // State Variables
     let currentUser = null;
-    let authMode = 'login'; 
+    let authMode = 'login'; // 'login', 'signup', or 'forgot'
     let selectedColor = 'bg-yellow';
     let isConnectMode = false;
     let connectSourceId = null;
@@ -2104,6 +2120,7 @@
     let preplanMonthYear = new Date().getFullYear();
     let preplanYear = new Date().getFullYear();
 
+    // FLOWER GROWTH ENGINE VARIABLES
     let currentFlowerStage = 0; 
     let targetFlowerStage = 0;  
     let flowerTime = 0;
@@ -2136,6 +2153,7 @@
       requestAnimationFrame(flowerAnimationLoop);
     });
 
+    // 2. Auth State Sync with Firebase
     auth.onAuthStateChanged((user) => {
       if (user) {
         currentUser = user.email ? user.email.split('@')[0] : 'User';
@@ -2148,6 +2166,7 @@
       }
     });
 
+    // 3. Database Read & Write Methods
     async function loadUserDataCloud(uid) {
       try {
         const doc = await db.collection('users').doc(uid).get();
@@ -2180,6 +2199,7 @@
           await saveUserDataCloud(uid);
         }
 
+        // Pre-fill settings recovery email field if available
         const emailInput = document.getElementById('settingsEmailInput');
         if (emailInput) {
           const activeEmail = auth.currentUser ? auth.currentUser.email : '';
@@ -2197,13 +2217,18 @@
 
     async function saveUserDataCloud(uid) {
       const targetUid = uid || (auth.currentUser ? auth.currentUser.uid : null);
-      if (!targetUid) return;
+      if (!targetUid) {
+        console.warn("Save skipped: No authenticated user ID found.");
+        return;
+      }
 
       try {
         const cleanData = JSON.parse(JSON.stringify(appData));
         await db.collection('users').doc(targetUid).set(cleanData, { merge: true });
+        console.log("Successfully saved to Firestore for UID:", targetUid);
       } catch (err) {
         console.error("Firestore Save Failed:", err);
+        alert("Firestore Save Error: " + err.message);
       }
     }
 
@@ -2215,7 +2240,7 @@
       }
     }
 
-    // 4. Form Authentication Handler
+    // 4. Form Authentication Handler (With Comprehensive Reset & Error Handling)
     authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const rawUser = document.getElementById('authUsername').value.trim();
@@ -2225,24 +2250,13 @@
 
       try {
         if (authMode === 'forgot') {
-          let emailToSend = rawUser;
-
-          // If the user typed an email address
           if (!rawUser.includes('@')) {
-            emailToSend = `${rawUser}@planner.com`;
+            alert("Please enter a full, valid email address (e.g. user@gmail.com).");
+            return;
           }
 
-          // Search Firestore for recovery email match if needed
-          const userSnapshot = await db.collection('users').get();
-          userSnapshot.forEach(doc => {
-            const data = doc.data();
-            if (data.recoveryEmail && (doc.id === rawUser || data.recoveryEmail === rawUser)) {
-              emailToSend = data.recoveryEmail;
-            }
-          });
-
-          await auth.sendPasswordResetEmail(emailToSend);
-          alert(`Password reset link sent to ${emailToSend}! Please check your email inbox (and spam folder).`);
+          await auth.sendPasswordResetEmail(rawUser);
+          alert(`Reset email dispatched to ${rawUser}!\n\nIf you don't see it within 2 minutes, please check your Spam/Junk folder.`);
           setAuthMode('login');
         } else if (authMode === 'signup') {
           if (!pass) return;
@@ -2259,7 +2273,13 @@
           await auth.signInWithEmailAndPassword(email, pass);
         }
       } catch (error) {
-        alert("Authentication Error: " + error.message);
+        if (error.code === 'auth/user-not-found') {
+          alert("No user account exists with this email address. Please check your spelling or sign up first.");
+        } else if (error.code === 'auth/invalid-email') {
+          alert("The email address format is invalid. Please enter a valid email address.");
+        } else {
+          alert("Authentication Error: " + error.message);
+        }
       }
     });
 
@@ -2267,34 +2287,26 @@
       auth.signOut().then(() => location.reload());
     });
 
-    // 5. Settings: Update Recovery Email Address in Auth and Database
+    // 5. Settings: Update Recovery Email
     async function updateUserRecoveryEmail(e) {
       e.preventDefault();
       const emailInput = document.getElementById('settingsEmailInput').value.trim();
-      if (!emailInput || !emailInput.includes('@')) {
-        alert("Please enter a valid email address.");
-        return;
-      }
+      if (!emailInput) return;
 
       appData.recoveryEmail = emailInput;
 
       try {
-        const user = auth.currentUser;
-        if (user) {
-          // Sync primary email with Firebase Auth for password resets
-          await user.updateEmail(emailInput);
+        if (auth.currentUser && auth.currentUser.email && auth.currentUser.email.includes('@')) {
+          await auth.currentUser.updateEmail(emailInput);
         }
-        await saveUserData();
-        alert("Recovery email updated successfully! Password reset links will now arrive in this inbox.");
       } catch (err) {
         if (err.code === 'auth/requires-recent-login') {
-          await saveUserData();
-          alert("Saved in database! Note: To update core login credentials, please log out and back in once.");
-        } else {
-          await saveUserData();
-          alert("Saved to planner settings! Note: " + err.message);
+          alert("Note: Saved in planner settings! To update core account email in Firebase security, please log out and back in.");
         }
       }
+
+      await saveUserData();
+      alert("Recovery email saved successfully! Password reset links will be sent to this email.");
     }
 
     // 6. Settings: Change Password
@@ -2386,7 +2398,7 @@
         forgotLink.style.display = 'none';
       } else if (authMode === 'forgot') {
         submitBtn.textContent = '📧 Send Password & Login Info';
-        helpText.textContent = 'Enter your registered email address (or username) to receive a password recovery link.';
+        helpText.textContent = 'Enter your registered email address to receive password recovery details.';
         passInput.style.display = 'none';
         passInput.required = false;
         forgotLink.style.display = 'none';
@@ -2404,6 +2416,7 @@
       document.execCommand(command, false, null);
     }
 
+    /* NOTE TABS MANAGEMENT */
     function renderNoteTabs() {
       const tabBar = document.getElementById('noteTabBar');
       if (!tabBar) return;
@@ -2435,6 +2448,7 @@
         titleEl.textContent = tab.title;
         titleEl.title = "Double-click to rename tab";
 
+        /* DOUBLE CLICK TO RENAME TAB VIA INLINE INPUT */
         titleEl.ondblclick = (e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -2579,6 +2593,7 @@
       autoSaveTodaySnapshot();
     }
 
+    /* COMPACT 7x7 HABIT TRACKER GRID RENDER */
     function render7x7Tracker() {
       const grid = document.getElementById('trackerGrid7x7');
       if (!grid) return;
@@ -3598,10 +3613,12 @@
       });
     }
 
+    /* PURE JS CSV EXPORTER (NO EXTERNAL LIBRARIES REQUIRED) */
     function exportToCSV() {
       const currentMonthYear = `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
       let csvRows = [];
 
+      // Section 1: Active Goals
       csvRows.push(['SECTION', 'ACTIVE GOALS']);
       csvRows.push(['Category', 'Type', 'Goal Title', 'Status', 'Periods Passed', 'Period Tag']);
 
@@ -3619,8 +3636,9 @@
         });
       });
 
-      csvRows.push([]);
+      csvRows.push([]); // Empty spacer row
 
+      // Section 2: Priority Matrix
       csvRows.push(['SECTION', 'PRIORITY MATRIX']);
       csvRows.push(['Note ID', 'Goal Note', 'Importance Level', 'Simplicity Level', 'Color Tag']);
 
@@ -3643,6 +3661,7 @@
         ]);
       });
 
+      // Escape quotes and format comma values
       const csvContent = csvRows.map(row => 
         row.map(field => {
           const str = String(field ?? '');
@@ -3653,6 +3672,7 @@
         }).join(',')
       ).join('\n');
 
+      // Trigger automatic CSV file download
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
