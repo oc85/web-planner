@@ -140,6 +140,23 @@
 
     .auth-btn:hover { background: var(--primary-dark); }
 
+    .forgot-pass-link {
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-decoration: underline;
+    }
+
+    .forgot-pass-link:hover {
+      color: var(--primary-dark);
+    }
+
     /* Top Navigation Bar */
     header {
       background: #2d4a60;
@@ -1114,7 +1131,7 @@
       content: '✓';
     }
 
-    /* SETTINGS CATEGORY CARD STYLES */
+    /* SETTINGS CARD STYLES */
     .settings-card {
       background: white;
       border-radius: 8px;
@@ -1134,6 +1151,37 @@
       color: var(--primary-dark);
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 6px;
+    }
+
+    .settings-card input[type="text"],
+    .settings-card input[type="email"],
+    .settings-card input[type="password"] {
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      width: 100%;
+    }
+
+    .settings-card input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .settings-btn {
+      padding: 8px 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s ease;
+    }
+
+    .settings-btn:hover {
+      background: var(--primary-dark);
     }
 
     .add-category-form {
@@ -1543,17 +1591,19 @@
   <div id="authModal" class="auth-overlay" style="display: flex;">
     <div class="auth-card">
       <div class="auth-tabs">
-        <button type="button" class="auth-tab active" id="loginTabBtn" onclick="setAuthMode(false)">🔑 Log In</button>
-        <button type="button" class="auth-tab" id="signupTabBtn" onclick="setAuthMode(true)">✨ Sign Up</button>
+        <button type="button" class="auth-tab active" id="loginTabBtn" onclick="setAuthMode('login')">🔑 Log In</button>
+        <button type="button" class="auth-tab" id="signupTabBtn" onclick="setAuthMode('signup')">✨ Sign Up</button>
       </div>
 
       <div class="auth-mode-help" id="authModeHelp">Log in with your existing account.</div>
 
       <form class="auth-form" id="authForm">
-        <input type="text" id="authUsername" placeholder="Username" required="">
+        <input type="text" id="authUsername" placeholder="Email or Username" required="">
         <input type="password" id="authPassword" placeholder="Password" required="">
         <button type="submit" class="auth-btn" id="authSubmitBtn">Log In to Cabinet</button>
       </form>
+
+      <button type="button" class="forgot-pass-link" id="forgotPassLink" onclick="setAuthMode('forgot')">Forgot Password / Login?</button>
     </div>
   </div>
 
@@ -1922,6 +1972,31 @@
 
       <!-- SETTINGS VIEW PANEL -->
       <div id="settingsView" class="view-panel">
+
+        <!-- ACCOUNT SECURITY & RECOVERY EMAIL CARD -->
+        <div class="settings-card">
+          <h3>📧 Account Recovery & Password Settings</h3>
+          
+          <form onsubmit="updateUserRecoveryEmail(event)" style="display:flex; flex-direction:column; gap:8px;">
+            <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Registered Email Address (For Password Reset):</label>
+            <div style="display:flex; gap:8px;">
+              <input type="email" id="settingsEmailInput" placeholder="Enter your email (e.g. user@example.com)" required style="flex:1;">
+              <button type="submit" class="settings-btn">Save Email</button>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted);">This email address will be used to send password reset links if you click "Forgot Password".</p>
+          </form>
+
+          <hr style="border:0; border-top:1px solid var(--border-color); margin:6px 0;">
+
+          <form onsubmit="updateUserPassword(event)" style="display:flex; flex-direction:column; gap:8px;">
+            <label style="font-size:0.8rem; font-weight:bold; color:var(--text-muted);">Change Password (Keep Login Username):</label>
+            <input type="password" id="settingsNewPassword" placeholder="New Password (min 6 characters)" required>
+            <input type="password" id="settingsConfirmPassword" placeholder="Confirm New Password" required>
+            <button type="submit" class="settings-btn" style="background:var(--accent-purple); align-self:flex-start;">Update Password</button>
+          </form>
+        </div>
+
+        <!-- CATEGORIES CARD -->
         <div class="settings-card">
           <h3>🎨 Category Settings &amp; Task Background Colors</h3>
           
@@ -1966,6 +2041,7 @@
     // Default template data for fresh user signups
     function getDefaultAppData() {
       return {
+        recoveryEmail: "",
         lastActiveMonthYear: "",
         userNotes: "",
         userNotesBg: "var(--pastel-yellow)",
@@ -2022,7 +2098,7 @@
 
     // State Variables
     let currentUser = null;
-    let isSignUpMode = false;
+    let authMode = 'login'; // 'login', 'signup', or 'forgot'
     let selectedColor = 'bg-yellow';
     let isConnectMode = false;
     let connectSourceId = null;
@@ -2122,6 +2198,14 @@
           appData = getDefaultAppData();
           await saveUserDataCloud(uid);
         }
+
+        // Pre-fill settings recovery email field if available
+        const emailInput = document.getElementById('settingsEmailInput');
+        if (emailInput) {
+          const activeEmail = auth.currentUser ? auth.currentUser.email : '';
+          emailInput.value = appData.recoveryEmail || activeEmail || '';
+        }
+
         checkMonthlyAutoReset();
         populateCategorySelects();
         renderAll();
@@ -2162,16 +2246,42 @@
       const rawUser = document.getElementById('authUsername').value.trim();
       const pass = document.getElementById('authPassword').value.trim();
 
-      if (!rawUser || !pass) return;
+      if (!rawUser) return;
 
       const email = rawUser.includes('@') ? rawUser : `${rawUser}@planner.com`;
 
       try {
-        if (isSignUpMode) {
+        if (authMode === 'forgot') {
+          // Check recovery email in Firestore first or attempt sending via Firebase Auth
+          let targetEmail = email;
+
+          // Search if user entered username instead of email for recovery
+          if (!rawUser.includes('@')) {
+            const userSnapshot = await db.collection('users').get();
+            let matchedEmail = null;
+            userSnapshot.forEach(doc => {
+              const data = doc.data();
+              if (data.recoveryEmail && (doc.id === rawUser || data.recoveryEmail.startsWith(rawUser + '@'))) {
+                matchedEmail = data.recoveryEmail;
+              }
+            });
+
+            if (matchedEmail) {
+              targetEmail = matchedEmail;
+            }
+          }
+
+          await auth.sendPasswordResetEmail(targetEmail);
+          alert(`Password reset instructions have been sent to ${targetEmail}! Please check your email inbox.`);
+          setAuthMode('login');
+        } else if (authMode === 'signup') {
+          if (!pass) return;
           const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
           appData = getDefaultAppData();
+          appData.recoveryEmail = email;
           await saveUserDataCloud(userCredential.user.uid);
         } else {
+          if (!pass) return;
           await auth.signInWithEmailAndPassword(email, pass);
         }
       } catch (error) {
@@ -2182,6 +2292,66 @@
     logoutBtn.addEventListener('click', () => {
       auth.signOut().then(() => location.reload());
     });
+
+    // 5. Settings: Update Recovery Email
+    async function updateUserRecoveryEmail(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('settingsEmailInput').value.trim();
+      if (!emailInput) return;
+
+      appData.recoveryEmail = emailInput;
+
+      try {
+        if (auth.currentUser && auth.currentUser.email && auth.currentUser.email.includes('@')) {
+          await auth.currentUser.updateEmail(emailInput);
+        }
+      } catch (err) {
+        if (err.code === 'auth/requires-recent-login') {
+          alert("Note: Saved in planner settings! To update core account email in Firebase security, please log out and back in.");
+        }
+      }
+
+      await saveUserData();
+      alert("Recovery email saved successfully! Password reset links will be sent to this email.");
+    }
+
+    // 6. Settings: Change Password
+    async function updateUserPassword(e) {
+      e.preventDefault();
+      const newPass = document.getElementById('settingsNewPassword').value;
+      const confirmPass = document.getElementById('settingsConfirmPassword').value;
+
+      if (!newPass || !confirmPass) return;
+
+      if (newPass !== confirmPass) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      if (newPass.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+
+      const user = auth.currentUser;
+      if (!user) {
+        alert("No active user session found.");
+        return;
+      }
+
+      try {
+        await user.updatePassword(newPass);
+        alert("Password changed successfully! Your login username remains unchanged.");
+        document.getElementById('settingsNewPassword').value = '';
+        document.getElementById('settingsConfirmPassword').value = '';
+      } catch (err) {
+        if (err.code === 'auth/requires-recent-login') {
+          alert("Security Requirement: Please log out and log back in, then try changing your password again.");
+        } else {
+          alert("Error updating password: " + err.message);
+        }
+      }
+    }
 
     function formatDateISO(dateObj) {
       const y = dateObj.getFullYear();
@@ -2213,23 +2383,38 @@
       }
     }
 
-    function setAuthMode(signUp) {
-      isSignUpMode = signUp;
+    function setAuthMode(mode) {
+      authMode = mode;
       const loginTab = document.getElementById('loginTabBtn');
       const signupTab = document.getElementById('signupTabBtn');
       const submitBtn = document.getElementById('authSubmitBtn');
       const helpText = document.getElementById('authModeHelp');
+      const passInput = document.getElementById('authPassword');
+      const forgotLink = document.getElementById('forgotPassLink');
 
-      if (isSignUpMode) {
-        loginTab.classList.remove('active');
+      loginTab.classList.remove('active');
+      signupTab.classList.remove('active');
+
+      if (authMode === 'signup') {
         signupTab.classList.add('active');
         submitBtn.textContent = '✨ Register New Account';
         helpText.textContent = 'Sign up for a new account to begin tracking goals.';
+        passInput.style.display = 'block';
+        passInput.required = true;
+        forgotLink.style.display = 'none';
+      } else if (authMode === 'forgot') {
+        submitBtn.textContent = '📧 Send Password & Login Info';
+        helpText.textContent = 'Enter your registered email (or username) to receive password recovery details.';
+        passInput.style.display = 'none';
+        passInput.required = false;
+        forgotLink.style.display = 'none';
       } else {
-        signupTab.classList.remove('active');
         loginTab.classList.add('active');
         submitBtn.textContent = '🔑 Log In to Cabinet';
         helpText.textContent = 'Log in with your existing account.';
+        passInput.style.display = 'block';
+        passInput.required = true;
+        forgotLink.style.display = 'block';
       }
     }
 
