@@ -181,6 +181,30 @@
       border-color: var(--primary);
     }
 
+    .note-tab-title-input {
+  width: 120px;
+  min-width: 70px;
+  max-width: 180px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  padding: 2px 5px;
+
+  border: 2px solid #3182ce;
+  border-radius: 4px;
+
+  outline: none;
+
+  color: #2d3748 !important;
+  background: #ffffff !important;
+}
+
+.note-tab-title-input:focus {
+  border-color: #2b6cb0;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
     .auth-btn {
       width: 100%;
       padding: 11px;
@@ -626,7 +650,6 @@
       color: #94a3b8;
     }
 
-    /* Subdued category tag pill styling */
     .category-tag-pill {
       font-size: 0.6rem;
       font-weight: 500;
@@ -868,7 +891,6 @@
     .matrix-cell[data-row="2"] { background-color: #ffedd5; }
     .matrix-cell[data-row="1"] { background-color: #fee2e2; }
 
-    /* Elegant Soft Dark Pastel Matrix Fills */
     body.dark-mode .matrix-cell[data-row="5"] { background-color: #16382b; }
     body.dark-mode .matrix-cell[data-row="4"] { background-color: #1a2e29; }
     body.dark-mode .matrix-cell[data-row="3"] { background-color: #38311b; }
@@ -976,7 +998,6 @@
       z-index: 30;
     }
 
-    /* Absolute positioned note on White Board */
     .sticky-note.on-whiteboard {
       position: absolute;
       cursor: move;
@@ -1005,7 +1026,7 @@
     .bg-green  { background-color: #bbf7d0 !important; }
     .bg-pink   { background-color: #fbcfe8 !important; }
 
-    /* FLOWER CARD STYLES (PASTEL THEMED) */
+    /* FLOWER CARD STYLES */
     .flower-card {
       background: var(--card-bg);
       border-radius: 8px;
@@ -1059,7 +1080,7 @@
       text-align: center;
     }
 
-    /* EXPANDED TABBED NOTES EDITOR CARD */
+    /* NOTES EDITOR CARD */
     .notes-editor-card {
       background: var(--card-bg);
       border-radius: 8px;
@@ -1205,9 +1226,42 @@
     }
 
     .bg-swatch:hover { transform: scale(1.15); }
-    .bg-swatch.selected { border-color: #2d3748; }
+    /* Fixed Text & Highlight Color Palette */
 
-    /* EXPANDED Tall Note Area (Locked Identical Text/Background Color across Light/Dark modes) */
+.fixed-color-palette {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--card-bg);
+}
+
+.palette-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+.text-color-swatch {
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid white;
+  outline: 1px solid #cbd5e0;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.text-color-swatch:hover {
+  transform: scale(1.2);
+  outline: 2px solid var(--primary);
+}
+
+    /* Tall Note Area */
     .rich-notes-box {
       min-height: 380px;
       max-height: 600px;
@@ -1227,7 +1281,7 @@
 
     .rich-notes-box:focus { border-color: var(--primary); }
 
-    /* COMPACT RIGHT SIDEBAR 7x7 TRACKER STYLES */
+    /* RIGHT SIDEBAR 7x7 TRACKER STYLES */
     .tracker-card {
       background: var(--card-bg);
       border-radius: 8px;
@@ -1293,7 +1347,6 @@
       white-space: normal;
     }
 
-    /* Compact Circle Checks */
     .circle-check-btn {
       width: 18px;
       height: 18px;
@@ -1447,7 +1500,7 @@
       vertical-align: middle;
     }
 
-    /* ARCHIVE EXCEL-STYLE TABLE STYLES (COMPACT & STRUCTURED) */
+    /* ARCHIVE TABLE STYLES */
     .archive-container-card {
       background: var(--card-bg);
       border-radius: 8px;
@@ -1526,7 +1579,6 @@
       background: #283248;
     }
 
-    /* Darker green completed row highlight styling (Non-italicized) */
     .excel-table tr.completed-row {
       background-color: rgba(56, 161, 105, 0.15);
     }
@@ -1806,7 +1858,7 @@
               </div>
             </div>
 
-            <!-- Notes Editor with Editable Tabs and Expanded Height -->
+            <!-- Notes Editor with Editable Tabs -->
             <div class="notes-editor-card">
               <h3>📝 Notes &amp; Comments Workspace</h3>
               
@@ -1822,6 +1874,78 @@
                 <button type="button" class="editor-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">• List</button>
                 <button type="button" class="editor-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">1. List</button>
                 
+<div class="fixed-color-palette">
+  <span class="palette-label">Text:</span>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#2d3748;"
+    onclick="applyForeColor('#2d3748')"
+    title="Dark"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#b7791f;"
+    onclick="applyForeColor('#b7791f')"
+    title="Brown"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#2b6cb0;"
+    onclick="applyForeColor('#2b6cb0')"
+    title="Blue"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#2f855a;"
+    onclick="applyForeColor('#2f855a')"
+    title="Green"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#b83280;"
+    onclick="applyForeColor('#b83280')"
+    title="Pink"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#805ad5;"
+    onclick="applyForeColor('#805ad5')"
+    title="Purple"></button>
+</div>
+
+<div class="fixed-color-palette">
+  <span class="palette-label">Highlight:</span>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#fef9c3;"
+    onclick="applyHiliteColor('#fef9c3')"
+    title="Yellow"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#e0f2fe;"
+    onclick="applyHiliteColor('#e0f2fe')"
+    title="Blue"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#dcfce7;"
+    onclick="applyHiliteColor('#dcfce7')"
+    title="Green"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#fce7f3;"
+    onclick="applyHiliteColor('#fce7f3')"
+    title="Pink"></button>
+
+  <button type="button" class="text-color-swatch"
+    style="background:#f3e8ff;"
+    onclick="applyHiliteColor('#f3e8ff')"
+    title="Purple"></button>
+</div>
+                
+                <select id="fontSizeSelect" onchange="applyFontSize(this.value); this.selectedIndex=0;" title="Font Size" style="height: 24px; font-size: 0.72rem; border: 1px solid var(--border-color); border-radius: 3px; background: var(--card-bg); color: inherit; cursor: pointer;">
+                  <option value="" disabled selected>Size</option>
+                  <option value="12px">12px (Small)</option>
+                  <option value="14px">14px (Normal)</option>
+                  <option value="16px">16px (Medium)</option>
+                  <option value="20px">20px (Large)</option>
+                  <option value="26px">26px (Huge)</option>
+                </select>
+
                 <div class="bg-swatches">
                   <span class="bg-swatch-title">Bg:</span>
                   <div class="bg-swatch selected" style="background-color: var(--pastel-yellow);" onclick="setPastelBg('var(--pastel-yellow)', this)" title="Pastel Yellow"></div>
@@ -1897,7 +2021,7 @@
         </div>
       </div>
 
-      <!-- ARCHIVE VIEW PANEL (FILTERABLE EXCEL-STYLE TABLE) -->
+      <!-- ARCHIVE VIEW PANEL -->
       <div id="archiveView" class="view-panel">
         <div class="archive-container-card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -2009,7 +2133,7 @@
         centerActiveView: "matrix",
         darkMode: false,
         noteTabs: [
-          { id: "tab_1", title: "Main Notes", content: "This is an expanded note area! Double-click tab titles to rename them.", bg: "var(--pastel-yellow)" },
+          { id: "tab_1", title: "Main Notes", content: "This is an expanded note area! Click any tab to select or instantly rename it.", bg: "var(--pastel-yellow)" },
           { id: "tab_2", title: "Brainstorming", content: "Ideas for future projects go here...", bg: "var(--pastel-blue)" }
         ],
         activeNoteTabId: "tab_1",
@@ -2346,9 +2470,135 @@
       }
     }
 
-    function execCmd(command) {
-      document.execCommand(command, false, null);
-    }
+    let savedNotesRange = null;
+
+document.addEventListener('selectionchange', () => {
+  const notesBox = document.getElementById('richNotesBox');
+  const selection = window.getSelection();
+
+  if (!notesBox || !selection || selection.rangeCount === 0) return;
+
+  const range = selection.getRangeAt(0);
+
+  let node = range.commonAncestorContainer;
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    node = node.parentNode;
+  }
+
+  if (node && notesBox.contains(node)) {
+    savedNotesRange = range.cloneRange();
+  }
+});
+
+function restoreNotesSelection() {
+  const notesBox = document.getElementById('richNotesBox');
+
+  if (!notesBox || !savedNotesRange) return false;
+
+  notesBox.focus();
+
+  const selection = window.getSelection();
+
+  selection.removeAllRanges();
+  selection.addRange(savedNotesRange.cloneRange());
+
+  return true;
+}
+
+function execCmd(command, value = null) {
+  restoreNotesSelection();
+
+  document.execCommand(command, false, value);
+
+  const selection = window.getSelection();
+
+  if (selection && selection.rangeCount > 0) {
+    savedNotesRange = selection.getRangeAt(0).cloneRange();
+  }
+
+  saveRichNotes();
+}
+
+function applyForeColor(colorVal) {
+  if (!restoreNotesSelection()) return;
+
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+
+  const range = selection.getRangeAt(0);
+  if (range.collapsed) return;
+
+  const span = document.createElement('span');
+  span.style.color = colorVal;
+
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  const newRange = document.createRange();
+  newRange.selectNodeContents(span);
+
+  selection.removeAllRanges();
+  selection.addRange(newRange);
+
+  savedNotesRange = newRange.cloneRange();
+
+  saveRichNotes();
+}
+
+function applyHiliteColor(colorVal) {
+  if (!restoreNotesSelection()) return;
+
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+
+  const range = selection.getRangeAt(0);
+  if (range.collapsed) return;
+
+  const span = document.createElement('span');
+  span.style.backgroundColor = colorVal;
+
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  const newRange = document.createRange();
+  newRange.selectNodeContents(span);
+
+  selection.removeAllRanges();
+  selection.addRange(newRange);
+
+  savedNotesRange = newRange.cloneRange();
+
+  saveRichNotes();
+}
+
+function applyFontSize(sizeVal) {
+  if (!sizeVal) return;
+
+  if (!restoreNotesSelection()) return;
+
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return;
+
+  const range = selection.getRangeAt(0);
+  if (range.collapsed) return;
+
+  const span = document.createElement('span');
+  span.style.fontSize = sizeVal;
+
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  const newRange = document.createRange();
+  newRange.selectNodeContents(span);
+
+  selection.removeAllRanges();
+  selection.addRange(newRange);
+
+  savedNotesRange = newRange.cloneRange();
+
+  saveRichNotes();
+}
 
     function switchCenterView(viewName, element) {
       document.querySelectorAll('.center-view-tab').forEach(btn => btn.classList.remove('active'));
@@ -2369,78 +2619,167 @@
     }
 
     function renderNoteTabs() {
-      const tabBar = document.getElementById('noteTabBar');
-      if (!tabBar) return;
+  const tabBar = document.getElementById('noteTabBar');
+  if (!tabBar) return;
 
-      tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
+  tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
 
-      if (!appData.noteTabs || appData.noteTabs.length === 0) {
-        appData.noteTabs = [{ id: "tab_1", title: "Main Notes", content: "", bg: "var(--pastel-yellow)" }];
-        appData.activeNoteTabId = "tab_1";
+  if (!appData.noteTabs || appData.noteTabs.length === 0) {
+    appData.noteTabs = [
+      {
+        id: "tab_1",
+        title: "Main Notes",
+        content: "",
+        bg: "var(--pastel-yellow)"
+      }
+    ];
+    appData.activeNoteTabId = "tab_1";
+  }
+
+  if (!appData.activeNoteTabId) {
+    appData.activeNoteTabId = appData.noteTabs[0].id;
+  }
+
+  appData.noteTabs.forEach(tab => {
+    const tabEl = document.createElement('div');
+
+    tabEl.className =
+      `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
+
+    tabEl.dataset.tabId = tab.id;
+
+    const titleEl = document.createElement('span');
+    titleEl.className = 'note-tab-title';
+    titleEl.textContent = tab.title;
+    titleEl.title = "Click to rename";
+
+    // CLICK TAB = select it AND immediately edit its name
+    tabEl.onclick = (e) => {
+
+      if (
+        e.target.classList.contains('close-note-tab') ||
+        e.target.tagName === 'INPUT'
+      ) {
+        return;
       }
 
-      if (!appData.activeNoteTabId) {
-        appData.activeNoteTabId = appData.noteTabs[0].id;
+      // If this is another tab, first select it
+      if (appData.activeNoteTabId !== tab.id) {
+        selectNoteTab(tab.id);
       }
 
-      appData.noteTabs.forEach(tab => {
-        const tabEl = document.createElement('div');
-        tabEl.className = `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
-        
-        tabEl.onclick = (e) => {
-          if (e.target.tagName === 'INPUT') return;
-          selectNoteTab(tab.id);
-        };
+      // IMPORTANT:
+      // selectNoteTab() re-renders the tabs, therefore find
+      // the NEW DOM element and edit that one.
+      beginRenameNoteTab(tab.id);
+    };
 
-        const titleEl = document.createElement('span');
-        titleEl.className = 'note-tab-title';
-        titleEl.textContent = tab.title;
 
-        titleEl.ondblclick = (e) => {
-          e.stopPropagation();
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.value = tab.title;
-          input.style.cssText = 'width: 90px; font-size: 0.82rem; font-weight: 600; padding: 1px 4px; border: 1px solid #2b6cb0; border-radius: 4px; outline: none; color: #2d3748; background: #ffffff;';
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'close-note-tab';
+    closeBtn.textContent = '✕';
 
-          titleEl.replaceWith(input);
-          input.focus();
-          input.select();
+    closeBtn.onclick = (e) => {
+      e.stopPropagation();
+      deleteNoteTab(tab.id);
+    };
 
-          const saveNewTitle = () => {
-            tab.title = input.value.trim() || 'Untitled Tab';
-            saveUserData();
-            renderNoteTabs();
-          };
+    tabEl.appendChild(titleEl);
 
-          input.onblur = saveNewTitle;
-          input.onkeydown = (ev) => {
-            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
-            if (ev.key === 'Escape') { renderNoteTabs(); }
-          };
-        };
-
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'close-note-tab';
-        closeBtn.textContent = '✕';
-        closeBtn.onclick = (e) => {
-          e.stopPropagation();
-          deleteNoteTab(tab.id);
-        };
-
-        tabEl.appendChild(titleEl);
-        if (appData.noteTabs.length > 1) tabEl.appendChild(closeBtn);
-
-        tabBar.insertBefore(tabEl, tabBar.querySelector('.add-note-tab-btn'));
-      });
-
-      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId) || appData.noteTabs[0];
-      const notesBox = document.getElementById('richNotesBox');
-      if (notesBox) {
-        notesBox.innerHTML = activeTab.content || "";
-        notesBox.style.backgroundColor = activeTab.bg || "var(--pastel-yellow)";
-      }
+    if (appData.noteTabs.length > 1) {
+      tabEl.appendChild(closeBtn);
     }
+
+    tabBar.insertBefore(
+      tabEl,
+      tabBar.querySelector('.add-note-tab-btn')
+    );
+  });
+
+
+  // Load selected tab content
+  const activeTab =
+    appData.noteTabs.find(t => t.id === appData.activeNoteTabId)
+    || appData.noteTabs[0];
+
+  const notesBox = document.getElementById('richNotesBox');
+
+  if (notesBox && activeTab) {
+    notesBox.innerHTML = activeTab.content || "";
+    notesBox.style.backgroundColor =
+      activeTab.bg || "var(--pastel-yellow)";
+  }
+}
+
+
+/* ============================================================
+   RENAME NOTE TAB
+   ============================================================ */
+
+function beginRenameNoteTab(tabId) {
+
+  const tab = appData.noteTabs.find(t => t.id === tabId);
+  if (!tab) return;
+
+  // IMPORTANT: locate the newly-rendered tab
+  const tabEl = Array.from(
+    document.querySelectorAll('.note-tab')
+  ).find(el => el.dataset.tabId === tabId);
+
+  if (!tabEl) return;
+
+  // Already editing
+  if (tabEl.querySelector('input')) return;
+
+  const titleEl = tabEl.querySelector('.note-tab-title');
+  if (!titleEl) return;
+
+  const input = document.createElement('input');
+
+  input.type = 'text';
+  input.value = tab.title;
+  input.className = 'note-tab-title-input';
+
+  // Prevent clicking inside input from triggering tab again
+  input.onclick = (e) => e.stopPropagation();
+  input.onmousedown = (e) => e.stopPropagation();
+
+  titleEl.replaceWith(input);
+
+  input.focus();
+  input.select();
+
+
+  const saveTitle = () => {
+
+    const newTitle = input.value.trim();
+
+    tab.title = newTitle || 'Untitled Tab';
+
+    saveUserData();
+    renderNoteTabs();
+  };
+
+
+  input.onblur = saveTitle;
+
+  input.onkeydown = (e) => {
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      input.blur();
+    }
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+
+      // Cancel editing without saving
+      input.onblur = null;
+      renderNoteTabs();
+    }
+  };
+}
 
     function selectNoteTab(id) {
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
@@ -2767,7 +3106,6 @@
       const doneTasks = allWeeklyInPeriod.filter(g => g.done).length + allMonthlyInPeriod.filter(g => g.done).length;
       const percent = totalTasks > 0 ? (doneTasks / totalTasks) * 100 : 0;
 
-      // Threshold: must be >= 50% completed to grow the rose
       if (percent < 50 || totalTasks === 0) {
         targetFlowerStage = 0;
       } else {
@@ -2788,7 +3126,6 @@
       const centerX = 140, baseY = 225;
       const stageRatio = Math.max(0.05, stageVal / 12);
 
-      // Floating pollen particles
       flowerPollenParticles.forEach(p => {
         p.y -= p.speedY;
         p.wobble += 0.02;
@@ -2801,13 +3138,11 @@
 
       if (stageVal < 0.5) return;
 
-      // --- Animated Breeze Swaying Stem & Flower Head ---
       const stemHeight = 110 * (stageVal / 12);
       const swayAmount = Math.sin(flowerTime * 1.5) * (3 * stageRatio);
       const tipX = centerX + swayAmount;
       const tipY = baseY - stemHeight;
 
-      // Curved Organic Stem emerging directly from bottom (always grows from ground up)
       ctx.beginPath();
       ctx.moveTo(centerX, baseY);
       ctx.quadraticCurveTo(centerX + swayAmount * 0.5, (baseY - stemHeight * 0.5), tipX, tipY);
@@ -2815,7 +3150,6 @@
       ctx.strokeStyle = '#059669';
       ctx.stroke();
 
-      // Leaves attached firmly along the rising stem height
       if (stageVal >= 2) {
         const leafY = baseY - (45 * (stageVal / 12));
         ctx.beginPath();
@@ -2836,7 +3170,6 @@
         ctx.fill();
       }
 
-      // Rose Bloom Petals & Layers at the top tip of the stem
       if (stageVal >= 8) {
         ctx.beginPath();
         ctx.arc(tipX, tipY + 6, 8 * stageRatio, 0, Math.PI * 2);
@@ -2889,13 +3222,8 @@
 
         let visibleGoals = (appData.goals[type] || []).filter(g => {
           const delta = calculatePeriodDelta(type, g.periodKey, currentSelectedKey);
-          
-          if (delta < 0) {
-            return false;
-          }
-          if (delta === 0) {
-            return true;
-          }
+          if (delta < 0) return false;
+          if (delta === 0) return true;
           return !g.done;
         });
 
@@ -3003,7 +3331,6 @@
       renderGoals();
     }
 
-    /* ARCHIVE TABLE RENDERING & FILTERING */
     function renderArchiveTable() {
       const tbody = document.getElementById('archiveTableBody');
       const countEl = document.getElementById('archiveTableCount');
@@ -3056,9 +3383,7 @@
 
       filtered.forEach(item => {
         const tr = document.createElement('tr');
-        if (item.done) {
-          tr.className = 'completed-row';
-        }
+        if (item.done) tr.className = 'completed-row';
         const statusBadge = item.done ? `<span class="excel-badge excel-badge-done">Completed</span>` : `<span class="excel-badge excel-badge-pending">Pending</span>`;
         const typeBadge = `<span class="excel-type-badge">${item.type.toUpperCase()}</span>`;
 
