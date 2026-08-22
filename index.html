@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mindful Planner | Personal Cabinet</title>
   
-  <!-- Chart.js for Analytics -->
-  <script src="./Mindful Planner _ Personal Cabinet_files/chart.js.download"></script>
-
   <!-- Firebase Web SDK Compatibility Scripts -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -27,13 +24,71 @@
       --accent-purple: #805ad5;
       --accent-red: #e53e3e;
 
-      /* Pastel Colors for Editor & Notes */
+      /* Pastel Colors for Editor & Notes (Locked Identical for Light and Dark Modes) */
       --pastel-white: #ffffff;
       --pastel-yellow: #fef9c3;
       --pastel-blue: #e0f2fe;
       --pastel-green: #dcfce7;
       --pastel-pink: #fce7f3;
       --pastel-purple: #f3e8ff;
+    }
+
+    /* Refined Dark Mode Theme Overrides (Excluding notes and stickers) */
+    body.dark-mode {
+      --primary: #63b3ed;
+      --primary-dark: #90cdf4;
+      --bg-main: #141824;
+      --card-bg: #1e2433;
+      --border-color: #2e384d;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+    }
+
+    body.dark-mode .auth-card,
+    body.dark-mode .goal-card,
+    body.dark-mode .matrix-card,
+    body.dark-mode .wall-board-card,
+    body.dark-mode .stickers-bank-card,
+    body.dark-mode .flower-card,
+    body.dark-mode .notes-editor-card,
+    body.dark-mode .tracker-card,
+    body.dark-mode .settings-card,
+    body.dark-mode .archive-container-card,
+    body.dark-mode .time-control-card {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-color: var(--border-color);
+    }
+
+    body.dark-mode header {
+      background: #10141f;
+    }
+
+    body.dark-mode .goal-item,
+    body.dark-mode .editor-toolbar,
+    body.dark-mode .stickers-container,
+    body.dark-mode .matrix-grid,
+    body.dark-mode .excel-table th {
+      background: #171c29 !important;
+      border-color: var(--border-color) !important;
+      color: var(--text-main) !important;
+    }
+
+    body.dark-mode .auth-tabs,
+    body.dark-mode .center-view-tabs,
+    body.dark-mode .nav-arrow-btn,
+    body.dark-mode .matrix-controls button,
+    body.dark-mode .note-tab {
+      background: #283248;
+      color: #e2e8f0;
+      border-color: #3b4863;
+    }
+
+    body.dark-mode .auth-tab.active,
+    body.dark-mode .center-view-tab.active,
+    body.dark-mode .note-tab.active {
+      background: #1e2433;
+      color: #63b3ed;
     }
 
     * {
@@ -65,7 +120,7 @@
     }
 
     .auth-card {
-      background: white;
+      background: var(--card-bg);
       padding: 24px;
       border-radius: 12px;
       width: 100%;
@@ -97,7 +152,7 @@
     }
 
     .auth-tab.active {
-      background: white;
+      background: var(--card-bg);
       color: var(--primary-dark);
       box-shadow: 0 2px 5px rgba(0,0,0,0.08);
     }
@@ -117,6 +172,8 @@
       border: 1px solid var(--border-color);
       border-radius: 6px;
       font-size: 0.9rem;
+      background: transparent;
+      color: inherit;
     }
 
     .auth-form input:focus {
@@ -211,6 +268,21 @@
       gap: 12px;
     }
 
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
     .logout-btn {
       background: #e53e3e;
       color: white;
@@ -280,7 +352,7 @@
     .btn-email:hover { background: #2b6cb0; }
 
     .time-control-card {
-      background: white;
+      background: var(--card-bg);
       padding: 10px 16px;
       border-radius: 8px;
       border: 1px solid var(--border-color);
@@ -317,12 +389,22 @@
       border: 1px solid #fbd38d;
     }
 
+    body.dark-mode .days-remaining-badge {
+      color: #fbd38d;
+      background: #3b301c;
+      border-color: #524225;
+    }
+
     .month-progress-container {
       width: 100%;
       height: 6px;
       background: #e2e8f0;
       border-radius: 3px;
       overflow: hidden;
+    }
+
+    body.dark-mode .month-progress-container {
+      background: #283248;
     }
 
     .month-progress-fill {
@@ -382,7 +464,7 @@
     }
 
     .goal-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -440,6 +522,10 @@
       margin-top: 2px;
     }
 
+    body.dark-mode .progress-bar-container {
+      background: #283248;
+    }
+
     .progress-bar-fill {
       height: 100%;
       background: var(--accent-green);
@@ -478,32 +564,12 @@
       border-style: dashed;
     }
 
-    .goal-item.overdue {
-      border-color: #fbd38d !important;
-    }
-
-    .goal-item.overdue .goal-text {
-      color: #c05621;
-      font-weight: 600;
-    }
-
     .drag-handle {
       color: #a0aec0;
       font-size: 0.85rem;
       line-height: 1;
       cursor: grab;
       padding-right: 2px;
-    }
-
-    .goal-num-badge {
-      font-size: 0.72rem;
-      font-weight: bold;
-      color: #718096;
-      white-space: nowrap;
-    }
-
-    .goal-item.overdue .goal-num-badge {
-      color: #dd6b20;
     }
 
     .goal-item-left {
@@ -521,7 +587,7 @@
       text-overflow: ellipsis;
       flex: 1;
       min-width: 0;
-      cursor: pointer;
+      cursor: text;
       padding: 1px 3px;
       border-radius: 3px;
     }
@@ -532,7 +598,7 @@
 
     .goal-text[contenteditable="true"] {
       outline: 1.5px solid var(--primary);
-      background: white;
+      background: var(--card-bg);
       white-space: normal;
       overflow: visible;
       cursor: text;
@@ -543,15 +609,38 @@
       color: var(--text-muted);
     }
 
-    .category-tag-pill {
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 1px 6px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.08);
-      color: #2d3748;
+    .deadline-badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 1px 4px;
+      border-radius: 8px;
+      background: #edf2f7;
+      color: #718096;
       white-space: nowrap;
       flex-shrink: 0;
+      border: 1px solid var(--border-color);
+    }
+
+    body.dark-mode .deadline-badge {
+      background: #283248;
+      color: #94a3b8;
+    }
+
+    /* Subdued category tag pill styling */
+    .category-tag-pill {
+      font-size: 0.6rem;
+      font-weight: 500;
+      padding: 1px 5px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.04);
+      color: #718096;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    body.dark-mode .category-tag-pill {
+      background: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
     }
 
     .delete-goal-btn {
@@ -590,6 +679,8 @@
       font-size: 0.78rem;
       border: 1px solid var(--border-color);
       border-radius: 4px;
+      background: transparent;
+      color: inherit;
     }
 
     .add-goal-form select {
@@ -597,7 +688,8 @@
       font-size: 0.75rem;
       border: 1px solid var(--border-color);
       border-radius: 4px;
-      background: #f7fafc;
+      background: var(--card-bg);
+      color: inherit;
     }
 
     .add-goal-form button {
@@ -609,8 +701,69 @@
       cursor: pointer;
     }
 
+    /* Center Section View Tabs Styles */
+    .center-view-tabs {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 8px;
+      gap: 4px;
+    }
+
+    body.dark-mode .center-view-tabs {
+      background: #171c29;
+    }
+
+    .center-view-tab {
+      flex: 1;
+      padding: 7px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .center-view-tab.active {
+      background: var(--card-bg);
+      color: var(--primary-dark);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .center-sub-panel {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .center-sub-panel.active-sub-panel {
+      display: flex;
+    }
+
+    /* White Board View Styles */
+    .wall-board-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid var(--border-color);
+      position: relative;
+      min-height: 400px;
+      background-image: radial-gradient(#cbd5e0 1px, transparent 1px);
+      background-size: 20px 20px;
+      overflow: hidden;
+    }
+
+    body.dark-mode .wall-board-card {
+      background-image: radial-gradient(#2e384d 1px, transparent 1px);
+    }
+
     .matrix-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 15px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -640,6 +793,12 @@
       border-color: #dd6b20;
       color: #9c4221;
       font-weight: bold;
+    }
+
+    body.dark-mode .matrix-controls button.active {
+      background: #3b301c;
+      border-color: #d69e2e;
+      color: #fbd38d;
     }
 
     .matrix-container-wrapper {
@@ -709,6 +868,13 @@
     .matrix-cell[data-row="2"] { background-color: #ffedd5; }
     .matrix-cell[data-row="1"] { background-color: #fee2e2; }
 
+    /* Elegant Soft Dark Pastel Matrix Fills */
+    body.dark-mode .matrix-cell[data-row="5"] { background-color: #16382b; }
+    body.dark-mode .matrix-cell[data-row="4"] { background-color: #1a2e29; }
+    body.dark-mode .matrix-cell[data-row="3"] { background-color: #38311b; }
+    body.dark-mode .matrix-cell[data-row="2"] { background-color: #38251b; }
+    body.dark-mode .matrix-cell[data-row="1"] { background-color: #381b1b; }
+
     .connections-svg {
       position: absolute;
       top: 0; left: 0;
@@ -718,7 +884,7 @@
     }
 
     .stickers-bank-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -739,6 +905,8 @@
       border: 1px solid var(--border-color);
       border-radius: 4px;
       font-size: 0.8rem;
+      background: transparent;
+      color: inherit;
     }
 
     .color-picker {
@@ -755,6 +923,7 @@
     }
 
     .color-opt.selected { border-color: #2d3748; }
+    body.dark-mode .color-opt.selected { border-color: #e2e8f0; }
 
     .sticker-creator button {
       padding: 6px;
@@ -779,14 +948,14 @@
     }
 
     .sticky-note {
-      width: 70px;
-      height: 70px;
+      width: 75px;
+      height: 75px;
       padding: 6px;
       border-radius: 6px;
       box-shadow: 2px 2px 5px rgba(0,0,0,0.12);
       font-size: 0.7rem;
       font-weight: 600;
-      color: #2d3748;
+      color: #2d3748 !important;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -799,6 +968,19 @@
     }
 
     .sticky-note:active { cursor: grabbing; }
+
+    .sticky-note[contenteditable="true"] {
+      outline: 1.5px solid var(--primary);
+      background: var(--card-bg);
+      cursor: text;
+      z-index: 30;
+    }
+
+    /* Absolute positioned note on White Board */
+    .sticky-note.on-whiteboard {
+      position: absolute;
+      cursor: move;
+    }
 
     .sticky-note.selected-for-connect {
       outline: 3px solid #dd6b20;
@@ -813,18 +995,19 @@
       color: rgba(0,0,0,0.4);
       cursor: pointer;
       display: none;
+      z-index: 25;
     }
 
     .sticky-note:hover .delete-note { display: block; }
 
-    .bg-yellow { background-color: #fef08a; }
-    .bg-blue   { background-color: #bae6fd; }
-    .bg-green  { background-color: #bbf7d0; }
-    .bg-pink   { background-color: #fbcfe8; }
+    .bg-yellow { background-color: #fef08a !important; }
+    .bg-blue   { background-color: #bae6fd !important; }
+    .bg-green  { background-color: #bbf7d0 !important; }
+    .bg-pink   { background-color: #fbcfe8 !important; }
 
-    /* FLOWER POT CARD STYLES */
+    /* FLOWER CARD STYLES (PASTEL THEMED) */
     .flower-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -848,10 +1031,10 @@
       position: relative;
       width: 100%;
       height: 240px;
-      background: radial-gradient(circle, #1a0b2e 0%, #05020c 100%);
+      background: linear-gradient(135deg, #fef9c3 0%, #e0f2fe 100%);
       border-radius: 8px;
-      border: 1px solid rgba(244, 63, 94, 0.25);
-      box-shadow: inset 0 0 20px rgba(168, 85, 247, 0.2);
+      border: 1px solid var(--border-color);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
       overflow: hidden;
     }
 
@@ -878,7 +1061,7 @@
 
     /* EXPANDED TABBED NOTES EDITOR CARD */
     .notes-editor-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 14px 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -964,6 +1147,10 @@
       background: #f7fafc;
     }
 
+    body.dark-mode .add-note-tab-btn:hover {
+      background: #171c29;
+    }
+
     .editor-toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -976,7 +1163,7 @@
     }
 
     .editor-btn {
-      background: white;
+      background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 3px;
       padding: 2px 6px;
@@ -989,6 +1176,10 @@
     .editor-btn:hover {
       background: #edf2f7;
       border-color: var(--primary);
+    }
+
+    body.dark-mode .editor-btn:hover {
+      background: #283248;
     }
 
     .bg-swatches {
@@ -1014,9 +1205,9 @@
     }
 
     .bg-swatch:hover { transform: scale(1.15); }
-    .bg-swatch.selected { border-color: #2d3748; stroke-width: 2px; }
+    .bg-swatch.selected { border-color: #2d3748; }
 
-    /* EXPANDED Tall Note Area */
+    /* EXPANDED Tall Note Area (Locked Identical Text/Background Color across Light/Dark modes) */
     .rich-notes-box {
       min-height: 380px;
       max-height: 600px;
@@ -1028,6 +1219,7 @@
       overflow-y: auto;
       outline: none;
       background-color: var(--pastel-yellow);
+      color: #2d3748 !important;
       transition: background-color 0.25s ease;
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
       resize: vertical;
@@ -1037,7 +1229,7 @@
 
     /* COMPACT RIGHT SIDEBAR 7x7 TRACKER STYLES */
     .tracker-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 10px 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -1090,8 +1282,12 @@
       border-color: var(--border-color);
     }
 
+    body.dark-mode .grid-7x7-task-label:hover {
+      background: #171c29;
+    }
+
     .grid-7x7-task-label[contenteditable="true"] {
-      background: white;
+      background: var(--card-bg);
       border-color: var(--primary);
       overflow: visible;
       white-space: normal;
@@ -1103,7 +1299,7 @@
       height: 18px;
       border-radius: 50%;
       border: 1.5px solid #cbd5e0;
-      background: white;
+      background: var(--card-bg);
       cursor: pointer;
       margin: 0 auto;
       display: flex;
@@ -1115,6 +1311,10 @@
       color: white;
       user-select: none;
       padding: 0;
+    }
+
+    body.dark-mode .circle-check-btn {
+      border-color: #3b4863;
     }
 
     .circle-check-btn:hover {
@@ -1133,7 +1333,7 @@
 
     /* SETTINGS CARD STYLES */
     .settings-card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 8px;
       padding: 16px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -1161,6 +1361,8 @@
       border-radius: 6px;
       font-size: 0.85rem;
       width: 100%;
+      background: transparent;
+      color: inherit;
     }
 
     .settings-card input:focus {
@@ -1204,7 +1406,7 @@
       border: 1px solid var(--border-color);
       border-radius: 6px;
       cursor: pointer;
-      background: white;
+      background: var(--card-bg);
     }
 
     .add-category-form button {
@@ -1245,316 +1447,125 @@
       vertical-align: middle;
     }
 
-    .analytics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-    }
-
-    .metric-card {
-      background: white;
-      padding: 12px 16px;
+    /* ARCHIVE EXCEL-STYLE TABLE STYLES (COMPACT & STRUCTURED) */
+    .archive-container-card {
+      background: var(--card-bg);
       border-radius: 8px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .metric-card h3 {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .metric-number {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-    }
-
-    .charts-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 15px;
-    }
-
-    .chart-card {
-      background: white;
       padding: 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chart-card h3 {
-      font-size: 0.88rem;
-      color: var(--primary-dark);
-      margin-bottom: 8px;
-    }
-
-    .chart-wrapper {
-      position: relative;
-      height: 200px;
-      width: 100%;
-    }
-
-    .archive-header-controls {
-      background: white;
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .archive-year-picker {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      color: var(--primary-dark);
-      font-size: 0.9rem;
-    }
-
-    .archive-year-picker select {
-      padding: 4px 10px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: #edf2f7;
-      cursor: pointer;
-    }
-
-    .dual-grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 12px;
-    }
-
-    .grid-menu-card {
-      background: white;
-      border-radius: 8px;
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .grid-menu-card h3 {
-      font-size: 0.8rem;
-      color: var(--primary-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .months-grid-menu {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-
-    .weeks-grid-menu {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-    }
-
-    .nav-grid-btn {
-      padding: 8px 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
-      background: #edf2f7;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-    }
-
-    .nav-grid-btn.has-completed {
-      background: #c6f6d5;
-      color: #22543d;
-      border-color: #9ae6b4;
-    }
-
-    .nav-grid-btn.has-uncompleted {
-      background: #feebc8;
-      color: #7b341e;
-      border-color: #fbd38d;
-    }
-
-    .nav-grid-btn.no-records {
-      background: #f7fafc;
-      color: #cbd5e0;
-    }
-
-    .nav-grid-btn.selected {
-      outline: 2px solid var(--primary);
-      font-weight: bold;
-      transform: scale(1.02);
-    }
-
-    .btn-sub-label {
-      font-size: 0.65rem;
-      font-weight: normal;
-      opacity: 0.85;
-    }
-
-    .archive-cabinet-workspace {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .archive-goal-card {
-      background: white;
-      border-radius: 8px;
-      padding: 12px;
       border: 1px solid var(--border-color);
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
+      gap: 10px;
+    }
+
+    .archive-filter-toolbar {
+      display: flex;
       gap: 8px;
-      min-height: 180px;
-    }
-
-    .archive-goal-card h3 {
-      font-size: 0.88rem;
-      color: var(--primary-dark);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 4px;
-    }
-
-    .archive-goal-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .archive-goal-item {
-      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      padding: 4px 6px;
-      background: #f8fafc;
-      border-radius: 4px;
-      border: 1px solid var(--border-color);
-      gap: 6px;
     }
 
-    .archive-goal-item span:first-child {
-      white-space: nowrap;
+    .archive-filter-toolbar input,
+    .archive-filter-toolbar select {
+      padding: 5px 8px;
+      font-size: 0.8rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: inherit;
+    }
+
+    .archive-filter-toolbar input {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      table-layout: fixed;
+    }
+
+    .excel-table th, .excel-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
       overflow: hidden;
       text-overflow: ellipsis;
-      flex: 1;
-      min-width: 0;
-      cursor: help;
+      white-space: nowrap;
     }
 
-    .archive-goal-item.done span:first-child {
-      text-decoration: line-through;
+    .excel-table th:nth-child(1), .excel-table td:nth-child(1) { width: 45%; }
+    .excel-table th:nth-child(2), .excel-table td:nth-child(2) { width: 20%; }
+    .excel-table th:nth-child(3), .excel-table td:nth-child(3) { width: 15%; }
+    .excel-table th:nth-child(4), .excel-table td:nth-child(4) { width: 20%; }
+
+    .excel-table th {
+      background: #f7fafc;
+      color: var(--primary-dark);
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+    }
+
+    body.dark-mode .excel-table th {
+      background: #171c29;
+      color: var(--primary);
+    }
+
+    .excel-table th:hover {
+      background: #edf2f7;
+    }
+
+    body.dark-mode .excel-table th:hover {
+      background: #283248;
+    }
+
+    /* Darker green completed row highlight styling (Non-italicized) */
+    .excel-table tr.completed-row {
+      background-color: rgba(56, 161, 105, 0.15);
+    }
+
+    body.dark-mode .excel-table tr.completed-row {
+      background-color: rgba(22, 101, 52, 0.35);
+    }
+
+    .excel-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+    }
+
+    .excel-badge-done { background: #c6f6d5; color: #22543d; }
+    .excel-badge-pending { background: #fed7d7; color: #742a2a; }
+
+    body.dark-mode .excel-badge-done { background: #16382b; color: #86efac; }
+    body.dark-mode .excel-badge-pending { background: #3b1b1b; color: #fca5a5; }
+
+    .excel-type-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #edf2f7;
       color: var(--text-muted);
     }
 
-    .badge-status {
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: bold;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .badge-done { background: #c6f6d5; color: #22543d; }
-    .badge-pending { background: #fed7d7; color: #742a2a; }
-
-    .archive-matrix-card {
-      background: white;
-      border-radius: 8px;
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .archive-matrix-card h3 {
-      font-size: 0.85rem;
-      color: var(--primary-dark);
-    }
-
-    .archive-matrix-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .matrix-pill {
-      background: #edf2f7;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border: 1px solid var(--border-color);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .matrix-pill-coord {
-      background: var(--primary);
-      color: white;
-      padding: 1px 5px;
-      border-radius: 3px;
-      font-size: 0.68rem;
-    }
-
-    .archive-notes-card {
-      background: white;
-      border-radius: 8px;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .archive-notes-card h3 {
-      font-size: 0.85rem;
-      color: var(--primary-dark);
-    }
-
-    .archive-notes-content {
-      font-size: 0.8rem;
-      line-height: 1.4;
-      padding: 8px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      min-height: 40px;
-      background-color: var(--pastel-yellow);
+    body.dark-mode .excel-type-badge {
+      background: #283248;
+      color: #94a3b8;
     }
 
     @media (max-width: 1024px) {
       .grid-workspace { grid-template-columns: 1fr; }
       .goals-column, .right-sidebar-column { width: 100%; max-width: none; resize: none; }
-      .dual-grid-container { grid-template-columns: 1fr; }
-      .archive-cabinet-workspace { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -1577,11 +1588,9 @@
       .welcome-header { text-align: center; font-size: 1.15rem; }
       .action-toolbar { justify-content: space-between; }
       .btn-action { flex: 1; justify-content: center; padding: 8px 4px; font-size: 0.75rem; }
-      .months-grid-menu { grid-template-columns: repeat(3, 1fr); }
-      .weeks-grid-menu { grid-template-columns: repeat(2, 1fr); }
       .matrix-grid { grid-template-rows: repeat(5, 65px); }
       .matrix-cell { font-size: 0.65rem; }
-      .sticky-note { width: 60px; height: 60px; font-size: 0.65rem; }
+      .sticky-note { width: 65px; height: 65px; font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -1624,15 +1633,13 @@
       <button class="cabinet-tab-btn" onclick="switchTab('archive', this)">
         📁 Archive Data
       </button>
-      <button class="cabinet-tab-btn" onclick="switchTab('analytics', this)">
-        📈 Task Analytics
-      </button>
       <button class="cabinet-tab-btn" onclick="switchTab('settings', this)">
         ⚙️ Settings
       </button>
     </nav>
 
     <div class="user-profile">
+      <button class="theme-toggle-btn" onclick="toggleDarkMode()" title="Toggle Dark/Light Mode">🌓 Theme</button>
       <span id="userDisplayName">User</span>
       <button class="logout-btn" id="logoutBtn">Logout</button>
     </div>
@@ -1754,31 +1761,48 @@
             </div>
           </div>
 
-          <!-- Column 2: Center (Matrix + Notes) -->
+          <!-- Column 2: Center (Matrix / White Board + Notes) -->
           <div class="center-column">
-            <!-- 5x5 Priority Matrix -->
-            <div class="matrix-card">
-              <div class="matrix-title-bar">
-                <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
-                <div class="matrix-controls">
-                  <button id="connectBtn" onclick="toggleConnectMode()">Connect Notes</button>
-                  <button onclick="clearConnections()">Clear Lines</button>
+            <!-- Center Section Tabs Bar -->
+            <div class="center-view-tabs">
+              <button type="button" class="center-view-tab active" id="tabBtnMatrix" onclick="switchCenterView('matrix', this)">Goal Priority Matrix</button>
+              <button type="button" class="center-view-tab" id="tabBtnNewBoard" onclick="switchCenterView('newboard', this)">White Board</button>
+            </div>
+
+            <!-- Panel 1: Goal Priority Matrix -->
+            <div class="center-sub-panel active-sub-panel" id="centerPanelMatrix">
+              <div class="matrix-card">
+                <div class="matrix-title-bar">
+                  <h2>Goal Priority Matrix <small style="font-size: 0.8rem; color: var(--text-muted);">(5x5)</small></h2>
+                  <div class="matrix-controls">
+                    <button id="connectBtn" onclick="toggleConnectMode()">Connect Notes</button>
+                    <button onclick="clearConnections()">Clear Lines</button>
+                  </div>
+                </div>
+
+                <div class="matrix-container-wrapper">
+                  <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
+                  <div class="matrix-wrapper" id="matrixWrapper">
+                    <svg class="connections-svg" id="connectionsSvg">
+                      <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                          <polygon points="0 0, 10 3.5, 0 7" fill="#63b3ed"></polygon>
+                        </marker>
+                      </defs>
+                    </svg>
+                    <div class="matrix-grid" id="matrixGrid"></div>
+                  </div>
+                  <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
                 </div>
               </div>
+            </div>
 
-              <div class="matrix-container-wrapper">
-                <div class="y-axis-label">IMPORTANCE (1 - 5)</div>
-                <div class="matrix-wrapper" id="matrixWrapper">
-                  <svg class="connections-svg" id="connectionsSvg">
-                    <defs>
-                      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#2b6cb0"></polygon>
-                      </marker>
-                    </defs>
-                  </svg>
-                  <div class="matrix-grid" id="matrixGrid"></div>
-                </div>
-                <div class="x-axis-label">SIMPLICITY LEVEL (1 - 5)</div>
+            <!-- Panel 2: White Board -->
+            <div class="center-sub-panel" id="centerPanelNewBoard">
+              <div class="wall-board-card" id="wallBoardContainer" ondragover="handleDragOver(event)" ondrop="handleDropToWallBoard(event)">
+                <div style="font-size: 0.85rem; font-weight: bold; color: var(--primary-dark); margin-bottom: 4px;">📌 White Board</div>
+                <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 12px;">Drag sticky notes here, then freely move them with your mouse anywhere across the board.</p>
+                <div id="wallBoardStickersZone" style="position: relative; width: 100%; height: 330px;"></div>
               </div>
             </div>
 
@@ -1788,7 +1812,6 @@
               
               <!-- Tab Bar for Notes -->
               <div class="note-tab-bar" id="noteTabBar">
-                <!-- Dynamic tabs added here in JS -->
                 <button type="button" class="add-note-tab-btn" onclick="addNoteTab()">+ New Tab</button>
               </div>
 
@@ -1810,7 +1833,6 @@
                 </div>
               </div>
               
-              <!-- Expanded Tall Rich Notes Area -->
               <div class="rich-notes-box" id="richNotesBox" contenteditable="true" oninput="saveRichNotes()" placeholder="Type comments or quick notes here..."></div>
             </div>
 
@@ -1832,22 +1854,22 @@
                 <button onclick="createSticker()">Create Sticker</button>
               </div>
 
-              <p style="font-size: 0.72rem; color: var(--text-muted);">Drag sticky notes onto grid cells or click "Connect Notes".</p>
+              <p style="font-size: 0.72rem; color: var(--text-muted);">Drag sticky notes onto grid cells or the White Board.</p>
               
               <div class="stickers-container" id="stickersBank" ondragover="handleDragOver(event)" ondrop="handleDropToBank(event)"></div>
             </div>
 
-            <!-- Flower Pot -->
+            <!-- Rose Garden -->
             <div class="flower-card">
               <h3>
-                🌹 Rose Bloom Pot
+                🌹 Rose Garden
                 <span class="flower-status-badge" id="flowerBadge">Stage 0 / 12</span>
               </h3>
               <div class="flower-canvas-box">
                 <canvas id="flowerCanvas" width="280" height="240"></canvas>
               </div>
               <div class="flower-info-text" id="flowerInfoText">
-                Complete > 60% of month &amp; week tasks to trigger bloom growth.
+                Complete &gt;= 50% of tasks to grow your rose.
               </div>
             </div>
 
@@ -1859,7 +1881,6 @@
               </h3>
               
               <div class="grid-7x7-container" id="trackerGrid7x7">
-                <!-- Headers -->
                 <div class="grid-7x7-header" style="text-align: left;">Task</div>
                 <div class="grid-7x7-header">M</div>
                 <div class="grid-7x7-header">T</div>
@@ -1876,104 +1897,47 @@
         </div>
       </div>
 
-      <!-- ARCHIVE VIEW PANEL -->
+      <!-- ARCHIVE VIEW PANEL (FILTERABLE EXCEL-STYLE TABLE) -->
       <div id="archiveView" class="view-panel">
-        <div class="archive-header-controls">
-          <div class="archive-year-picker">
-            <label for="archiveYearSelect">🗓 Archive Year:</label>
-            <select id="archiveYearSelect" onchange="onArchiveYearChange()"></select>
+        <div class="archive-container-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-size: 1rem; color: var(--primary-dark);">📁 Filterable Archive Goals Data</h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);" id="archiveTableCount">0 records found</span>
           </div>
-          <div style="font-size: 0.8rem; color: var(--text-muted);">
-            <span style="color: var(--accent-green); font-weight: bold;">■ Completed</span> | 
-            <span style="color: var(--accent-orange); font-weight: bold;">■ Pending</span> | 
-            <span style="color: #cbd5e0; font-weight: bold;">■ No Records</span>
-          </div>
-        </div>
 
-        <div class="dual-grid-container">
-          <div class="grid-menu-card">
-            <h3>1. Select Month</h3>
-            <div class="months-grid-menu" id="archiveMonthGridMenu"></div>
+          <div class="archive-filter-toolbar">
+            <input type="text" id="archiveSearchInput" placeholder="🔍 Search task name..." oninput="renderArchiveTable()">
+            <select id="archiveTypeFilter" onchange="renderArchiveTable()">
+              <option value="all">All Types (Week, Month, Year)</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+            <select id="archiveStatusFilter" onchange="renderArchiveTable()">
+              <option value="all">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+            </select>
           </div>
-          <div class="grid-menu-card">
-            <h3>2. Select Week</h3>
-            <div class="weeks-grid-menu" id="archiveWeekGridMenu"></div>
-          </div>
-        </div>
 
-        <div style="font-weight: bold; font-size: 0.95rem; color: var(--primary-dark);" id="archiveSelectedDateTitle">
-          Archive Cabinet Snapshot
-        </div>
-
-        <div class="archive-cabinet-workspace">
-          <div class="archive-goal-card">
-            <h3>Weekly Goals</h3>
-            <ul class="archive-goal-list" id="archiveWeeklyList"></ul>
-          </div>
-          <div class="archive-goal-card">
-            <h3>Monthly Goals</h3>
-            <ul class="archive-goal-list" id="archiveMonthlyList"></ul>
-          </div>
-          <div class="archive-goal-card">
-            <h3>Yearly Goals</h3>
-            <ul class="archive-goal-list" id="archiveYearlyList"></ul>
-          </div>
-        </div>
-
-        <div class="archive-matrix-card">
-          <h3>Priority Matrix Snapshot</h3>
-          <div class="archive-matrix-pills" id="archiveMatrixPills"></div>
-        </div>
-
-        <div class="archive-notes-card">
-          <h3>Notes &amp; Comments Snapshot</h3>
-          <div class="archive-notes-content" id="archiveNotesContent"></div>
-        </div>
-      </div>
-
-      <!-- ANALYTICS VIEW PANEL -->
-      <div id="analyticsView" class="view-panel">
-        <h2 style="color: var(--primary-dark); font-size: 1.2rem;">Task &amp; Productivity Analytics</h2>
-        
-        <div class="analytics-grid">
-          <div class="metric-card">
-            <h3>Active Goals</h3>
-            <div class="metric-number" id="metricActiveGoals">0</div>
-          </div>
-          <div class="metric-card">
-            <h3>Archived Completed</h3>
-            <div class="metric-number" id="metricArchivedGoals" style="color: var(--accent-green);">0</div>
-          </div>
-          <div class="metric-card">
-            <h3>Completion Rate</h3>
-            <div class="metric-number" id="metricCompletionRate" style="color: var(--primary);">0%</div>
-          </div>
-          <div class="metric-card">
-            <h3>Matrix Priority Notes</h3>
-            <div class="metric-number" id="metricMatrixNotes" style="color: var(--accent-orange);">0</div>
-          </div>
-        </div>
-
-        <div class="charts-row">
-          <div class="chart-card">
-            <h3>Active Goals by Category</h3>
-            <div class="chart-wrapper">
-              <canvas id="categoryChart"></canvas>
-            </div>
-          </div>
-          <div class="chart-card">
-            <h3>Overall Completion Status</h3>
-            <div class="chart-wrapper">
-              <canvas id="completionChart"></canvas>
-            </div>
+          <div style="overflow-x: auto;">
+            <table class="excel-table">
+              <thead>
+                <tr>
+                  <th onclick="sortArchiveTable('text')">Task Name ↕</th>
+                  <th onclick="sortArchiveTable('status')">Status ↕</th>
+                  <th onclick="sortArchiveTable('type')">Type ↕</th>
+                  <th onclick="sortArchiveTable('periodKey')">Created Period ↕</th>
+                </tr>
+              </thead>
+              <tbody id="archiveTableBody"></tbody>
+            </table>
           </div>
         </div>
       </div>
 
       <!-- SETTINGS VIEW PANEL -->
       <div id="settingsView" class="view-panel">
-
-        <!-- ACCOUNT SECURITY & RECOVERY EMAIL CARD -->
         <div class="settings-card">
           <h3>📧 Account Recovery & Password Settings</h3>
           
@@ -1996,7 +1960,6 @@
           </form>
         </div>
 
-        <!-- CATEGORIES CARD -->
         <div class="settings-card">
           <h3>🎨 Category Settings &amp; Task Background Colors</h3>
           
@@ -2023,7 +1986,6 @@
   </div>
 
   <script>
-    // 1. Initialize Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA5NLG57O_ehRWFzkk1GUGO-LS9iXB8O6U",
       authDomain: "mindful-planner-31026.firebaseapp.com",
@@ -2038,13 +2000,14 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Default template data for fresh user signups
     function getDefaultAppData() {
       return {
         recoveryEmail: "",
         lastActiveMonthYear: "",
         userNotes: "",
         userNotesBg: "var(--pastel-yellow)",
+        centerActiveView: "matrix",
+        darkMode: false,
         noteTabs: [
           { id: "tab_1", title: "Main Notes", content: "This is an expanded note area! Double-click tab titles to rename them.", bg: "var(--pastel-yellow)" },
           { id: "tab_2", title: "Brainstorming", content: "Ideas for future projects go here...", bg: "var(--pastel-blue)" }
@@ -2067,20 +2030,20 @@
         ],
         goals: {
           weekly: [
-            { id: 1, text: "Run 10k", categoryId: "cat_hobby", done: true, dateCreated: formatDateISO(getMonday(new Date())) },
-            { id: 2, text: "Meal prep", categoryId: "cat_home", done: false, dateCreated: formatDateISO(getMonday(new Date())) }
+            { id: 1, text: "Run 10k", categoryId: "cat_hobby", done: true, periodKey: getWeekPeriodKey(getMonday(new Date())) },
+            { id: 2, text: "Meal prep", categoryId: "cat_home", done: false, periodKey: getWeekPeriodKey(getMonday(new Date())) }
           ],
           monthly: [
-            { id: 3, text: "Read 3 books", categoryId: "cat_hobby", done: true, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) },
-            { id: 4, text: "Finish project", categoryId: "cat_work", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) }
+            { id: 3, text: "Read 3 books", categoryId: "cat_hobby", done: true, periodKey: getMonthPeriodKey(new Date().getFullYear(), new Date().getMonth()) },
+            { id: 4, text: "Finish project", categoryId: "cat_work", done: false, periodKey: getMonthPeriodKey(new Date().getFullYear(), new Date().getMonth()) }
           ],
           yearly: [
-            { id: 5, text: "Save $5000", categoryId: "cat_home", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) },
-            { id: 6, text: "Travel to Italy", categoryId: "cat_hobby", done: false, dateCreated: formatDateISO(new Date(new Date().getFullYear(), 0, 1)) }
+            { id: 5, text: "Save $5000", categoryId: "cat_home", done: false, periodKey: String(new Date().getFullYear()) },
+            { id: 6, text: "Travel to Italy", categoryId: "cat_hobby", done: false, periodKey: String(new Date().getFullYear()) }
           ]
         },
         stickers: [
-          { id: "s1", text: "Learn Python", color: "bg-yellow", cellId: null },
+          { id: "s1", text: "Learn Python", color: "bg-yellow", cellId: null, x: 20, y: 20 },
           { id: "s2", text: "Gym Session", color: "bg-blue", cellId: "cell-2-4" },
           { id: "s3", text: "Research Trip", color: "bg-blue", cellId: "cell-2-2" },
           { id: "s4", text: "Skill Project", color: "bg-yellow", cellId: "cell-4-2" },
@@ -2096,9 +2059,8 @@
       };
     }
 
-    // State Variables
     let currentUser = null;
-    let authMode = 'login'; // 'login', 'signup', or 'forgot'
+    let authMode = 'login';
     let selectedColor = 'bg-yellow';
     let isConnectMode = false;
     let connectSourceId = null;
@@ -2106,38 +2068,32 @@
     let draggedGoalType = null;
     let draggedGoalId = null;
 
-    const DAY_MS = 24 * 60 * 60 * 1000;
+    let archiveSortField = 'periodKey';
+    let archiveSortAsc = false;
 
+    const DAY_MS = 24 * 60 * 60 * 1000;
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const fullMonthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    let selectedArchiveYear = new Date().getFullYear();
-    let selectedArchiveMonthIdx = new Date().getMonth();
-    let selectedArchiveWeekIdx = 1;
 
     let preplanWeekDate = getMonday(new Date());
     let preplanMonthIdx = new Date().getMonth();
     let preplanMonthYear = new Date().getFullYear();
     let preplanYear = new Date().getFullYear();
 
-    // FLOWER GROWTH ENGINE VARIABLES
     let currentFlowerStage = 0; 
     let targetFlowerStage = 0;  
     let flowerTime = 0;
 
-    const flowerPollenParticles = Array.from({ length: 30 }, () => ({
+    const flowerPollenParticles = Array.from({ length: 35 }, () => ({
       x: Math.random() * 280,
       y: Math.random() * 240,
-      radius: Math.random() * 1.5 + 0.4,
-      speedY: Math.random() * 0.35 + 0.15,
+      radius: Math.random() * 1.8 + 0.5,
+      speedY: Math.random() * 0.4 + 0.15,
       wobble: Math.random() * Math.PI * 2,
       opacity: Math.random()
     }));
 
     let appData = getDefaultAppData();
-
-    let categoryChartInstance = null;
-    let completionChartInstance = null;
 
     const authModal = document.getElementById('authModal');
     const authForm = document.getElementById('authForm');
@@ -2147,13 +2103,11 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       buildMatrixGrid();
-      initYearCombobox();
       populateCategorySelects();
       window.addEventListener('resize', renderConnections);
       requestAnimationFrame(flowerAnimationLoop);
     });
 
-    // 2. Auth State Sync with Firebase
     auth.onAuthStateChanged((user) => {
       if (user) {
         currentUser = user.email ? user.email.split('@')[0] : 'User';
@@ -2166,13 +2120,13 @@
       }
     });
 
-    // 3. Database Read & Write Methods
     async function loadUserDataCloud(uid) {
       try {
         const doc = await db.collection('users').doc(uid).get();
         if (doc.exists) {
           appData = doc.data();
           if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
+          if (!appData.centerActiveView) appData.centerActiveView = "matrix";
           if (!appData.categories || appData.categories.length === 0) {
             appData.categories = [
               { id: "cat_work", name: "Work", color: "#e0f2fe" },
@@ -2181,6 +2135,24 @@
               { id: "cat_default", name: "General", color: "#f8fafc" }
             ];
           }
+
+          ['weekly', 'monthly', 'yearly'].forEach(type => {
+            if (appData.goals && appData.goals[type]) {
+              appData.goals[type].forEach(g => {
+                if (!g.periodKey) {
+                  if (type === 'weekly') {
+                    g.periodKey = getWeekPeriodKey(g.dateCreated ? parseDateISO(g.dateCreated) : getMonday(new Date()));
+                  } else if (type === 'monthly') {
+                    const d = g.dateCreated ? parseDateISO(g.dateCreated) : new Date();
+                    g.periodKey = getMonthPeriodKey(d.getFullYear(), d.getMonth());
+                  } else {
+                    const d = g.dateCreated ? parseDateISO(g.dateCreated) : new Date();
+                    g.periodKey = String(d.getFullYear());
+                  }
+                }
+              });
+            }
+          });
 
           if (!appData.noteTabs || appData.noteTabs.length === 0) {
             appData.noteTabs = [
@@ -2193,13 +2165,23 @@
               "Morning Run", "Deep Work (2h)", "Read 30 mins", "Meditation", "No Sugar", "Code / Study", "Plan Tomorrow"
             ].map((t, idx) => ({ id: idx + 1, title: t, checks: [false, false, false, false, false, false, false] }));
           }
-
         } else {
           appData = getDefaultAppData();
           await saveUserDataCloud(uid);
         }
 
-        // Pre-fill settings recovery email field if available
+        if (appData.darkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+
+        const targetView = appData.centerActiveView || "matrix";
+        const btnToClick = targetView === "newboard" ? document.getElementById('tabBtnNewBoard') : document.getElementById('tabBtnMatrix');
+        if (btnToClick) {
+          switchCenterView(targetView, btnToClick);
+        }
+
         const emailInput = document.getElementById('settingsEmailInput');
         if (emailInput) {
           const activeEmail = auth.currentUser ? auth.currentUser.email : '';
@@ -2211,36 +2193,33 @@
         renderAll();
       } catch (err) {
         console.error("Error reading cloud data:", err);
-        alert("Firestore Read Error: " + err.message);
       }
     }
 
     async function saveUserDataCloud(uid) {
       const targetUid = uid || (auth.currentUser ? auth.currentUser.uid : null);
-      if (!targetUid) {
-        console.warn("Save skipped: No authenticated user ID found.");
-        return;
-      }
+      if (!targetUid) return;
 
       try {
         const cleanData = JSON.parse(JSON.stringify(appData));
         await db.collection('users').doc(targetUid).set(cleanData, { merge: true });
-        console.log("Successfully saved to Firestore for UID:", targetUid);
       } catch (err) {
         console.error("Firestore Save Failed:", err);
-        alert("Firestore Save Error: " + err.message);
       }
     }
 
     async function saveUserData() {
       if (auth.currentUser) {
         await saveUserDataCloud(auth.currentUser.uid);
-      } else {
-        alert("Cannot save: You are not logged in.");
       }
     }
 
-    // 4. Form Authentication Handler (With Comprehensive Reset & Error Handling)
+    function toggleDarkMode() {
+      appData.darkMode = !appData.darkMode;
+      document.body.classList.toggle('dark-mode', appData.darkMode);
+      saveUserData();
+    }
+
     authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const rawUser = document.getElementById('authUsername').value.trim();
@@ -2251,21 +2230,18 @@
       try {
         if (authMode === 'forgot') {
           if (!rawUser.includes('@')) {
-            alert("Please enter a full, valid email address (e.g. user@gmail.com).");
+            alert("Please enter a valid email address.");
             return;
           }
-
           await auth.sendPasswordResetEmail(rawUser);
-          alert(`Reset email dispatched to ${rawUser}!\n\nIf you don't see it within 2 minutes, please check your Spam/Junk folder.`);
+          alert(`Reset email dispatched to ${rawUser}!`);
           setAuthMode('login');
         } else if (authMode === 'signup') {
           if (!pass) return;
           const email = rawUser.includes('@') ? rawUser : `${rawUser}@planner.com`;
           const userCredential = await auth.createUserWithEmailAndPassword(email, pass);
           appData = getDefaultAppData();
-          if (rawUser.includes('@')) {
-            appData.recoveryEmail = rawUser;
-          }
+          if (rawUser.includes('@')) appData.recoveryEmail = rawUser;
           await saveUserDataCloud(userCredential.user.uid);
         } else {
           if (!pass) return;
@@ -2273,13 +2249,7 @@
           await auth.signInWithEmailAndPassword(email, pass);
         }
       } catch (error) {
-        if (error.code === 'auth/user-not-found') {
-          alert("No user account exists with this email address. Please check your spelling or sign up first.");
-        } else if (error.code === 'auth/invalid-email') {
-          alert("The email address format is invalid. Please enter a valid email address.");
-        } else {
-          alert("Authentication Error: " + error.message);
-        }
+        alert("Authentication Error: " + error.message);
       }
     });
 
@@ -2287,63 +2257,36 @@
       auth.signOut().then(() => location.reload());
     });
 
-    // 5. Settings: Update Recovery Email
     async function updateUserRecoveryEmail(e) {
       e.preventDefault();
       const emailInput = document.getElementById('settingsEmailInput').value.trim();
       if (!emailInput) return;
-
       appData.recoveryEmail = emailInput;
-
-      try {
-        if (auth.currentUser && auth.currentUser.email && auth.currentUser.email.includes('@')) {
-          await auth.currentUser.updateEmail(emailInput);
-        }
-      } catch (err) {
-        if (err.code === 'auth/requires-recent-login') {
-          alert("Note: Saved in planner settings! To update core account email in Firebase security, please log out and back in.");
-        }
-      }
-
       await saveUserData();
-      alert("Recovery email saved successfully! Password reset links will be sent to this email.");
+      alert("Recovery email saved successfully!");
     }
 
-    // 6. Settings: Change Password
     async function updateUserPassword(e) {
       e.preventDefault();
       const newPass = document.getElementById('settingsNewPassword').value;
       const confirmPass = document.getElementById('settingsConfirmPassword').value;
 
-      if (!newPass || !confirmPass) return;
-
       if (newPass !== confirmPass) {
         alert("Passwords do not match!");
         return;
       }
-
       if (newPass.length < 6) {
-        alert("Password must be at least 6 characters long.");
-        return;
-      }
-
-      const user = auth.currentUser;
-      if (!user) {
-        alert("No active user session found.");
+        alert("Password must be at least 6 characters.");
         return;
       }
 
       try {
-        await user.updatePassword(newPass);
-        alert("Password changed successfully! Your login username remains unchanged.");
+        await auth.currentUser.updatePassword(newPass);
+        alert("Password changed successfully!");
         document.getElementById('settingsNewPassword').value = '';
         document.getElementById('settingsConfirmPassword').value = '';
       } catch (err) {
-        if (err.code === 'auth/requires-recent-login') {
-          alert("Security Requirement: Please log out and log back in, then try changing your password again.");
-        } else {
-          alert("Error updating password: " + err.message);
-        }
+        alert("Error: " + err.message);
       }
     }
 
@@ -2363,17 +2306,11 @@
     async function manualSave() {
       const btn = document.getElementById('manualSaveBtn');
       if (btn) btn.innerHTML = '⏳ Saving...';
-      
       autoSaveTodaySnapshot();
       await saveUserData();
-
       if (btn) {
         btn.innerHTML = '✅ Saved!';
-        btn.style.backgroundColor = '#38a169';
-        setTimeout(() => {
-          btn.innerHTML = '💾 Save';
-          btn.style.backgroundColor = '';
-        }, 1800);
+        setTimeout(() => { btn.innerHTML = '💾 Save'; }, 1800);
       }
     }
 
@@ -2392,22 +2329,19 @@
       if (authMode === 'signup') {
         signupTab.classList.add('active');
         submitBtn.textContent = '✨ Register New Account';
-        helpText.textContent = 'Sign up for a new account to begin tracking goals.';
+        helpText.textContent = 'Sign up for a new account.';
         passInput.style.display = 'block';
-        passInput.required = true;
         forgotLink.style.display = 'none';
       } else if (authMode === 'forgot') {
-        submitBtn.textContent = '📧 Send Password & Login Info';
-        helpText.textContent = 'Enter your registered email address to receive password recovery details.';
+        submitBtn.textContent = '📧 Send Password Reset';
+        helpText.textContent = 'Enter your email for password recovery.';
         passInput.style.display = 'none';
-        passInput.required = false;
         forgotLink.style.display = 'none';
       } else {
         loginTab.classList.add('active');
         submitBtn.textContent = '🔑 Log In to Cabinet';
         helpText.textContent = 'Log in with your existing account.';
         passInput.style.display = 'block';
-        passInput.required = true;
         forgotLink.style.display = 'block';
       }
     }
@@ -2416,7 +2350,24 @@
       document.execCommand(command, false, null);
     }
 
-    /* NOTE TABS MANAGEMENT */
+    function switchCenterView(viewName, element) {
+      document.querySelectorAll('.center-view-tab').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      document.querySelectorAll('.center-sub-panel').forEach(panel => panel.classList.remove('active-sub-panel'));
+
+      if (viewName === 'matrix') {
+        document.getElementById('centerPanelMatrix').classList.add('active-sub-panel');
+        appData.centerActiveView = 'matrix';
+        setTimeout(renderConnections, 50);
+      } else if (viewName === 'newboard') {
+        document.getElementById('centerPanelNewBoard').classList.add('active-sub-panel');
+        appData.centerActiveView = 'newboard';
+      }
+
+      saveUserData();
+    }
+
     function renderNoteTabs() {
       const tabBar = document.getElementById('noteTabBar');
       if (!tabBar) return;
@@ -2424,9 +2375,7 @@
       tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
 
       if (!appData.noteTabs || appData.noteTabs.length === 0) {
-        appData.noteTabs = [
-          { id: "tab_1", title: "Main Notes", content: "", bg: "var(--pastel-yellow)" }
-        ];
+        appData.noteTabs = [{ id: "tab_1", title: "Main Notes", content: "", bg: "var(--pastel-yellow)" }];
         appData.activeNoteTabId = "tab_1";
       }
 
@@ -2446,13 +2395,9 @@
         const titleEl = document.createElement('span');
         titleEl.className = 'note-tab-title';
         titleEl.textContent = tab.title;
-        titleEl.title = "Double-click to rename tab";
 
-        /* DOUBLE CLICK TO RENAME TAB VIA INLINE INPUT */
         titleEl.ondblclick = (e) => {
           e.stopPropagation();
-          e.preventDefault();
-
           const input = document.createElement('input');
           input.type = 'text';
           input.value = tab.title;
@@ -2463,38 +2408,28 @@
           input.select();
 
           const saveNewTitle = () => {
-            const newTitle = input.value.trim();
-            tab.title = newTitle || 'Untitled Tab';
+            tab.title = input.value.trim() || 'Untitled Tab';
             saveUserData();
-            autoSaveTodaySnapshot();
             renderNoteTabs();
           };
 
           input.onblur = saveNewTitle;
           input.onkeydown = (ev) => {
-            if (ev.key === 'Enter') {
-              ev.preventDefault();
-              input.blur();
-            }
-            if (ev.key === 'Escape') {
-              renderNoteTabs();
-            }
+            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
+            if (ev.key === 'Escape') { renderNoteTabs(); }
           };
         };
 
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close-note-tab';
         closeBtn.textContent = '✕';
-        closeBtn.title = "Delete tab";
         closeBtn.onclick = (e) => {
           e.stopPropagation();
           deleteNoteTab(tab.id);
         };
 
         tabEl.appendChild(titleEl);
-        if (appData.noteTabs.length > 1) {
-          tabEl.appendChild(closeBtn);
-        }
+        if (appData.noteTabs.length > 1) tabEl.appendChild(closeBtn);
 
         tabBar.insertBefore(tabEl, tabBar.querySelector('.add-note-tab-btn'));
       });
@@ -2503,27 +2438,14 @@
       const notesBox = document.getElementById('richNotesBox');
       if (notesBox) {
         notesBox.innerHTML = activeTab.content || "";
-        const bg = activeTab.bg || "var(--pastel-yellow)";
-        notesBox.style.backgroundColor = bg;
-
-        document.querySelectorAll('.bg-swatch').forEach(sw => {
-          if (sw.getAttribute('onclick').includes(bg)) {
-            sw.classList.add('selected');
-          } else {
-            sw.classList.remove('selected');
-          }
-        });
+        notesBox.style.backgroundColor = activeTab.bg || "var(--pastel-yellow)";
       }
     }
 
     function selectNoteTab(id) {
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
       const notesBox = document.getElementById('richNotesBox');
-      if (activeTab && notesBox) {
-        activeTab.content = notesBox.innerHTML;
-      }
-
-      if (appData.activeNoteTabId === id) return;
+      if (activeTab && notesBox) activeTab.content = notesBox.innerHTML;
 
       appData.activeNoteTabId = id;
       renderNoteTabs();
@@ -2533,36 +2455,21 @@
     function addNoteTab() {
       const notesBox = document.getElementById('richNotesBox');
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
-      if (activeTab && notesBox) {
-        activeTab.content = notesBox.innerHTML;
-      }
+      if (activeTab && notesBox) activeTab.content = notesBox.innerHTML;
 
       const newId = 'tab_' + Date.now();
-      const newTab = {
-        id: newId,
-        title: `Note ${appData.noteTabs.length + 1}`,
-        content: '',
-        bg: 'var(--pastel-yellow)'
-      };
-
-      appData.noteTabs.push(newTab);
+      appData.noteTabs.push({ id: newId, title: `Note ${appData.noteTabs.length + 1}`, content: '', bg: 'var(--pastel-yellow)' });
       appData.activeNoteTabId = newId;
       renderNoteTabs();
       saveUserData();
-      autoSaveTodaySnapshot();
     }
 
     function deleteNoteTab(id) {
       if (appData.noteTabs.length <= 1) return;
-
       appData.noteTabs = appData.noteTabs.filter(t => t.id !== id);
-      if (appData.activeNoteTabId === id) {
-        appData.activeNoteTabId = appData.noteTabs[0].id;
-      }
-
+      if (appData.activeNoteTabId === id) appData.activeNoteTabId = appData.noteTabs[0].id;
       renderNoteTabs();
       saveUserData();
-      autoSaveTodaySnapshot();
     }
 
     function setPastelBg(colorVal, element) {
@@ -2570,47 +2477,32 @@
       element.classList.add('selected');
 
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
-      if (activeTab) {
-        activeTab.bg = colorVal;
-      }
+      if (activeTab) activeTab.bg = colorVal;
 
-      const notesBox = document.getElementById('richNotesBox');
-      notesBox.style.backgroundColor = colorVal;
-
+      document.getElementById('richNotesBox').style.backgroundColor = colorVal;
       appData.userNotesBg = colorVal;
       saveUserData();
-      autoSaveTodaySnapshot();
     }
 
     function saveRichNotes() {
       const notesBox = document.getElementById('richNotesBox');
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
-      if (activeTab && notesBox) {
-        activeTab.content = notesBox.innerHTML;
-      }
+      if (activeTab && notesBox) activeTab.content = notesBox.innerHTML;
       appData.userNotes = notesBox.innerHTML;
       saveUserData();
-      autoSaveTodaySnapshot();
     }
 
-    /* COMPACT 7x7 HABIT TRACKER GRID RENDER */
     function render7x7Tracker() {
       const grid = document.getElementById('trackerGrid7x7');
       if (!grid) return;
 
       grid.querySelectorAll('.grid-7x7-task-label, .circle-check-btn').forEach(el => el.remove());
 
-      if (!appData.tracker7x7 || appData.tracker7x7.length === 0) {
-        appData.tracker7x7 = [
-          "Run 10k", "Deep Work", "Read", "Meditate", "No Sugar", "Code/Study", "Plan Day"
-        ].map((t, idx) => ({ id: idx + 1, title: t, checks: [false, false, false, false, false, false, false] }));
-      }
-
       appData.tracker7x7.slice(0, 7).forEach((row, rowIndex) => {
         const label = document.createElement('div');
         label.className = 'grid-7x7-task-label';
         label.textContent = row.title || `Habit ${rowIndex + 1}`;
-        label.title = "Click to edit task name";
+        label.title = row.title || `Habit ${rowIndex + 1}`;
 
         label.onclick = () => {
           label.contentEditable = "true";
@@ -2619,16 +2511,13 @@
 
         label.onblur = () => {
           label.contentEditable = "false";
-          const newTitle = label.textContent.trim();
-          row.title = newTitle || `Habit ${rowIndex + 1}`;
+          row.title = label.textContent.trim() || `Habit ${rowIndex + 1}`;
+          label.title = row.title;
           saveUserData();
         };
 
         label.onkeydown = (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            label.blur();
-          }
+          if (e.key === 'Enter') { e.preventDefault(); label.blur(); }
         };
 
         grid.appendChild(label);
@@ -2641,7 +2530,6 @@
             row.checks[col] = !row.checks[col];
             btn.classList.toggle('checked', row.checks[col]);
             saveUserData();
-            autoSaveTodaySnapshot();
           };
           grid.appendChild(btn);
         }
@@ -2655,10 +2543,6 @@
       return new Date(date.setDate(diff));
     }
 
-    function formatShortDate(d) {
-      return `${d.getDate()} ${monthNames[d.getMonth()]}`;
-    }
-
     function getWeekRangeLabel(mondayDate) {
       const sunday = new Date(mondayDate);
       sunday.setDate(mondayDate.getDate() + 6);
@@ -2666,39 +2550,45 @@
       return `Week ${weekNum} (${formatShortDate(mondayDate)} - ${formatShortDate(sunday)})`;
     }
 
-    function getWeekRangeForMonth(year, monthIdx, weekIdx) {
-      const startDay = weekIdx * 7 + 1;
-      const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
-      const endDay = Math.min(startDay + 6, daysInMonth);
-      return `${startDay} ${monthNames[monthIdx]} - ${endDay} ${monthNames[monthIdx]}`;
+    function formatShortDate(d) {
+      return `${d.getDate()} ${monthNames[d.getMonth()]}`;
     }
 
-    function calculatePeriodDelta(type, goalDateCreated) {
-      if (!goalDateCreated) return 0;
-      const created = parseDateISO(goalDateCreated);
+    function getWeekPeriodKey(dateObj) {
+      const m = getMonday(dateObj);
+      return formatDateISO(m);
+    }
 
+    function getMonthPeriodKey(year, monthIdx) {
+      return `${year}-${String(monthIdx + 1).padStart(2, '0')}`;
+    }
+
+    function getCurrentSelectedPeriodKey(type) {
+      if (type === 'weekly') return getWeekPeriodKey(preplanWeekDate);
+      if (type === 'monthly') return getMonthPeriodKey(preplanMonthYear, preplanMonthIdx);
+      if (type === 'yearly') return String(preplanYear);
+      return '';
+    }
+
+    function calculatePeriodDelta(type, goalPeriodKey, currentSelectedKey) {
+      if (!goalPeriodKey) return 0;
       if (type === 'weekly') {
-        const viewedMonday = new Date(preplanWeekDate);
+        const viewedMonday = parseDateISO(currentSelectedKey);
         viewedMonday.setHours(0,0,0,0);
-        
-        const createdMonday = getMonday(created);
+        const createdMonday = parseDateISO(goalPeriodKey);
         createdMonday.setHours(0,0,0,0);
-
-        const diffTime = viewedMonday.getTime() - createdMonday.getTime();
-        return Math.round(diffTime / (7 * DAY_MS));
-      } 
-      else if (type === 'monthly') {
-        const viewedYear = preplanMonthYear;
-        const viewedMonth = preplanMonthIdx;
-        const createdYear = created.getFullYear();
-        const createdMonth = created.getMonth();
-
-        return (viewedYear - createdYear) * 12 + (viewedMonth - createdMonth);
-      } 
-      else if (type === 'yearly') {
-        const viewedYear = preplanYear;
-        const createdYear = created.getFullYear();
-        return viewedYear - createdYear;
+        const diffWeeks = Math.round((viewedMonday.getTime() - createdMonday.getTime()) / (7 * DAY_MS));
+        return diffWeeks;
+      } else if (type === 'monthly') {
+        const [currYear, currMonth] = currentSelectedKey.split('-').map(Number);
+        const [gYear, gMonth] = goalPeriodKey.split('-').map(Number);
+        const diffMonths = (currYear - gYear) * 12 + (currMonth - gMonth);
+        return diffMonths;
+      } else if (type === 'yearly') {
+        const currYear = parseInt(currentSelectedKey, 10);
+        const gYear = parseInt(goalPeriodKey, 10);
+        const diffYears = currYear - gYear;
+        return diffYears;
       }
       return 0;
     }
@@ -2710,13 +2600,8 @@
 
     function navigatePreplanMonth(offset) {
       preplanMonthIdx += offset;
-      if (preplanMonthIdx > 11) {
-        preplanMonthIdx = 0;
-        preplanMonthYear++;
-      } else if (preplanMonthIdx < 0) {
-        preplanMonthIdx = 11;
-        preplanMonthYear--;
-      }
+      if (preplanMonthIdx > 11) { preplanMonthIdx = 0; preplanMonthYear++; }
+      else if (preplanMonthIdx < 0) { preplanMonthIdx = 11; preplanMonthYear--; }
       renderGoals();
     }
 
@@ -2735,7 +2620,6 @@
       const snapshotKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-W${weekNum}`;
       
       if (!appData.archiveSnapshots) appData.archiveSnapshots = {};
-
       appData.archiveSnapshots[snapshotKey] = {
         goals: JSON.parse(JSON.stringify(appData.goals)),
         stickers: JSON.parse(JSON.stringify(appData.stickers)),
@@ -2748,16 +2632,13 @@
     function checkMonthlyAutoReset() {
       const now = new Date();
       const currentMonthYear = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
-
       if (!appData.lastActiveMonthYear) {
         appData.lastActiveMonthYear = currentMonthYear;
         autoSaveTodaySnapshot();
         return;
       }
-
       if (appData.lastActiveMonthYear !== currentMonthYear) {
         autoSaveTodaySnapshot();
-        appData.goals.weekly = [];
         appData.lastActiveMonthYear = currentMonthYear;
         saveUserData();
       } else {
@@ -2777,10 +2658,10 @@
       const percentPassed = Math.round((dayOfMonth / totalDaysInMonth) * 100);
 
       document.getElementById('currentMonthYear').textContent = `📅 ${currentMonthName} ${year}`;
-      document.getElementById('daysLeftBadge').textContent = `⏳ ${daysRemaining} day${daysRemaining === 1 ? '' : 's'} remaining in ${currentMonthName}`;
+      document.getElementById('daysLeftBadge').textContent = `⏳ ${daysRemaining} days remaining`;
       document.getElementById('monthProgressFill').style.width = `${percentPassed}%`;
       document.getElementById('monthSubtextLeft').textContent = `Day ${dayOfMonth} of ${totalDaysInMonth}`;
-      document.getElementById('monthSubtextRight').textContent = `${percentPassed}% of ${currentMonthName} elapsed`;
+      document.getElementById('monthSubtextRight').textContent = `${percentPassed}% elapsed`;
     }
 
     function switchTab(tabName, element) {
@@ -2794,10 +2675,7 @@
         setTimeout(renderConnections, 50);
       } else if (tabName === 'archive') {
         document.getElementById('archiveView').classList.add('active-panel');
-        renderArchiveSystem();
-      } else if (tabName === 'analytics') {
-        document.getElementById('analyticsView').classList.add('active-panel');
-        renderAnalytics();
+        renderArchiveTable();
       } else if (tabName === 'settings') {
         document.getElementById('settingsView').classList.add('active-panel');
         renderSettingsCategories();
@@ -2815,17 +2693,7 @@
     }
 
     function populateCategorySelects() {
-      const selects = document.querySelectorAll('.category-select');
-      if (!appData.categories || appData.categories.length === 0) {
-        appData.categories = [
-          { id: "cat_work", name: "Work", color: "#e0f2fe" },
-          { id: "cat_home", name: "Home", color: "#dcfce7" },
-          { id: "cat_hobby", name: "Hobby", color: "#fce7f3" },
-          { id: "cat_default", name: "General", color: "#f8fafc" }
-        ];
-      }
-
-      selects.forEach(sel => {
+      document.querySelectorAll('.category-select').forEach(sel => {
         sel.innerHTML = '';
         appData.categories.forEach(cat => {
           const opt = document.createElement('option');
@@ -2852,7 +2720,7 @@
             </div>
           </td>
           <td>
-            <button class="delete-goal-btn" onclick="deleteCategory('${cat.id}')" title="Delete category">🗑️</button>
+            <button class="delete-goal-btn" onclick="deleteCategory('${cat.id}')">🗑️</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -2866,18 +2734,9 @@
       const name = nameInput.value.trim();
       if (!name) return;
 
-      const newCat = {
-        id: 'cat_' + Date.now(),
-        name: name,
-        color: colorInput.value
-      };
-
-      if (!appData.categories) appData.categories = [];
-      appData.categories.push(newCat);
-
+      appData.categories.push({ id: 'cat_' + Date.now(), name, color: colorInput.value });
       nameInput.value = '';
       saveUserData();
-      autoSaveTodaySnapshot();
       populateCategorySelects();
       renderSettingsCategories();
       renderGoals();
@@ -2885,330 +2744,140 @@
 
     function updateCategoryColor(catId, newColor) {
       const cat = appData.categories.find(c => c.id === catId);
-      if (cat) {
-        cat.color = newColor;
-        saveUserData();
-        autoSaveTodaySnapshot();
-        renderGoals();
-      }
+      if (cat) { cat.color = newColor; saveUserData(); renderGoals(); }
     }
 
     function deleteCategory(catId) {
-      if (appData.categories.length <= 1) {
-        alert("You must keep at least one category.");
-        return;
-      }
+      if (appData.categories.length <= 1) { alert("Keep at least one category."); return; }
       appData.categories = appData.categories.filter(c => c.id !== catId);
       saveUserData();
-      autoSaveTodaySnapshot();
       populateCategorySelects();
       renderSettingsCategories();
       renderGoals();
     }
 
     function updateFlowerGrowth() {
-      const visibleWeekly = (appData.goals.weekly || []).filter(g => calculatePeriodDelta('weekly', g.dateCreated) >= 0);
-      const visibleMonthly = (appData.goals.monthly || []).filter(g => calculatePeriodDelta('monthly', g.dateCreated) >= 0);
+      const currentWeekKey = getCurrentSelectedPeriodKey('weekly');
+      const currentMonthKey = getCurrentSelectedPeriodKey('monthly');
 
-      const totalTasks = visibleWeekly.length + visibleMonthly.length;
-      const doneTasks = visibleWeekly.filter(g => g.done).length + visibleMonthly.filter(g => g.done).length;
+      const allWeeklyInPeriod = (appData.goals.weekly || []).filter(g => calculatePeriodDelta('weekly', g.periodKey, currentWeekKey) === 0);
+      const allMonthlyInPeriod = (appData.goals.monthly || []).filter(g => calculatePeriodDelta('monthly', g.periodKey, currentMonthKey) === 0);
 
-      const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+      const totalTasks = allWeeklyInPeriod.length + allMonthlyInPeriod.length;
+      const doneTasks = allWeeklyInPeriod.filter(g => g.done).length + allMonthlyInPeriod.filter(g => g.done).length;
+      const percent = totalTasks > 0 ? (doneTasks / totalTasks) * 100 : 0;
 
-      if (percent <= 60) {
+      // Threshold: must be >= 50% completed to grow the rose
+      if (percent < 50 || totalTasks === 0) {
         targetFlowerStage = 0;
       } else {
-        const normalized = (percent - 60) / 40; 
+        const normalized = (percent - 50) / 50;
         targetFlowerStage = Math.min(12, Math.max(1, Math.round(normalized * 11) + 1));
       }
 
-      const badge = document.getElementById('flowerBadge');
-      const infoText = document.getElementById('flowerInfoText');
-
-      if (badge) badge.textContent = `Stage ${targetFlowerStage} / 12`;
-      if (infoText) {
-        if (percent <= 60) {
-          infoText.textContent = `Month completion: ${percent}%. Reach >60% to sprout flower!`;
-        } else {
-          infoText.textContent = `Month completion: ${percent}%! Flower blooming at Stage ${targetFlowerStage}.`;
-        }
-      }
+      document.getElementById('flowerBadge').textContent = `Stage ${Math.round(currentFlowerStage)} / 12`;
     }
 
     function draw12StageRose(stageVal) {
       const canvas = document.getElementById('flowerCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      flowerTime += 0.025;
+      flowerTime += 0.03;
 
-      const centerX = 140;
-      const baseY = 205;
-      const stageRatio = stageVal / 12;
+      const centerX = 140, baseY = 225;
+      const stageRatio = Math.max(0.05, stageVal / 12);
 
+      // Floating pollen particles
       flowerPollenParticles.forEach(p => {
         p.y -= p.speedY;
         p.wobble += 0.02;
-        const xOffset = Math.sin(p.wobble) * 1.2;
-
         if (p.y < 0) p.y = canvas.height;
-
         ctx.beginPath();
-        ctx.arc(p.x + xOffset, p.y, p.radius, 0, Math.PI * 2);
-        const alpha = (0.2 + 0.6 * p.opacity) * Math.max(stageRatio, 0.1);
-        ctx.fillStyle = `rgba(251, 191, 36, ${alpha})`;
+        ctx.arc(p.x + Math.sin(p.wobble) * 2, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(217, 119, 6, ${0.25 + 0.5 * p.opacity})`;
         ctx.fill();
       });
 
-      if (stageVal === 0) {
-        ctx.save();
-        ctx.translate(centerX, baseY - 15);
-        ctx.beginPath();
-        ctx.arc(0, 0, 6 + Math.sin(flowerTime * 2) * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#38bdf8';
-        ctx.shadowColor = '#38bdf8';
-        ctx.shadowBlur = 12;
-        ctx.fill();
-        ctx.restore();
-        return;
-      }
+      if (stageVal < 0.5) return;
 
-      const windSway = Math.sin(flowerTime * 0.8) * 4 * Math.max(stageRatio, 0.2);
-      const actualStemLength = 110 * Math.max(0.2, stageRatio);
-      const tipX = centerX + windSway;
-      const tipY = baseY - actualStemLength;
+      // --- Animated Breeze Swaying Stem & Flower Head ---
+      const stemHeight = 110 * (stageVal / 12);
+      const swayAmount = Math.sin(flowerTime * 1.5) * (3 * stageRatio);
+      const tipX = centerX + swayAmount;
+      const tipY = baseY - stemHeight;
 
-      ctx.save();
+      // Curved Organic Stem emerging directly from bottom (always grows from ground up)
       ctx.beginPath();
       ctx.moveTo(centerX, baseY);
-      ctx.bezierCurveTo(
-        centerX - 18 * stageRatio + windSway * 0.3, baseY - actualStemLength * 0.4,
-        centerX + 15 * stageRatio + windSway * 0.7, baseY - actualStemLength * 0.7,
-        tipX, tipY
-      );
-
-      const stemGrad = ctx.createLinearGradient(centerX, baseY, tipX, tipY);
-      stemGrad.addColorStop(0, '#064e3b');
-      stemGrad.addColorStop(0.5, '#059669');
-      stemGrad.addColorStop(1, '#10b981');
-
-      ctx.lineWidth = 4 + stageRatio * 2;
-      ctx.strokeStyle = stemGrad;
-      ctx.shadowColor = '#34d399';
-      ctx.shadowBlur = 8 * stageRatio;
+      ctx.quadraticCurveTo(centerX + swayAmount * 0.5, (baseY - stemHeight * 0.5), tipX, tipY);
+      ctx.lineWidth = Math.max(2, 3.5 * stageRatio);
+      ctx.strokeStyle = '#059669';
       ctx.stroke();
-      ctx.restore();
 
+      // Leaves attached firmly along the rising stem height
       if (stageVal >= 2) {
-        const leafProgress = stageRatio;
-        drawDetailedLeaf(ctx, centerX - 8 + windSway * 0.2, baseY - actualStemLength * 0.3, -Math.PI * 0.7, 42 * leafProgress, 18 * leafProgress);
-        drawDetailedLeaf(ctx, centerX + 10 + windSway * 0.5, baseY - actualStemLength * 0.55, Math.PI * 0.2, 46 * leafProgress, 20 * leafProgress);
+        const leafY = baseY - (45 * (stageVal / 12));
+        ctx.beginPath();
+        ctx.moveTo(centerX, leafY);
+        ctx.quadraticCurveTo(centerX - 32 + swayAmount * 0.3, leafY - 10, centerX - 20, leafY + 13);
+        ctx.quadraticCurveTo(centerX - 8, leafY + 7, centerX, leafY);
+        ctx.fillStyle = '#10b981';
+        ctx.fill();
+      }
 
-        if (stageVal >= 6) {
-          drawDetailedLeaf(ctx, centerX - 6 + windSway * 0.8, baseY - actualStemLength * 0.8, -Math.PI * 0.6, 32 * leafProgress, 14 * leafProgress);
+      if (stageVal >= 5) {
+        const leafY2 = baseY - (80 * (stageVal / 12));
+        ctx.beginPath();
+        ctx.moveTo(centerX, leafY2);
+        ctx.quadraticCurveTo(centerX + 32 + swayAmount * 0.6, leafY2 - 10, centerX + 22, leafY2 + 12);
+        ctx.quadraticCurveTo(centerX + 8, leafY2 + 6, centerX, leafY2);
+        ctx.fillStyle = '#10b981';
+        ctx.fill();
+      }
+
+      // Rose Bloom Petals & Layers at the top tip of the stem
+      if (stageVal >= 8) {
+        ctx.beginPath();
+        ctx.arc(tipX, tipY + 6, 8 * stageRatio, 0, Math.PI * 2);
+        ctx.fillStyle = '#f43f5e';
+        ctx.fill();
+      }
+
+      if (stageVal >= 10) {
+        const petalCount = 6;
+        for (let i = 0; i < petalCount; i++) {
+          const angle = (i / petalCount) * Math.PI * 2 + flowerTime * 0.05;
+          const px = tipX + Math.cos(angle) * (11 * stageRatio);
+          const py = (tipY + 6) + Math.sin(angle) * (11 * stageRatio);
+          ctx.beginPath();
+          ctx.arc(px, py, 9.5 * stageRatio, 0, Math.PI * 2);
+          ctx.fillStyle = '#fb7185';
+          ctx.fill();
         }
       }
 
-      if (stageVal >= 3) {
-        ctx.save();
-        ctx.translate(tipX, tipY);
-
+      if (stageVal >= 12) {
         ctx.beginPath();
-        ctx.arc(0, -8, 35 * stageRatio, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(244, 63, 94, 0.18)';
-        ctx.shadowColor = '#f43f5e';
-        ctx.shadowBlur = 22 * stageRatio;
+        ctx.arc(tipX, tipY + 6, 6.5 * stageRatio, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffe4e6';
         ctx.fill();
-
-        const sepalScale = Math.min(1, stageRatio * 1.2);
-        for (let i = 0; i < 5; i++) {
-          const sepalAngle = (i * Math.PI * 2 / 5) + Math.PI / 5;
-          ctx.save();
-          ctx.rotate(sepalAngle);
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.quadraticCurveTo(-5 * sepalScale, 12 * sepalScale, 0, 22 * sepalScale);
-          ctx.quadraticCurveTo(5 * sepalScale, 12 * sepalScale, 0, 0);
-          ctx.fillStyle = '#059669';
-          ctx.fill();
-          ctx.restore();
-        }
-
-        drawPetalRing(ctx, 8, 38 * stageRatio, 25 * stageRatio, '#881337', '#e11d48', '#f43f5e', flowerTime * 0.05);
-
-        if (stageVal >= 6) {
-          const midScale = (stageVal - 5) / 7;
-          drawPetalRing(ctx, 6, 28 * midScale, 18 * midScale, '#9f1239', '#f43f5e', '#fb7185', -flowerTime * 0.08);
-        }
-
-        if (stageVal >= 9) {
-          const innerScale = (stageVal - 8) / 4;
-          drawPetalRing(ctx, 5, 18 * innerScale, 12 * innerScale, '#be123c', '#fb7185', '#ffe4e6', flowerTime * 0.12);
-        }
-
-        if (stageVal >= 11) {
-          const coreScale = (stageVal - 10) / 2;
-          const stamenCount = 10;
-
-          ctx.globalCompositeOperation = 'lighter';
-          for (let s = 0; s < stamenCount; s++) {
-            const angle = (s * Math.PI * 2 / stamenCount) + flowerTime * 0.1;
-            const len = 10 * coreScale;
-
-            ctx.save();
-            ctx.rotate(angle);
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(0, -len);
-            ctx.strokeStyle = '#fef08a';
-            ctx.lineWidth = 1.4;
-            ctx.shadowColor = '#fbbf24';
-            ctx.shadowBlur = 5;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(0, -len, 1.8 * coreScale, 0, Math.PI * 2);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.restore();
-          }
-
-          ctx.beginPath();
-          ctx.arc(0, 0, (5 + Math.sin(flowerTime * 3) * 1.2) * coreScale, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.shadowColor = '#fbbf24';
-          ctx.shadowBlur = 16;
-          ctx.fill();
-        }
-
-        ctx.restore();
-      } else {
-        ctx.save();
-        ctx.translate(tipX, tipY);
-        ctx.beginPath();
-        ctx.ellipse(0, -6, 6, 10, 0, 0, Math.PI * 2);
-        ctx.fillStyle = '#be123c';
-        ctx.shadowColor = '#f43f5e';
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.restore();
-      }
-    }
-
-    function drawDetailedLeaf(ctx, x, y, rotation, length, width) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rotation);
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-width * 0.8, length * 0.3, -width, length * 0.7, 0, length);
-      ctx.bezierCurveTo(width, length * 0.7, width * 0.8, length * 0.3, 0, 0);
-
-      const leafGrad = ctx.createLinearGradient(0, 0, 0, length);
-      leafGrad.addColorStop(0, '#065f46');
-      leafGrad.addColorStop(0.6, '#10b981');
-      leafGrad.addColorStop(1, '#6ee7b7');
-
-      ctx.fillStyle = leafGrad;
-      ctx.shadowColor = '#10b981';
-      ctx.shadowBlur = 6;
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, length * 0.9);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      ctx.restore();
-    }
-
-    function drawPetalRing(ctx, count, length, width, colorBase, colorMid, colorEdge, rotationOffset) {
-      for (let i = 0; i < count; i++) {
-        const angle = (i * Math.PI * 2 / count) + rotationOffset;
-        ctx.save();
-        ctx.rotate(angle);
-
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(-width * 0.9, -length * 0.35, -width * 0.6, -length, 0, -length);
-        ctx.bezierCurveTo(width * 0.6, -length, width * 0.9, -length * 0.35, 0, 0);
-
-        const petalGrad = ctx.createLinearGradient(0, 0, 0, -length);
-        petalGrad.addColorStop(0, colorBase);
-        petalGrad.addColorStop(0.65, colorMid);
-        petalGrad.addColorStop(1, colorEdge);
-
-        ctx.fillStyle = petalGrad;
-        ctx.shadowColor = colorMid;
-        ctx.shadowBlur = 10;
-        ctx.fill();
-
-        ctx.restore();
       }
     }
 
     function flowerAnimationLoop() {
       if (Math.abs(currentFlowerStage - targetFlowerStage) > 0.005) {
-        currentFlowerStage += (targetFlowerStage - currentFlowerStage) * 0.04;
+        currentFlowerStage += (targetFlowerStage - currentFlowerStage) * 0.05;
       } else {
         currentFlowerStage = targetFlowerStage;
       }
-
       draw12StageRose(currentFlowerStage);
       requestAnimationFrame(flowerAnimationLoop);
     }
 
-    function editGoalText(type, id, textSpan) {
-      if (textSpan.getAttribute('contenteditable') === 'true') return;
-
-      textSpan.setAttribute('contenteditable', 'true');
-      textSpan.focus();
-
-      const range = document.createRange();
-      range.selectNodeContents(textSpan);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-
-      const saveEdit = () => {
-        textSpan.removeAttribute('contenteditable');
-        const newText = textSpan.innerText.trim();
-        const goal = appData.goals[type].find(g => g.id === id);
-
-        if (newText && goal && newText !== goal.text) {
-          goal.text = newText;
-          saveUserData();
-          autoSaveTodaySnapshot();
-          renderGoals();
-        } else if (goal) {
-          textSpan.innerText = goal.text;
-        }
-      };
-
-      textSpan.onblur = saveEdit;
-      textSpan.onkeydown = (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          textSpan.blur();
-        }
-        if (e.key === 'Escape') {
-          const goal = appData.goals[type].find(g => g.id === id);
-          if (goal) textSpan.innerText = goal.text;
-          textSpan.removeAttribute('contenteditable');
-        }
-      };
-    }
-
     function renderGoals() {
-      const currentWeekTag = getWeekRangeLabel(preplanWeekDate);
-      const currentMonthTag = getSelectedPreplanMonthTag();
-
-      document.getElementById('weeklyCardLabel').textContent = currentWeekTag;
-      document.getElementById('monthlyCardLabel').textContent = currentMonthTag;
+      document.getElementById('weeklyCardLabel').textContent = getWeekRangeLabel(preplanWeekDate);
+      document.getElementById('monthlyCardLabel').textContent = getSelectedPreplanMonthTag();
       document.getElementById('yearlyCardLabel').textContent = preplanYear;
 
       ['weekly', 'monthly', 'yearly'].forEach(type => {
@@ -3216,71 +2885,69 @@
         const progressEl = document.getElementById(`${type}Progress`);
         listEl.innerHTML = '';
 
-        let allGoals = appData.goals[type] || [];
-        let visibleGoals = allGoals.filter(g => calculatePeriodDelta(type, g.dateCreated) >= 0);
+        const currentSelectedKey = getCurrentSelectedPeriodKey(type);
+
+        let visibleGoals = (appData.goals[type] || []).filter(g => {
+          const delta = calculatePeriodDelta(type, g.periodKey, currentSelectedKey);
+          
+          if (delta < 0) {
+            return false;
+          }
+          if (delta === 0) {
+            return true;
+          }
+          return !g.done;
+        });
 
         let completedCount = 0;
 
         visibleGoals.forEach((goal) => {
           if (goal.done) completedCount++;
-
-          const deltaIndex = calculatePeriodDelta(type, goal.dateCreated);
-          const isOverdue = deltaIndex > 0 && !goal.done;
-
           const cat = (appData.categories || []).find(c => c.id === goal.categoryId) || { name: 'General', color: '#f8fafc' };
+          const delta = calculatePeriodDelta(type, goal.periodKey, currentSelectedKey);
 
           const li = document.createElement('li');
-          li.className = `goal-item ${goal.done ? 'done' : ''} ${isOverdue ? 'overdue' : ''}`;
+          li.className = `goal-item ${goal.done ? 'done' : ''}`;
           li.style.backgroundColor = cat.color;
           li.draggable = true;
 
           li.addEventListener('dragstart', (e) => {
             draggedGoalType = type;
             draggedGoalId = goal.id;
-            e.dataTransfer.effectAllowed = 'move';
             e.dataTransfer.setData('text/plain', JSON.stringify({ type, id: goal.id }));
-            setTimeout(() => li.classList.add('dragging'), 0);
-          });
-
-          li.addEventListener('dragend', () => {
-            li.classList.remove('dragging');
-            draggedGoalType = null;
-            draggedGoalId = null;
-          });
-
-          li.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          });
-
-          li.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (draggedGoalType === type && draggedGoalId !== null && draggedGoalId !== goal.id) {
-              const fullList = appData.goals[type];
-              const fromIndex = fullList.findIndex(g => g.id === draggedGoalId);
-              const toIndex = fullList.findIndex(g => g.id === goal.id);
-
-              if (fromIndex !== -1 && toIndex !== -1) {
-                const [movedItem] = fullList.splice(fromIndex, 1);
-                fullList.splice(toIndex, 0, movedItem);
-                saveUserData();
-                autoSaveTodaySnapshot();
-                renderGoals();
-              }
-            }
           });
 
           li.innerHTML = `
             <div class="goal-item-left">
-              <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+              <span class="drag-handle">⋮⋮</span>
               <input type="checkbox" ${goal.done ? 'checked' : ''} onchange="toggleGoal('${type}', ${goal.id})">
-              <span class="goal-num-badge">(${deltaIndex})</span>
-              <span class="goal-text" title="${escapeHtml(goal.text)}" ondblclick="editGoalText('${type}', ${goal.id}, this)">${escapeHtml(goal.text)}</span>
+              <span class="goal-text" title="${escapeHtml(goal.text)}">${escapeHtml(goal.text)}</span>
+              <span class="deadline-badge" title="Periods elapsed since creation">${delta}</span>
               <span class="category-tag-pill">${escapeHtml(cat.name)}</span>
             </div>
-            <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})" title="Delete goal">🗑️</button>
+            <button class="delete-goal-btn" onclick="deleteGoal('${type}', ${goal.id})">🗑️</button>
           `;
+
+          const textSpan = li.querySelector('.goal-text');
+          textSpan.onclick = () => {
+            textSpan.contentEditable = "true";
+            textSpan.focus();
+          };
+          textSpan.onblur = () => {
+            textSpan.contentEditable = "false";
+            const newText = textSpan.textContent.trim();
+            if (newText) {
+              goal.text = newText;
+              textSpan.title = newText;
+              saveUserData();
+            } else {
+              textSpan.textContent = goal.text;
+            }
+          };
+          textSpan.onkeydown = (ev) => {
+            if (ev.key === 'Enter') { ev.preventDefault(); textSpan.blur(); }
+          };
+
           listEl.appendChild(li);
         });
 
@@ -3291,11 +2958,7 @@
       updateFlowerGrowth();
     }
 
-    function handleGoalContainerDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-    }
-
+    function handleGoalContainerDragOver(e) { e.preventDefault(); }
     function handleGoalContainerDrop(e, targetType) {
       e.preventDefault();
       if (draggedGoalType === targetType && draggedGoalId !== null) {
@@ -3305,7 +2968,6 @@
           const [movedItem] = fullList.splice(fromIndex, 1);
           fullList.push(movedItem);
           saveUserData();
-          autoSaveTodaySnapshot();
           renderGoals();
         }
       }
@@ -3313,16 +2975,12 @@
 
     function toggleGoal(type, id) {
       const goal = appData.goals[type].find(g => g.id === id);
-      if (goal) {
-        goal.done = !goal.done;
-        autoSaveTodaySnapshot();
-        renderGoals();
-      }
+      if (goal) { goal.done = !goal.done; saveUserData(); renderGoals(); }
     }
 
     function deleteGoal(type, id) {
       appData.goals[type] = appData.goals[type].filter(g => g.id !== id);
-      autoSaveTodaySnapshot();
+      saveUserData();
       renderGoals();
     }
 
@@ -3331,390 +2989,113 @@
       const form = event.target;
       const input = form.querySelector('input[type="text"]');
       const catSelect = form.querySelector('.category-select');
-
       const text = input.value.trim();
-      const catId = catSelect.value;
       if (!text) return;
 
-      let createdDateObj;
-      if (type === 'weekly') {
-        createdDateObj = getMonday(preplanWeekDate);
-      } else if (type === 'monthly') {
-        createdDateObj = new Date(preplanMonthYear, preplanMonthIdx, 1);
-      } else if (type === 'yearly') {
-        createdDateObj = new Date(preplanYear, 0, 1);
-      }
+      let periodKey = '';
+      if (type === 'weekly') periodKey = getWeekPeriodKey(preplanWeekDate);
+      else if (type === 'monthly') periodKey = getMonthPeriodKey(preplanMonthYear, preplanMonthIdx);
+      else periodKey = String(preplanYear);
 
-      const createdDateStr = formatDateISO(createdDateObj);
-
-      const newGoal = {
-        id: Date.now(),
-        text: text,
-        categoryId: catId,
-        done: false,
-        dateCreated: createdDateStr
-      };
-
-      appData.goals[type].push(newGoal);
-
+      appData.goals[type].push({ id: Date.now(), text, categoryId: catSelect.value, done: false, periodKey });
       input.value = '';
       saveUserData();
-      autoSaveTodaySnapshot();
       renderGoals();
     }
 
-    function initYearCombobox() {
-      const select = document.getElementById('archiveYearSelect');
-      select.innerHTML = '';
-      const curYear = new Date().getFullYear();
-      for (let y = curYear - 3; y <= curYear + 3; y++) {
-        const opt = document.createElement('option');
-        opt.value = y;
-        opt.textContent = y;
-        if (y === selectedArchiveYear) opt.selected = true;
-        select.appendChild(opt);
-      }
-    }
+    /* ARCHIVE TABLE RENDERING & FILTERING */
+    function renderArchiveTable() {
+      const tbody = document.getElementById('archiveTableBody');
+      const countEl = document.getElementById('archiveTableCount');
+      if (!tbody) return;
 
-    function onArchiveYearChange() {
-      selectedArchiveYear = parseInt(document.getElementById('archiveYearSelect').value);
-      renderArchiveSystem();
-    }
+      const searchTerm = document.getElementById('archiveSearchInput').value.toLowerCase();
+      const typeFilter = document.getElementById('archiveTypeFilter').value;
+      const statusFilter = document.getElementById('archiveStatusFilter').value;
 
-    function renderArchiveSystem() {
-      renderMonthGrid();
-      renderWeekGrid();
-      render3ColumnArchiveCabinet();
-    }
-
-    function getWeekSnapshotStatus(snapshotKey) {
-      const snap = (appData.archiveSnapshots || {})[snapshotKey];
-      if (!snap) return 'none';
-
-      let total = 0;
-      let done = 0;
-
-      ['weekly', 'monthly', 'yearly'].forEach(type => {
-        const list = snap.goals ? (snap.goals[type] || []) : [];
-        total += list.length;
-        done += list.filter(g => g.done).length;
-      });
-
-      if (done > 0) return 'completed';
-      if (total > 0) return 'uncompleted';
-      return 'none';
-    }
-
-    function getMonthStatus(year, monthIdx) {
-      const prefix = `${year}-${String(monthIdx + 1).padStart(2, '0')}`;
-      const matchingKeys = Object.keys(appData.archiveSnapshots || {}).filter(k => k.startsWith(prefix));
-
-      if (matchingKeys.length === 0) return 'none';
-
-      let hasDone = false;
-      let hasTasks = false;
-
-      matchingKeys.forEach(k => {
-        const status = getWeekSnapshotStatus(k);
-        if (status === 'completed') hasDone = true;
-        if (status === 'completed' || status === 'uncompleted') hasTasks = true;
-      });
-
-      if (hasDone) return 'completed';
-      if (hasTasks) return 'uncompleted';
-      return 'none';
-    }
-
-    function renderMonthGrid() {
-      const container = document.getElementById('archiveMonthGridMenu');
-      container.innerHTML = '';
-
-      monthNames.forEach((mName, idx) => {
-        const status = getMonthStatus(selectedArchiveYear, idx);
-        const btn = document.createElement('button');
-        btn.className = 'nav-grid-btn';
-
-        if (status === 'completed') btn.classList.add('has-completed');
-        else if (status === 'uncompleted') btn.classList.add('has-uncompleted');
-        else btn.classList.add('no-records');
-
-        if (idx === selectedArchiveMonthIdx) btn.classList.add('selected');
-
-        btn.textContent = mName;
-        btn.onclick = () => {
-          selectedArchiveMonthIdx = idx;
-          selectedArchiveWeekIdx = 0;
-          renderArchiveSystem();
-        };
-        container.appendChild(btn);
-      });
-    }
-
-    function renderWeekGrid() {
-      const container = document.getElementById('archiveWeekGridMenu');
-      container.innerHTML = '';
-
-      for (let w = 0; w < 5; w++) {
-        const snapshotKey = `${selectedArchiveYear}-${String(selectedArchiveMonthIdx + 1).padStart(2, '0')}-W${w + 1}`;
-        const status = getWeekSnapshotStatus(snapshotKey);
-
-        const btn = document.createElement('button');
-        btn.className = 'nav-grid-btn';
-
-        if (status === 'completed') btn.classList.add('has-completed');
-        else if (status === 'uncompleted') btn.classList.add('has-uncompleted');
-        else btn.classList.add('no-records');
-
-        if (w === selectedArchiveWeekIdx) btn.classList.add('selected');
-
-        const rangeStr = getWeekRangeForMonth(selectedArchiveYear, selectedArchiveMonthIdx, w);
-
-        btn.innerHTML = `
-          <span>Week ${w + 1}</span>
-          <span class="btn-sub-label">${rangeStr}</span>
-        `;
-        btn.onclick = () => {
-          selectedArchiveWeekIdx = w;
-          renderArchiveSystem();
-        };
-        container.appendChild(btn);
-      }
-    }
-
-    function render3ColumnArchiveCabinet() {
-      const formattedMonth = fullMonthNames[selectedArchiveMonthIdx];
-      const rangeStr = getWeekRangeForMonth(selectedArchiveYear, selectedArchiveMonthIdx, selectedArchiveWeekIdx);
-      const titleEl = document.getElementById('archiveSelectedDateTitle');
-      titleEl.textContent = `Archive Cabinet Snapshot: ${formattedMonth} ${selectedArchiveYear} - Week ${selectedArchiveWeekIdx + 1} (${rangeStr})`;
-
-      const snapshotKey = `${selectedArchiveYear}-${String(selectedArchiveMonthIdx + 1).padStart(2, '0')}-W${selectedArchiveWeekIdx + 1}`;
-      const snap = (appData.archiveSnapshots || {})[snapshotKey];
-
-      ['weekly', 'monthly', 'yearly'].forEach(type => {
-        const listEl = document.getElementById(`archive${type.charAt(0).toUpperCase() + type.slice(1)}List`);
-        listEl.innerHTML = '';
-
-        const goals = snap && snap.goals ? (snap.goals[type] || []) : [];
-
-        if (goals.length === 0) {
-          listEl.innerHTML = `<li style="font-size:0.75rem; color:var(--text-muted);">No goals saved.</li>`;
-        } else {
-          goals.forEach(g => {
-            const li = document.createElement('li');
-            li.className = `archive-goal-item ${g.done ? 'done' : ''}`;
-            li.innerHTML = `
-              <span title="${escapeHtml(g.text)}">${escapeHtml(g.text)}</span>
-              <span class="badge-status ${g.done ? 'badge-done' : 'badge-pending'}">${g.done ? '✓ Completed' : 'Pending'}</span>
-            `;
-            listEl.appendChild(li);
-          });
-        }
-      });
-
-      const pillsContainer = document.getElementById('archiveMatrixPills');
-      pillsContainer.innerHTML = '';
-      const stickers = snap && snap.stickers ? snap.stickers : [];
-
-      if (stickers.length === 0) {
-        pillsContainer.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">No matrix sticky notes on grid for this date.</span>`;
-      } else {
-        stickers.forEach(s => {
-          let coord = "Unassigned";
-          if (s.cellId) {
-            const parts = s.cellId.split('-');
-            coord = `Imp: ${parts[1]} | Sim: ${parts[2]}`;
-          }
-
-          const pill = document.createElement('div');
-          pill.className = 'matrix-pill';
-          pill.innerHTML = `
-            <span>${escapeHtml(s.text)}</span>
-            <span class="matrix-pill-coord">${coord}</span>
-          `;
-          pillsContainer.appendChild(pill);
-        });
-      }
-
-      const notesEl = document.getElementById('archiveNotesContent');
-      const notesHtml = snap && snap.userNotes ? snap.userNotes : "";
-      const notesBg = snap && snap.userNotesBg ? snap.userNotesBg : "var(--pastel-yellow)";
-
-      notesEl.style.backgroundColor = notesBg;
-
-      if (!notesHtml || notesHtml.trim() === "" || notesHtml === "<br>") {
-        notesEl.innerHTML = `<span style="color:var(--text-muted); font-style: italic;">No notes or comments saved for this period.</span>`;
-      } else {
-        notesEl.innerHTML = notesHtml;
-      }
-    }
-
-    function renderAnalytics() {
-      const activeWeekly = appData.goals.weekly.length;
-      const activeMonthly = appData.goals.monthly.length;
-      const activeYearly = appData.goals.yearly.length;
-      const totalActive = activeWeekly + activeMonthly + activeYearly;
-
-      const activeCompleted = ['weekly', 'monthly', 'yearly'].reduce((acc, type) => {
-        return acc + appData.goals[type].filter(g => g.done).length;
-      }, 0);
-
-      const totalMatrixNotes = appData.stickers.length;
-      const rate = totalActive > 0 ? Math.round((activeCompleted / totalActive) * 100) : 0;
-
-      document.getElementById('metricActiveGoals').textContent = totalActive;
-      document.getElementById('metricArchivedGoals').textContent = activeCompleted;
-      document.getElementById('metricCompletionRate').textContent = `${rate}%`;
-      document.getElementById('metricMatrixNotes').textContent = totalMatrixNotes;
-
-      const ctxCat = document.getElementById('categoryChart').getContext('2d');
-      if (categoryChartInstance) categoryChartInstance.destroy();
-
-      categoryChartInstance = new Chart(ctxCat, {
-        type: 'bar',
-        data: {
-          labels: ['Weekly', 'Monthly', 'Yearly'],
-          datasets: [{
-            label: 'Active Goals',
-            data: [activeWeekly, activeMonthly, activeYearly],
-            backgroundColor: ['#3182ce', '#dd6b20', '#805ad5'],
-            borderRadius: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } } },
-            x: { ticks: { font: { size: 11 } } }
-          }
-        }
-      });
-
-      const ctxComp = document.getElementById('completionChart').getContext('2d');
-      if (completionChartInstance) completionChartInstance.destroy();
-
-      completionChartInstance = new Chart(ctxComp, {
-        type: 'doughnut',
-        data: {
-          labels: ['Pending', 'Completed'],
-          datasets: [{
-            data: [totalActive - activeCompleted, activeCompleted],
-            backgroundColor: ['#cbd5e0', '#48bb78']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } }
-          }
-        }
-      });
-    }
-
-    /* PURE JS CSV EXPORTER (NO EXTERNAL LIBRARIES REQUIRED) */
-    function exportToCSV() {
-      const currentMonthYear = `${fullMonthNames[new Date().getMonth()]} ${new Date().getFullYear()}`;
-      let csvRows = [];
-
-      // Section 1: Active Goals
-      csvRows.push(['SECTION', 'ACTIVE GOALS']);
-      csvRows.push(['Category', 'Type', 'Goal Title', 'Status', 'Periods Passed', 'Period Tag']);
-
+      let allRecords = [];
       ['weekly', 'monthly', 'yearly'].forEach(type => {
         (appData.goals[type] || []).forEach(g => {
-          const cat = (appData.categories || []).find(c => c.id === g.categoryId) || { name: 'General' };
-          csvRows.push([
-            cat.name,
-            type.toUpperCase(),
-            g.text,
-            g.done ? 'Completed' : 'Pending',
-            calculatePeriodDelta(type, g.dateCreated),
-            g.weekTag || g.monthYearTag || g.yearTag || currentMonthYear
-          ]);
+          allRecords.push({
+            id: g.id,
+            text: g.text,
+            done: g.done,
+            status: g.done ? 'Completed' : 'Pending',
+            type: type,
+            periodKey: g.periodKey || '2026-01-01'
+          });
         });
       });
 
-      csvRows.push([]); // Empty spacer row
-
-      // Section 2: Priority Matrix
-      csvRows.push(['SECTION', 'PRIORITY MATRIX']);
-      csvRows.push(['Note ID', 'Goal Note', 'Importance Level', 'Simplicity Level', 'Color Tag']);
-
-      (appData.stickers || []).forEach(s => {
-        let imp = "Unassigned";
-        let simp = "Unassigned";
-
-        if (s.cellId) {
-          const parts = s.cellId.split('-');
-          imp = parts[1] + " / 5";
-          simp = parts[2] + " / 5";
-        }
-
-        csvRows.push([
-          s.id,
-          s.text,
-          imp,
-          simp,
-          s.color
-        ]);
+      let filtered = allRecords.filter(item => {
+        const matchesSearch = item.text.toLowerCase().includes(searchTerm);
+        const matchesType = (typeFilter === 'all' || item.type === typeFilter);
+        const matchesStatus = (statusFilter === 'all' || (statusFilter === 'completed' && item.done) || (statusFilter === 'pending' && !item.done));
+        return matchesSearch && matchesType && matchesStatus;
       });
 
-      // Escape quotes and format comma values
-      const csvContent = csvRows.map(row => 
-        row.map(field => {
-          const str = String(field ?? '');
-          if (str.includes(',') || str.includes('"') || str.includes('\n')) {
-            return `"${str.replace(/"/g, '""')}"`;
-          }
-          return str;
-        }).join(',')
-      ).join('\n');
+      filtered.sort((a, b) => {
+        let valA = a[archiveSortField];
+        let valB = b[archiveSortField];
+        if (typeof valA === 'string') {
+          valA = valA.toLowerCase();
+          valB = valB.toLowerCase();
+        }
+        if (valA < valB) return archiveSortAsc ? -1 : 1;
+        if (valA > valB) return archiveSortAsc ? 1 : -1;
+        return 0;
+      });
 
-      // Trigger automatic CSV file download
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
+      tbody.innerHTML = '';
+      countEl.textContent = `${filtered.length} record${filtered.length === 1 ? '' : 's'} found`;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding: 20px;">No archive goals match your filter criteria.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        if (item.done) {
+          tr.className = 'completed-row';
+        }
+        const statusBadge = item.done ? `<span class="excel-badge excel-badge-done">Completed</span>` : `<span class="excel-badge excel-badge-pending">Pending</span>`;
+        const typeBadge = `<span class="excel-type-badge">${item.type.toUpperCase()}</span>`;
+
+        tr.innerHTML = `
+          <td style="font-weight: 500;" title="${escapeHtml(item.text)}">${escapeHtml(item.text)}</td>
+          <td>${statusBadge}</td>
+          <td>${typeBadge}</td>
+          <td style="color: var(--text-muted);">${escapeHtml(item.periodKey)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function sortArchiveTable(field) {
+      if (archiveSortField === field) {
+        archiveSortAsc = !archiveSortAsc;
+      } else {
+        archiveSortField = field;
+        archiveSortAsc = true;
+      }
+      renderArchiveTable();
+    }
+
+    function exportToCSV() {
+      let csvRows = [['Type', 'Goal', 'Status', 'Created Period']];
+      ['weekly', 'monthly', 'yearly'].forEach(type => {
+        appData.goals[type].forEach(g => csvRows.push([type, g.text, g.done ? 'Completed' : 'Pending', g.periodKey]));
+      });
+      const blob = new Blob([csvRows.map(r => r.join(',')).join('\n')], { type: 'text/csv' });
       const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `Mindful_Planner_${currentUser || 'Export'}_${new Date().toISOString().split('T')[0]}.csv`);
-      document.body.appendChild(link);
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Mindful_Planner_Export.csv';
       link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
     }
 
     function sendEmailReport() {
-      const now = new Date();
-      const monthYearStr = `${fullMonthNames[now.getMonth()]} ${now.getFullYear()}`;
-
-      let body = `Mindful Planner Summary for ${currentUser} (${monthYearStr})\n\n`;
-
-      body += `--- ACTIVE GOALS ---\n`;
-      ['weekly', 'monthly', 'yearly'].forEach(type => {
-        body += `\n[${type.toUpperCase()} GOALS]\n`;
-        const list = appData.goals[type] || [];
-        if (list.length === 0) body += `(No active goals)\n`;
-        list.forEach(g => {
-          const cat = (appData.categories || []).find(c => c.id === g.categoryId) || { name: 'General' };
-          body += `- [${g.done ? 'X' : ' '}] (${cat.name}) ${g.text}\n`;
-        });
-      });
-
-      body += `\n--- MATRIX PRIORITY STICKIES ---\n`;
-      appData.stickers.forEach(s => {
-        if (s.cellId) {
-          const p = s.cellId.split('-');
-          body += `- "${s.text}" (Importance: ${p[1]}/5, Simplicity: ${p[2]}/5)\n`;
-        } else {
-          body += `- "${s.text}" (Unassigned in Bank)\n`;
-        }
-      });
-
-      const subject = encodeURIComponent(`Mindful Planner Goals Report (${monthYearStr}) - ${currentUser}`);
-      const mailtoUrl = `mailto:?subject=${subject}&body=${encodeURIComponent(body)}`;
-
-      window.location.href = mailtoUrl;
+      window.location.href = `mailto:?subject=Mindful Planner Report&body=Check out my current goals!`;
     }
 
     function buildMatrixGrid() {
@@ -3727,8 +3108,8 @@
           cell.dataset.row = r;
           cell.dataset.col = c;
           cell.id = `cell-${r}-${c}`;
-          cell.setAttribute('ondragover', 'handleDragOver(event)');
-          cell.setAttribute('ondrop', 'handleDropToCell(event)');
+          cell.ondragover = handleDragOver;
+          cell.ondrop = handleDropToCell;
           grid.appendChild(cell);
         }
       }
@@ -3737,12 +3118,18 @@
     function renderStickers() {
       document.getElementById('stickersBank').innerHTML = '';
       document.querySelectorAll('.matrix-cell').forEach(cell => cell.innerHTML = '');
+      const whiteBoardZone = document.getElementById('wallBoardStickersZone');
+      whiteBoardZone.innerHTML = '';
 
       appData.stickers.forEach(sticker => {
         const noteEl = createStickerElement(sticker);
-
-        if (sticker.cellId && document.getElementById(sticker.cellId)) {
+        if (sticker.cellId && sticker.cellId.startsWith('cell-') && document.getElementById(sticker.cellId)) {
           document.getElementById(sticker.cellId).appendChild(noteEl);
+        } else if (sticker.cellId === 'white-board') {
+          noteEl.classList.add('on-whiteboard');
+          noteEl.style.left = (sticker.x !== undefined ? sticker.x : 20) + 'px';
+          noteEl.style.top = (sticker.y !== undefined ? sticker.y : 20) + 'px';
+          whiteBoardZone.appendChild(noteEl);
         } else {
           document.getElementById('stickersBank').appendChild(noteEl);
         }
@@ -3753,32 +3140,81 @@
       const div = document.createElement('div');
       div.className = `sticky-note ${sticker.color}`;
       div.id = sticker.id;
-      div.draggable = true;
+      div.draggable = (sticker.cellId !== 'white-board');
       div.innerText = sticker.text;
+      div.title = sticker.text;
 
-      if (connectSourceId === sticker.id) {
-        div.classList.add('selected-for-connect');
-      }
+      if (connectSourceId === sticker.id) div.classList.add('selected-for-connect');
 
       const delBtn = document.createElement('span');
       delBtn.className = 'delete-note';
       delBtn.innerHTML = '&#10005;';
-      delBtn.onclick = (e) => {
-        e.stopPropagation();
-        deleteSticker(sticker.id);
-      };
+      delBtn.onclick = (e) => { e.stopPropagation(); deleteSticker(sticker.id); };
       div.appendChild(delBtn);
 
-      div.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', sticker.id);
+      div.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', sticker.id));
+      div.addEventListener('click', (e) => {
+        if (isConnectMode) { e.stopPropagation(); handleConnectClick(sticker.id); }
       });
 
-      div.addEventListener('click', (e) => {
-        if (isConnectMode) {
-          e.stopPropagation();
-          handleConnectClick(sticker.id);
+      div.onclick = (e) => {
+        if (isConnectMode || e.target === delBtn) return;
+        div.contentEditable = "true";
+        div.focus();
+      };
+
+      div.onblur = () => {
+        div.contentEditable = "false";
+        const newText = div.innerText.trim();
+        if (newText) {
+          sticker.text = newText;
+          div.title = newText;
+          saveUserData();
+        } else {
+          div.innerText = sticker.text;
         }
-      });
+      };
+
+      div.onkeydown = (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); div.blur(); }
+      };
+
+      if (sticker.cellId === 'white-board') {
+        div.onmousedown = (e) => {
+          if (e.target === delBtn || document.activeElement === div) return;
+          e.preventDefault();
+          const boardRect = document.getElementById('wallBoardStickersZone').getBoundingClientRect();
+          let shiftX = e.clientX - div.getBoundingClientRect().left;
+          let shiftY = e.clientY - div.getBoundingClientRect().top;
+
+          function moveAt(clientX, clientY) {
+            let newX = clientX - shiftX - boardRect.left;
+            let newY = clientY - shiftY - boardRect.top;
+            
+            const maxX = boardRect.width - div.offsetWidth;
+            const maxY = boardRect.height - div.offsetHeight;
+            newX = Math.max(0, Math.min(newX, maxX));
+            newY = Math.max(0, Math.min(newY, maxY));
+
+            div.style.left = newX + 'px';
+            div.style.top = newY + 'px';
+          }
+
+          function onMouseMove(event) {
+            moveAt(event.clientX, event.clientY);
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+
+          document.onmouseup = () => {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.onmouseup = null;
+            sticker.x = parseInt(div.style.left);
+            sticker.y = parseInt(div.style.top);
+            saveUserData();
+          };
+        };
+      }
 
       return div;
     }
@@ -3793,18 +3229,9 @@
       const input = document.getElementById('newStickerText');
       const text = input.value.trim();
       if (!text) return;
-
-      const newSticker = {
-        id: 's_' + Date.now(),
-        text: text,
-        color: selectedColor,
-        cellId: null
-      };
-
-      appData.stickers.push(newSticker);
+      appData.stickers.push({ id: 's_' + Date.now(), text, color: selectedColor, cellId: null, x: 20, y: 20 });
       input.value = '';
       saveUserData();
-      autoSaveTodaySnapshot();
       renderStickers();
     }
 
@@ -3812,42 +3239,36 @@
       appData.stickers = appData.stickers.filter(s => s.id !== id);
       appData.connections = appData.connections.filter(c => c.from !== id && c.to !== id);
       saveUserData();
-      autoSaveTodaySnapshot();
       renderStickers();
       renderConnections();
     }
 
-    function handleDragOver(e) {
-      e.preventDefault();
-    }
-
+    function handleDragOver(e) { e.preventDefault(); }
     function handleDropToCell(e) {
       e.preventDefault();
-      const stickerId = e.dataTransfer.getData('text/plain');
-      const targetCell = e.currentTarget;
-
-      const sticker = appData.stickers.find(s => s.id === stickerId);
-      if (sticker) {
-        sticker.cellId = targetCell.id;
+      const id = e.dataTransfer.getData('text/plain');
+      const st = appData.stickers.find(s => s.id === id);
+      if (st) { st.cellId = e.currentTarget.id; saveUserData(); renderStickers(); renderConnections(); }
+    }
+    function handleDropToWallBoard(e) {
+      e.preventDefault();
+      const id = e.dataTransfer.getData('text/plain');
+      const st = appData.stickers.find(s => s.id === id);
+      if (st) {
+        st.cellId = 'white-board';
+        const boardRect = document.getElementById('wallBoardStickersZone').getBoundingClientRect();
+        st.x = Math.max(0, e.clientX - boardRect.left - 35);
+        st.y = Math.max(0, e.clientY - boardRect.top - 35);
         saveUserData();
-        autoSaveTodaySnapshot();
         renderStickers();
         renderConnections();
       }
     }
-
     function handleDropToBank(e) {
       e.preventDefault();
-      const stickerId = e.dataTransfer.getData('text/plain');
-
-      const sticker = appData.stickers.find(s => s.id === stickerId);
-      if (sticker) {
-        sticker.cellId = null;
-        saveUserData();
-        autoSaveTodaySnapshot();
-        renderStickers();
-        renderConnections();
-      }
+      const id = e.dataTransfer.getData('text/plain');
+      const st = appData.stickers.find(s => s.id === id);
+      if (st) { st.cellId = null; saveUserData(); renderStickers(); renderConnections(); }
     }
 
     function toggleConnectMode() {
@@ -3855,27 +3276,18 @@
       const btn = document.getElementById('connectBtn');
       btn.classList.toggle('active', isConnectMode);
       btn.textContent = isConnectMode ? 'Click 2 Notes...' : 'Connect Notes';
-
-      if (!isConnectMode) {
-        connectSourceId = null;
-        renderStickers();
-      }
+      if (!isConnectMode) { connectSourceId = null; renderStickers(); }
     }
 
-    function handleConnectClick(stickerId) {
+    function handleConnectClick(id) {
       if (!connectSourceId) {
-        connectSourceId = stickerId;
+        connectSourceId = id;
         renderStickers();
       } else {
-        if (connectSourceId !== stickerId) {
-          const exists = appData.connections.some(
-            c => (c.from === connectSourceId && c.to === stickerId)
-          );
-          if (!exists) {
-            appData.connections.push({ from: connectSourceId, to: stickerId });
-            saveUserData();
-            autoSaveTodaySnapshot();
-          }
+        if (connectSourceId !== id) {
+          const exists = appData.connections.some(c => c.from === connectSourceId && c.to === id);
+          if (!exists) appData.connections.push({ from: connectSourceId, to: id });
+          saveUserData();
         }
         connectSourceId = null;
         toggleConnectMode();
@@ -3886,58 +3298,41 @@
     function clearConnections() {
       appData.connections = [];
       saveUserData();
-      autoSaveTodaySnapshot();
       renderConnections();
     }
 
     function renderConnections() {
       const svg = document.getElementById('connectionsSvg');
       const wrapper = document.getElementById('matrixWrapper');
-      if (!wrapper) return;
-      
+      if (!wrapper || !svg) return;
       const wrapperRect = wrapper.getBoundingClientRect();
-
-      const lines = svg.querySelectorAll('path');
-      lines.forEach(l => l.remove());
+      svg.querySelectorAll('path').forEach(p => p.remove());
 
       appData.connections.forEach(conn => {
         const fromEl = document.getElementById(conn.from);
         const toEl = document.getElementById(conn.to);
-
-        if (fromEl && toEl && fromEl.closest('.matrix-grid') && toEl.closest('.matrix-grid')) {
-          const fromRect = fromEl.getBoundingClientRect();
-          const toRect = toEl.getBoundingClientRect();
-
-          const x1 = (fromRect.left + fromRect.width / 2) - wrapperRect.left;
-          const y1 = (fromRect.top + fromRect.height / 2) - wrapperRect.top;
-          const x2 = (toRect.left + toRect.width / 2) - wrapperRect.left;
-          const y2 = (toRect.top + toRect.height / 2) - wrapperRect.top;
+        if (fromEl && toEl) {
+          const r1 = fromEl.getBoundingClientRect();
+          const r2 = toEl.getBoundingClientRect();
+          const x1 = (r1.left + r1.width / 2) - wrapperRect.left;
+          const y1 = (r1.top + r1.height / 2) - wrapperRect.top;
+          const x2 = (r2.left + r2.width / 2) - wrapperRect.left;
+          const y2 = (r2.top + r2.height / 2) - wrapperRect.top;
 
           const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          
-          const dx = x2 - x1;
-          const dy = y2 - y1;
-          const cx1 = x1 + dx / 2;
-          const cy1 = y1;
-          const cx2 = x1 + dx / 2;
-          const cy2 = y2;
-
-          path.setAttribute('d', `M ${x1} ${y1} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x2} ${y2}`);
-          path.setAttribute('stroke', '#2b6cb0');
+          path.setAttribute('d', `M ${x1} ${y1} Q ${(x1+x2)/2} ${Math.min(y1,y2)-20} ${x2} ${y2}`);
+          path.setAttribute('stroke', '#63b3ed');
           path.setAttribute('stroke-width', '2.5');
           path.setAttribute('fill', 'none');
-          path.setAttribute('stroke-dasharray', '4 2');
           path.setAttribute('marker-end', 'url(#arrowhead)');
-
           svg.appendChild(path);
         }
       });
     }
 
     function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
   </script>
-
 </body>
 </html>
