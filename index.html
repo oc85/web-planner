@@ -182,28 +182,23 @@
     }
 
     .note-tab-title-input {
-  width: 120px;
-  min-width: 70px;
-  max-width: 180px;
+      width: 120px;
+      min-width: 70px;
+      max-width: 180px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 2px 5px;
+      border: 2px solid #3182ce;
+      border-radius: 4px;
+      outline: none;
+      color: #2d3748 !important;
+      background: #ffffff !important;
+    }
 
-  font-size: 0.82rem;
-  font-weight: 600;
-
-  padding: 2px 5px;
-
-  border: 2px solid #3182ce;
-  border-radius: 4px;
-
-  outline: none;
-
-  color: #2d3748 !important;
-  background: #ffffff !important;
-}
-
-.note-tab-title-input:focus {
-  border-color: #2b6cb0;
-  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
-}
+    .note-tab-title-input:focus {
+      border-color: #2b6cb0;
+      box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+    }
 
     .auth-btn {
       width: 100%;
@@ -1226,40 +1221,40 @@
     }
 
     .bg-swatch:hover { transform: scale(1.15); }
+
     /* Fixed Text & Highlight Color Palette */
+    .fixed-color-palette {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: var(--card-bg);
+    }
 
-.fixed-color-palette {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 2px 5px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background: var(--card-bg);
-}
+    .palette-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-right: 2px;
+    }
 
-.palette-label {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  margin-right: 2px;
-}
+    .text-color-swatch {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+      padding: 0;
+      border-radius: 50%;
+      border: 2px solid white;
+      outline: 1px solid #cbd5e0;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
 
-.text-color-swatch {
-  width: 17px;
-  height: 17px;
-  min-width: 17px;
-  padding: 0;
-  border-radius: 50%;
-  border: 2px solid white;
-  outline: 1px solid #cbd5e0;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-.text-color-swatch:hover {
-  transform: scale(1.2);
-  outline: 2px solid var(--primary);
-}
+    .text-color-swatch:hover {
+      transform: scale(1.2);
+      outline: 2px solid var(--primary);
+    }
 
     /* Tall Note Area */
     .rich-notes-box {
@@ -1769,7 +1764,7 @@
                   Monthly Goals
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(-1)" title="Previous month">◀</button>
-                    <span id="monthlyCardLabel">August 2026</span>
+                    <span id="monthlyCardLabel">September 2026</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(1)" title="Next month">▶</button>
                   </span>
                 </h3>
@@ -1874,68 +1869,24 @@
                 <button type="button" class="editor-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">• List</button>
                 <button type="button" class="editor-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">1. List</button>
                 
-<div class="fixed-color-palette">
-  <span class="palette-label">Text:</span>
+                <div class="fixed-color-palette">
+                  <span class="palette-label">Text:</span>
+                  <button type="button" class="text-color-swatch" style="background:#2d3748;" onclick="applyForeColor('#2d3748')" title="Dark"></button>
+                  <button type="button" class="text-color-swatch" style="background:#b7791f;" onclick="applyForeColor('#b7791f')" title="Brown"></button>
+                  <button type="button" class="text-color-swatch" style="background:#2b6cb0;" onclick="applyForeColor('#2b6cb0')" title="Blue"></button>
+                  <button type="button" class="text-color-swatch" style="background:#2f855a;" onclick="applyForeColor('#2f855a')" title="Green"></button>
+                  <button type="button" class="text-color-swatch" style="background:#b83280;" onclick="applyForeColor('#b83280')" title="Pink"></button>
+                  <button type="button" class="text-color-swatch" style="background:#805ad5;" onclick="applyForeColor('#805ad5')" title="Purple"></button>
+                </div>
 
-  <button type="button" class="text-color-swatch"
-    style="background:#2d3748;"
-    onclick="applyForeColor('#2d3748')"
-    title="Dark"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#b7791f;"
-    onclick="applyForeColor('#b7791f')"
-    title="Brown"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#2b6cb0;"
-    onclick="applyForeColor('#2b6cb0')"
-    title="Blue"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#2f855a;"
-    onclick="applyForeColor('#2f855a')"
-    title="Green"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#b83280;"
-    onclick="applyForeColor('#b83280')"
-    title="Pink"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#805ad5;"
-    onclick="applyForeColor('#805ad5')"
-    title="Purple"></button>
-</div>
-
-<div class="fixed-color-palette">
-  <span class="palette-label">Highlight:</span>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#fef9c3;"
-    onclick="applyHiliteColor('#fef9c3')"
-    title="Yellow"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#e0f2fe;"
-    onclick="applyHiliteColor('#e0f2fe')"
-    title="Blue"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#dcfce7;"
-    onclick="applyHiliteColor('#dcfce7')"
-    title="Green"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#fce7f3;"
-    onclick="applyHiliteColor('#fce7f3')"
-    title="Pink"></button>
-
-  <button type="button" class="text-color-swatch"
-    style="background:#f3e8ff;"
-    onclick="applyHiliteColor('#f3e8ff')"
-    title="Purple"></button>
-</div>
+                <div class="fixed-color-palette">
+                  <span class="palette-label">Highlight:</span>
+                  <button type="button" class="text-color-swatch" style="background:#fef9c3;" onclick="applyHiliteColor('#fef9c3')" title="Yellow"></button>
+                  <button type="button" class="text-color-swatch" style="background:#e0f2fe;" onclick="applyHiliteColor('#e0f2fe')" title="Blue"></button>
+                  <button type="button" class="text-color-swatch" style="background:#dcfce7;" onclick="applyHiliteColor('#dcfce7')" title="Green"></button>
+                  <button type="button" class="text-color-swatch" style="background:#fce7f3;" onclick="applyHiliteColor('#fce7f3')" title="Pink"></button>
+                  <button type="button" class="text-color-swatch" style="background:#f3e8ff;" onclick="applyHiliteColor('#f3e8ff')" title="Purple"></button>
+                </div>
                 
                 <select id="fontSizeSelect" onchange="applyFontSize(this.value); this.selectedIndex=0;" title="Font Size" style="height: 24px; font-size: 0.72rem; border: 1px solid var(--border-color); border-radius: 3px; background: var(--card-bg); color: inherit; cursor: pointer;">
                   <option value="" disabled selected>Size</option>
@@ -2472,133 +2423,119 @@
 
     let savedNotesRange = null;
 
-document.addEventListener('selectionchange', () => {
-  const notesBox = document.getElementById('richNotesBox');
-  const selection = window.getSelection();
+    document.addEventListener('selectionchange', () => {
+      const notesBox = document.getElementById('richNotesBox');
+      const selection = window.getSelection();
 
-  if (!notesBox || !selection || selection.rangeCount === 0) return;
+      if (!notesBox || !selection || selection.rangeCount === 0) return;
 
-  const range = selection.getRangeAt(0);
+      const range = selection.getRangeAt(0);
+      let node = range.commonAncestorContainer;
 
-  let node = range.commonAncestorContainer;
+      if (node.nodeType === Node.TEXT_NODE) {
+        node = node.parentNode;
+      }
 
-  if (node.nodeType === Node.TEXT_NODE) {
-    node = node.parentNode;
-  }
+      if (node && notesBox.contains(node)) {
+        savedNotesRange = range.cloneRange();
+      }
+    });
 
-  if (node && notesBox.contains(node)) {
-    savedNotesRange = range.cloneRange();
-  }
-});
+    function restoreNotesSelection() {
+      const notesBox = document.getElementById('richNotesBox');
+      if (!notesBox || !savedNotesRange) return false;
 
-function restoreNotesSelection() {
-  const notesBox = document.getElementById('richNotesBox');
+      notesBox.focus();
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(savedNotesRange.cloneRange());
+      return true;
+    }
 
-  if (!notesBox || !savedNotesRange) return false;
+    function execCmd(command, value = null) {
+      restoreNotesSelection();
+      document.execCommand(command, false, value);
 
-  notesBox.focus();
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        savedNotesRange = selection.getRangeAt(0).cloneRange();
+      }
 
-  const selection = window.getSelection();
+      saveRichNotes();
+    }
 
-  selection.removeAllRanges();
-  selection.addRange(savedNotesRange.cloneRange());
+    function applyForeColor(colorVal) {
+      if (!restoreNotesSelection()) return;
 
-  return true;
-}
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
 
-function execCmd(command, value = null) {
-  restoreNotesSelection();
+      const range = selection.getRangeAt(0);
+      if (range.collapsed) return;
 
-  document.execCommand(command, false, value);
+      const span = document.createElement('span');
+      span.style.color = colorVal;
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
 
-  const selection = window.getSelection();
+      const newRange = document.createRange();
+      newRange.selectNodeContents(span);
 
-  if (selection && selection.rangeCount > 0) {
-    savedNotesRange = selection.getRangeAt(0).cloneRange();
-  }
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+      savedNotesRange = newRange.cloneRange();
 
-  saveRichNotes();
-}
+      saveRichNotes();
+    }
 
-function applyForeColor(colorVal) {
-  if (!restoreNotesSelection()) return;
+    function applyHiliteColor(colorVal) {
+      if (!restoreNotesSelection()) return;
 
-  const selection = window.getSelection();
-  if (!selection.rangeCount) return;
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
 
-  const range = selection.getRangeAt(0);
-  if (range.collapsed) return;
+      const range = selection.getRangeAt(0);
+      if (range.collapsed) return;
 
-  const span = document.createElement('span');
-  span.style.color = colorVal;
+      const span = document.createElement('span');
+      span.style.backgroundColor = colorVal;
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
 
-  span.appendChild(range.extractContents());
-  range.insertNode(span);
+      const newRange = document.createRange();
+      newRange.selectNodeContents(span);
 
-  const newRange = document.createRange();
-  newRange.selectNodeContents(span);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+      savedNotesRange = newRange.cloneRange();
 
-  selection.removeAllRanges();
-  selection.addRange(newRange);
+      saveRichNotes();
+    }
 
-  savedNotesRange = newRange.cloneRange();
+    function applyFontSize(sizeVal) {
+      if (!sizeVal) return;
+      if (!restoreNotesSelection()) return;
 
-  saveRichNotes();
-}
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
 
-function applyHiliteColor(colorVal) {
-  if (!restoreNotesSelection()) return;
+      const range = selection.getRangeAt(0);
+      if (range.collapsed) return;
 
-  const selection = window.getSelection();
-  if (!selection.rangeCount) return;
+      const span = document.createElement('span');
+      span.style.fontSize = sizeVal;
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
 
-  const range = selection.getRangeAt(0);
-  if (range.collapsed) return;
+      const newRange = document.createRange();
+      newRange.selectNodeContents(span);
 
-  const span = document.createElement('span');
-  span.style.backgroundColor = colorVal;
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+      savedNotesRange = newRange.cloneRange();
 
-  span.appendChild(range.extractContents());
-  range.insertNode(span);
-
-  const newRange = document.createRange();
-  newRange.selectNodeContents(span);
-
-  selection.removeAllRanges();
-  selection.addRange(newRange);
-
-  savedNotesRange = newRange.cloneRange();
-
-  saveRichNotes();
-}
-
-function applyFontSize(sizeVal) {
-  if (!sizeVal) return;
-
-  if (!restoreNotesSelection()) return;
-
-  const selection = window.getSelection();
-  if (!selection.rangeCount) return;
-
-  const range = selection.getRangeAt(0);
-  if (range.collapsed) return;
-
-  const span = document.createElement('span');
-  span.style.fontSize = sizeVal;
-
-  span.appendChild(range.extractContents());
-  range.insertNode(span);
-
-  const newRange = document.createRange();
-  newRange.selectNodeContents(span);
-
-  selection.removeAllRanges();
-  selection.addRange(newRange);
-
-  savedNotesRange = newRange.cloneRange();
-
-  saveRichNotes();
-}
+      saveRichNotes();
+    }
 
     function switchCenterView(viewName, element) {
       document.querySelectorAll('.center-view-tab').forEach(btn => btn.classList.remove('active'));
@@ -2619,167 +2556,119 @@ function applyFontSize(sizeVal) {
     }
 
     function renderNoteTabs() {
-  const tabBar = document.getElementById('noteTabBar');
-  if (!tabBar) return;
+      const tabBar = document.getElementById('noteTabBar');
+      if (!tabBar) return;
 
-  tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
+      tabBar.querySelectorAll('.note-tab').forEach(el => el.remove());
 
-  if (!appData.noteTabs || appData.noteTabs.length === 0) {
-    appData.noteTabs = [
-      {
-        id: "tab_1",
-        title: "Main Notes",
-        content: "",
-        bg: "var(--pastel-yellow)"
-      }
-    ];
-    appData.activeNoteTabId = "tab_1";
-  }
-
-  if (!appData.activeNoteTabId) {
-    appData.activeNoteTabId = appData.noteTabs[0].id;
-  }
-
-  appData.noteTabs.forEach(tab => {
-    const tabEl = document.createElement('div');
-
-    tabEl.className =
-      `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
-
-    tabEl.dataset.tabId = tab.id;
-
-    const titleEl = document.createElement('span');
-    titleEl.className = 'note-tab-title';
-    titleEl.textContent = tab.title;
-    titleEl.title = "Click to rename";
-
-    // CLICK TAB = select it AND immediately edit its name
-    tabEl.onclick = (e) => {
-
-      if (
-        e.target.classList.contains('close-note-tab') ||
-        e.target.tagName === 'INPUT'
-      ) {
-        return;
+      if (!appData.noteTabs || appData.noteTabs.length === 0) {
+        appData.noteTabs = [
+          {
+            id: "tab_1",
+            title: "Main Notes",
+            content: "",
+            bg: "var(--pastel-yellow)"
+          }
+        ];
+        appData.activeNoteTabId = "tab_1";
       }
 
-      // If this is another tab, first select it
-      if (appData.activeNoteTabId !== tab.id) {
-        selectNoteTab(tab.id);
+      if (!appData.activeNoteTabId) {
+        appData.activeNoteTabId = appData.noteTabs[0].id;
       }
 
-      // IMPORTANT:
-      // selectNoteTab() re-renders the tabs, therefore find
-      // the NEW DOM element and edit that one.
-      beginRenameNoteTab(tab.id);
-    };
+      appData.noteTabs.forEach(tab => {
+        const tabEl = document.createElement('div');
+        tabEl.className = `note-tab ${tab.id === appData.activeNoteTabId ? 'active' : ''}`;
+        tabEl.dataset.tabId = tab.id;
 
+        const titleEl = document.createElement('span');
+        titleEl.className = 'note-tab-title';
+        titleEl.textContent = tab.title;
+        titleEl.title = "Click to rename";
 
-    const closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'close-note-tab';
-    closeBtn.textContent = '✕';
+        tabEl.onclick = (e) => {
+          if (e.target.classList.contains('close-note-tab') || e.target.tagName === 'INPUT') {
+            return;
+          }
+          if (appData.activeNoteTabId !== tab.id) {
+            selectNoteTab(tab.id);
+          }
+          beginRenameNoteTab(tab.id);
+        };
 
-    closeBtn.onclick = (e) => {
-      e.stopPropagation();
-      deleteNoteTab(tab.id);
-    };
+        const closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'close-note-tab';
+        closeBtn.textContent = '✕';
 
-    tabEl.appendChild(titleEl);
+        closeBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteNoteTab(tab.id);
+        };
 
-    if (appData.noteTabs.length > 1) {
-      tabEl.appendChild(closeBtn);
+        tabEl.appendChild(titleEl);
+
+        if (appData.noteTabs.length > 1) {
+          tabEl.appendChild(closeBtn);
+        }
+
+        tabBar.insertBefore(tabEl, tabBar.querySelector('.add-note-tab-btn'));
+      });
+
+      const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId) || appData.noteTabs[0];
+      const notesBox = document.getElementById('richNotesBox');
+
+      if (notesBox && activeTab) {
+        notesBox.innerHTML = activeTab.content || "";
+        notesBox.style.backgroundColor = activeTab.bg || "var(--pastel-yellow)";
+      }
     }
 
-    tabBar.insertBefore(
-      tabEl,
-      tabBar.querySelector('.add-note-tab-btn')
-    );
-  });
+    function beginRenameNoteTab(tabId) {
+      const tab = appData.noteTabs.find(t => t.id === tabId);
+      if (!tab) return;
 
+      const tabEl = Array.from(document.querySelectorAll('.note-tab')).find(el => el.dataset.tabId === tabId);
+      if (!tabEl) return;
 
-  // Load selected tab content
-  const activeTab =
-    appData.noteTabs.find(t => t.id === appData.activeNoteTabId)
-    || appData.noteTabs[0];
+      if (tabEl.querySelector('input')) return;
 
-  const notesBox = document.getElementById('richNotesBox');
+      const titleEl = tabEl.querySelector('.note-tab-title');
+      if (!titleEl) return;
 
-  if (notesBox && activeTab) {
-    notesBox.innerHTML = activeTab.content || "";
-    notesBox.style.backgroundColor =
-      activeTab.bg || "var(--pastel-yellow)";
-  }
-}
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = tab.title;
+      input.className = 'note-tab-title-input';
 
+      input.onclick = (e) => e.stopPropagation();
+      input.onmousedown = (e) => e.stopPropagation();
 
-/* ============================================================
-   RENAME NOTE TAB
-   ============================================================ */
+      titleEl.replaceWith(input);
+      input.focus();
+      input.select();
 
-function beginRenameNoteTab(tabId) {
+      const saveTitle = () => {
+        const newTitle = input.value.trim();
+        tab.title = newTitle || 'Untitled Tab';
+        saveUserData();
+        renderNoteTabs();
+      };
 
-  const tab = appData.noteTabs.find(t => t.id === tabId);
-  if (!tab) return;
-
-  // IMPORTANT: locate the newly-rendered tab
-  const tabEl = Array.from(
-    document.querySelectorAll('.note-tab')
-  ).find(el => el.dataset.tabId === tabId);
-
-  if (!tabEl) return;
-
-  // Already editing
-  if (tabEl.querySelector('input')) return;
-
-  const titleEl = tabEl.querySelector('.note-tab-title');
-  if (!titleEl) return;
-
-  const input = document.createElement('input');
-
-  input.type = 'text';
-  input.value = tab.title;
-  input.className = 'note-tab-title-input';
-
-  // Prevent clicking inside input from triggering tab again
-  input.onclick = (e) => e.stopPropagation();
-  input.onmousedown = (e) => e.stopPropagation();
-
-  titleEl.replaceWith(input);
-
-  input.focus();
-  input.select();
-
-
-  const saveTitle = () => {
-
-    const newTitle = input.value.trim();
-
-    tab.title = newTitle || 'Untitled Tab';
-
-    saveUserData();
-    renderNoteTabs();
-  };
-
-
-  input.onblur = saveTitle;
-
-  input.onkeydown = (e) => {
-
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      input.blur();
+      input.onblur = saveTitle;
+      input.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          input.blur();
+        }
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          input.onblur = null;
+          renderNoteTabs();
+        }
+      };
     }
-
-    if (e.key === 'Escape') {
-      e.preventDefault();
-
-      // Cancel editing without saving
-      input.onblur = null;
-      renderNoteTabs();
-    }
-  };
-}
 
     function selectNoteTab(id) {
       const activeTab = appData.noteTabs.find(t => t.id === appData.activeNoteTabId);
