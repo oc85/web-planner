@@ -502,7 +502,7 @@
       color: var(--primary-dark);
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
 
     .goal-header-sub {
@@ -527,6 +527,25 @@
     }
 
     .nav-arrow-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-dark);
+    }
+
+    .nav-current-btn {
+      background: #edf2f7;
+      border: 1px solid var(--border-color);
+      border-radius: 3px;
+      color: var(--primary-dark);
+      cursor: pointer;
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      line-height: 1;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .nav-current-btn:hover {
       background: var(--primary);
       color: white;
       border-color: var(--primary-dark);
@@ -1739,6 +1758,7 @@
                   Weekly Goals
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(-1)" title="Previous week">◀</button>
+                    <button type="button" class="nav-current-btn" onclick="navigatePreplanWeek('current')" title="Go to current week">Current</button>
                     <span id="weeklyCardLabel">Week 1</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(1)" title="Next week">▶</button>
                   </span>
@@ -1764,6 +1784,7 @@
                   Monthly Goals
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(-1)" title="Previous month">◀</button>
+                    <button type="button" class="nav-current-btn" onclick="navigatePreplanMonth('current')" title="Go to current month">Current</button>
                     <span id="monthlyCardLabel">September 2026</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanMonth(1)" title="Next month">▶</button>
                   </span>
@@ -1789,6 +1810,7 @@
                   Yearly Goals
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanYear(-1)" title="Previous year">◀</button>
+                    <button type="button" class="nav-current-btn" onclick="navigatePreplanYear('current')" title="Go to current year">Current</button>
                     <span id="yearlyCardLabel">2026</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanYear(1)" title="Next year">▶</button>
                   </span>
@@ -2822,19 +2844,33 @@
     }
 
     function navigatePreplanWeek(offset) {
-      preplanWeekDate.setDate(preplanWeekDate.getDate() + (offset * 7));
+      if (offset === 'current') {
+        preplanWeekDate = getMonday(new Date());
+      } else {
+        preplanWeekDate.setDate(preplanWeekDate.getDate() + (offset * 7));
+      }
       renderGoals();
     }
 
     function navigatePreplanMonth(offset) {
-      preplanMonthIdx += offset;
-      if (preplanMonthIdx > 11) { preplanMonthIdx = 0; preplanMonthYear++; }
-      else if (preplanMonthIdx < 0) { preplanMonthIdx = 11; preplanMonthYear--; }
+      if (offset === 'current') {
+        const now = new Date();
+        preplanMonthIdx = now.getMonth();
+        preplanMonthYear = now.getFullYear();
+      } else {
+        preplanMonthIdx += offset;
+        if (preplanMonthIdx > 11) { preplanMonthIdx = 0; preplanMonthYear++; }
+        else if (preplanMonthIdx < 0) { preplanMonthIdx = 11; preplanMonthYear--; }
+      }
       renderGoals();
     }
 
     function navigatePreplanYear(offset) {
-      preplanYear += offset;
+      if (offset === 'current') {
+        preplanYear = new Date().getFullYear();
+      } else {
+        preplanYear += offset;
+      }
       renderGoals();
     }
 
