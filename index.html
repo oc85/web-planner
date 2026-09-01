@@ -497,21 +497,23 @@
       margin-bottom: 8px;
     }
 
-    .goal-header h3 {
-      font-size: 0.9rem;
+.goal-header h3 {
+      font-size: 0.88rem;
       color: var(--primary-dark);
       display: flex;
       flex-direction: column;
       gap: 4px;
+      width: 100%;
     }
 
     .goal-header-sub {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       font-weight: normal;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      flex-wrap: nowrap;
     }
 
     .nav-arrow-btn {
@@ -1751,7 +1753,7 @@
           
           <!-- Column 1: Goals -->
           <div class="goals-column">
-            <!-- Weekly Goals -->
+<!-- Weekly Goals -->
             <div class="goal-card">
               <div class="goal-header">
                 <h3>
@@ -1759,7 +1761,7 @@
                   <span class="goal-header-sub">
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(-1)" title="Previous week">◀</button>
                     <button type="button" class="nav-current-btn" onclick="navigatePreplanWeek('current')" title="Go to current week">Current</button>
-                    <span id="weeklyCardLabel">Week 1</span>
+                    <span id="weeklyCardLabel" style="white-space: nowrap;">Week 1</span>
                     <button type="button" class="nav-arrow-btn" onclick="navigatePreplanWeek(1)" title="Next week">▶</button>
                   </span>
                 </h3>
